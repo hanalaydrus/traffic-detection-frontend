@@ -43,7 +43,7 @@ const tableData = [
 /**
  * A more complex example, allowing the table height to be set, and key boolean properties to be toggled.
  */
-export default class TableExampleComplex extends Component {
+export default class Hiring extends Component {
   state = {
     fixedHeader: true,
     fixedFooter: false,
