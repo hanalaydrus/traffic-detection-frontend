@@ -83,11 +83,11 @@ export default class Hiring extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor:'#f9bb00'}}>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}} tooltip="Num">ID</TableHeaderColumn>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}} tooltip="Name">Name</TableHeaderColumn>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}} tooltip="Link">Link</TableHeaderColumn>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}} tooltip="Viewed">Viewed</TableHeaderColumn>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}} tooltip="Requested">Requested</TableHeaderColumn>
+              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>No</TableHeaderColumn>
+              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>Name</TableHeaderColumn>
+              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>Link</TableHeaderColumn>
+              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>Viewed</TableHeaderColumn>
+              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>Requested</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
