@@ -10,6 +10,7 @@ import {
 } from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
+import HiringData from '../../../../temp-data/tempHiring'
 
 const styles = {
   propContainer: {
@@ -25,20 +26,7 @@ const styles = {
   }
 };
 
-const tableData = [
-  {
-    name: 'tiket.com',
-    link: '-',
-    viewed: '30',
-    requested: '2',
-  },
-  {
-    name: 'traveloka.com',
-    link: '-',
-    viewed: '26',
-    requested: '6',
-  },
-];
+const tableData = HiringData.data
 
 /**
  * A more complex example, allowing the table height to be set, and key boolean properties to be toggled.
@@ -68,6 +56,7 @@ export default class Hiring extends Component {
   };
 
   render() {
+    console.log(tableData)
     return (
       <div>
         <Table
@@ -83,11 +72,11 @@ export default class Hiring extends Component {
             enableSelectAll={this.state.enableSelectAll}
           >
             <TableRow style={{backgroundColor:'#f9bb00'}}>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>No</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '50', color:'#212121', fontWeight: 'Bold'}}>ID</TableHeaderColumn>
               <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>Name</TableHeaderColumn>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>Link</TableHeaderColumn>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>Viewed</TableHeaderColumn>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>Requested</TableHeaderColumn>
+              <TableHeaderColumn style={{width: '450', color:'#212121', fontWeight: 'Bold'}}>Link</TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Viewed</TableHeaderColumn>
+              <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Requested</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -98,11 +87,11 @@ export default class Hiring extends Component {
           >
             {tableData.map( (row, index) => (
               <TableRow key={index}>
-                <TableRowColumn>{index+1}</TableRowColumn>
+                <TableRowColumn style={{width: '50'}}>{row.id}</TableRowColumn>
                 <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn>{row.link}</TableRowColumn>
-                <TableRowColumn>{row.viewed}</TableRowColumn>
-                <TableRowColumn>{row.requested}</TableRowColumn>
+                <TableRowColumn style={{width: '450'}}>{row.link}</TableRowColumn>
+                <TableRowColumn style={{textAlign: 'center'}}>{row.views}</TableRowColumn>
+                <TableRowColumn style={{textAlign: 'center'}}>{row.requested}</TableRowColumn>
               </TableRow>
               ))}
           </TableBody>
