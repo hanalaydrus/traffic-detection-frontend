@@ -1,17 +1,26 @@
 import React from "react";
 import ReactDom from "react-dom";
-import { BrowserRouter as Router, Route, IndexRoute } from 'react-router-dom'
-import {Header} from "./components/Header";
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import createBrowserHistory from 'history/createBrowserHistory'
+
+import { Header } from "./components/Header";
+import Profile from "./components/Profile";
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 //Import Routes
 import Login from './auth/login'
+injectTapEventPlugin();
+
+const history = createBrowserHistory()
 
 class App extends React.Component{
   render(){
     return(
-      <Router>
+      <Router history={history}>
         <div>
-          <Route path="/" component={Login} />
+            <Route exact path="/" component={Login} />
+            <Route path="/profile" component={Profile} />
         </div>
       </Router>
     );
