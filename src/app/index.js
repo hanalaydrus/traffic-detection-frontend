@@ -10,6 +10,9 @@ const history = createBrowserHistory()
 //Import Routes
 import { Header } from "./components/Header";
 import Login from './auth/login'
+import Hiring from './components/Hiring';
+
+const history = createBrowserHistory()
 
 class App extends React.Component{
   render(){
@@ -18,8 +21,7 @@ class App extends React.Component{
         <Router history={history}>
           <div>
               <Route exact path="/" component={Login} />
-              // put other route here
-              // <Route path="/profile" component={Profile} />
+              <Route path="/hiring" component={Hiring} />
           </div>
         </Router>
       </MuiThemeProvider>
