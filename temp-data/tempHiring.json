@@ -1,0 +1,19 @@
+{
+	"success": true,
+	"data": [
+		{
+			"id": 1,
+	 		"name": "Tiket.com",
+	 		"link": "http://refactory.id/grads/12123123132?token=12312313",
+	 		"views": 10,
+	 		"requested": 1
+		},
+		{
+			"id": 2,
+	 		"name": "Traveloka.com",
+	 		"link": "http://refactory.id/grads/345345345?token=234242254",
+	 		"views": 5,
+	 		"requested": 1
+		}
+	]
+}
