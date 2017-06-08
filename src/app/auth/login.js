@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {RaisedButton, TextField, MuiThemeProvider} from 'material-ui';
+import {RaisedButton, TextField} from 'material-ui';
 import {orange600, orange500} from 'material-ui/styles/colors';
 import "./styles.scss";
 
@@ -21,7 +21,6 @@ class Login extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider>
         <div>
           <div className="login-card">
             <img src="/images/Refactory.png" className="img-logo" />
@@ -43,7 +42,6 @@ class Login extends Component {
             </div>
           </div>
         </div>
-      </MuiThemeProvider>
     );
   }
 }
