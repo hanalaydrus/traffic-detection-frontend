@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    .table-item{
+        display: flex;
+        flex-direction: column;
+        .select-item {
+        display: flex;
+        justify-content: flex-end;
+        }
+    }    
+    
+}
+
