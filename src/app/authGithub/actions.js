@@ -14,7 +14,7 @@ import {
 } from './constants';
 
 const https = require('https');
-const Querystring = require('querystring');
+const querystring = require('querystring');
 
 import axios from 'axios';
 import {browserHistory} from 'react-router';
@@ -26,30 +26,25 @@ export function logIn() {
 }
 
 export function authenticateUser() {
-  // return dispatch => {
-  //   const url = buildUrl(ENDPOINT_AUTH, TOKEN_PARAMS);
-  //   window.open(url)
-  // }
   return dispatch => {
+    window.receivedCode = (url) => {
+        requestToken(getParameterByName('code',url))
+          .then(resp => {
+              const name = jwt.decode(resp.data.id_token)
+              console.log(resp)
+              dispatch(logIn());
+              // Save JWT token to localStorage and set expiration
+              setHtmlStorage('token', resp.data.access_token, 3600);
+              // Redirect using react router
+              browserHistory.push('/hana');
+
+        });
+    }
     const jwtToken = jwt.sign(TOKEN_PARAMS, CLIENT_SECRET);
 
     const url = buildUrl(ENDPOINT_AUTH, TOKEN_PARAMS, jwtToken);
 
-    const childWindow = window.open(url);
-
-  //   window.receivedCode = (url) => {
-  //       requestToken(getParameterByName('code',url))
-  //         .then(resp => {
-  //             const name = jwt.decode(resp.data.id_token)
-  //
-  //             dispatch(logIn());
-  //             // Save JWT token to localStorage and set expiration
-  //             setHtmlStorage('token', resp.data.access_token, 3600);
-  //             // Redirect using react router
-  //             browserHistory.push('/');
-  //
-  //       });
-  //   }
+    const childWindow = window.open(url, 'ddd', 'width=800,height=300');
   }
 
 };
@@ -80,19 +75,22 @@ function getParameterByName(name, url) {
 function requestToken(code) {
 
   const token = jwt.sign(PAYLOADS, CLIENT_SECRET);
-
+  const config = {
+    headers: {'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept':'application/json'}
+  }
   const params_token = {
     client_id:CLIENT_ID,
     client_secret:CLIENT_SECRET,
     code: code,
-    accept: 'json',
-    client_assertion: token
-  };
+    redirect_uri: REDIRECT_URI
+  }
 
-  const reqAccessToken = axios.post(ENDPOINT, Querystring.stringify(params_token), {
-    httpsAgent: new https.Agent({ rejectUnauthorized: false }),
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  });
+  console.log(params_token)
+
+  const reqAccessToken = axios.post(ENDPOINT_AUTH, params_token, config);
+
+  console.log(reqAccessToken)
 
   return reqAccessToken
 }

@@ -25,6 +25,7 @@ import Dashboard from './containers/Dashboard'
 
 // import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
+import getToken from './authGithub/getToken'
 
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
 export const store = createStoreWithMiddleware(reducers)
@@ -39,6 +40,7 @@ class App extends React.Component{
               <Route exact path="/" component={Login} />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/githublogin" component={GithubLogin} />
+              <Route path="/github/callback" component={getToken} />
           </div>
         </Router>
       </MuiThemeProvider>
