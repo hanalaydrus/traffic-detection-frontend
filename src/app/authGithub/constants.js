@@ -15,7 +15,7 @@ export const ENDPOINT = `https://${GITHUB_CLIENT_BASE_URI}/login/oauth/access_to
 // export const ENDPOINT_DEAUTH = `https://${GITHUB_CLIENT_BASE_URI}/oxauth/seam/resource/restv1/oxauth/end_session`
 export const REDIRECT_URI = GITHUB_REDIRECT_URI
 export const CLIENT_ID = GITHUB_CLIENT_ID
-export const CLIENT_SECRET = GITHUB_CLIENT_ID
+export const CLIENT_SECRET = GITHUB_CLIENT_SECRET
 // export const CLIENT_ASSERTION_TYPE = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
 // export const GRANT_TYPE = 'authorization_code'
 
@@ -30,7 +30,6 @@ export const PAYLOADS = {
     iat: Math.floor(Date.now() / 1000),
     exp: Math.floor(Date.now() / 1000) + 86400
 }
-
 
 export const TOKEN_PARAMS = {
     client_id: CLIENT_ID,
