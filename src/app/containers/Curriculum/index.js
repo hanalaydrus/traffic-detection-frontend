@@ -25,7 +25,7 @@ const style = {
  }
 };
 
-class Dashboard extends Component {
+class Curriculum extends Component {
   constructor() {
     super()
     this.state = {
@@ -88,4 +88,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default Curriculum;
