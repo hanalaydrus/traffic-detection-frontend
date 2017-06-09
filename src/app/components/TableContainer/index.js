@@ -19,7 +19,7 @@ import * as constant from './tableHeader';
  * A simple table demonstrating the hierarchy of the `Table` component and its sub-components.
  */
 
-export default class TabsExampleControlled extends React.Component {
+export default class TableStudents extends React.Component {
 
   constructor(props) {
     super(props);

@@ -18,7 +18,7 @@ export const seederData = [{
     'fullname':"jhonantan",
     'email':'jhonwick@hadouken.com',
     'phone':'09322020',
-   "campuses":"jogja",
+   "campuses":"bandung",
     "batch":2,
     "status":"lulus"
 },
@@ -27,7 +27,7 @@ export const seederData = [{
     'email':'ajasal@hadouken.com',
     'phone':'09322020',
     'action':'constant',
-    "campuses":"jogja",
+    "campuses":"bandung",
     "batch":2,
     "status":"preparation"
 },
@@ -36,7 +36,7 @@ export const seederData = [{
     'email':'asalaja@hadouken.com',
     'phone':'09322020',
     'action':'constant',
-    "campuses":"jogja",
+    "campuses":"bali",
     "batch":2,
     "status":"preparation"
 }
@@ -44,7 +44,7 @@ export const seederData = [{
     "fullname":"jhonantan frans",
     "email":'jhonwick@hadouken.com',
     'phone':'09322020',
-   "campuses":"jogja",
+   "campuses":"bali",
     "batch":2,
     "status":"siap interview"
 },
@@ -53,7 +53,7 @@ export const seederData = [{
     'email':'ajasal@hadouken.com',
     'phone':'09322020',
     'action':'constant',
-    "campuses":"jogja",
+    "campuses":"kalimantan",
     "batch":2,
     "status":"siap interview"
 },
@@ -62,7 +62,7 @@ export const seederData = [{
     'email':'asalaja@hadouken.com',
     'phone':'09322020',
     'action':'constant',
-    "campuses":"jogja",
+    "campuses":"kalimantan",
     "batch":2,
     "status":"siap interview"
 },
@@ -70,7 +70,7 @@ export const seederData = [{
     'fullname':"antonio banderas",
     'email':'jhonwick@hadouken.com',
     'phone':'09322020',
-   "campuses":"jogja",
+   "campuses":"kalimantan",
     "batch":3,
     "status":"gagal"
 },
@@ -79,7 +79,7 @@ export const seederData = [{
     'email':'ajasal@hadouken.com',
     'phone':'09322020',
     'action':'constant',
-    "campuses":"jogja",
+    "campuses":"solo",
     "batch":1,
     "status":"gagal"
 },
@@ -88,7 +88,7 @@ export const seederData = [{
     'email':'asalaja@hadouken.com',
     'phone':'09322020',
     'action':'constant',
-    "campuses":"jogja",
+    "campuses":"depok",
     "batch":5,
     "status":"gagal"
 },
@@ -96,7 +96,7 @@ export const seederData = [{
     'fullname':"mama mia",
     'email':'jhonwick@hadouken.com',
     'phone':'09322020',
-   "campuses":"jogja",
+   "campuses":"depok",
     "batch":3,
     "status":"preparation"
 },
@@ -105,7 +105,7 @@ export const seederData = [{
     'email':'ajasal@hadouken.com',
     'phone':'09322020',
     'action':'constant',
-    "campuses":"jogja",
+    "campuses":"bandung",
     "batch":1,
     "status":"gagal"
 },
@@ -113,7 +113,7 @@ export const seederData = [{
     'fullname':"mama mia",
     'email':'jhonwick@hadouken.com',
     'phone':'09322020',
-   "campuses":"jogja",
+   "campuses":"bandung",
     "batch":3,
     "status":"menunggu dokumen"
 },
@@ -131,7 +131,7 @@ export const seederData = [{
     'email':'jhonwick@hadouken.com',
     'phone':'09322020',
    "campuses":"jogja",
-    "batch":3,
+    "batch":2,
     "status":"pending"
 },
 {

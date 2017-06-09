@@ -4,12 +4,10 @@
 import React, { Component } from 'react';
 import { RaisedButton,MuiThemeProvider } from 'material-ui';
 import SelectFields from '../SelectField'
-import TabsExampleControlled from '../TableContainer'
+import TableStudents from '../TableContainer'
 import './styles.scss'
-import * as constants from '../TableContainer/tableHeader'
-const style = {
-  margin: 5,
-};
+import * as constants from '../Drawer/constants'
+
 
 class StudentListPage extends Component {
   constructor(props) {
@@ -19,40 +17,51 @@ class StudentListPage extends Component {
       campus: ["kampus1" , "kampus2","kampus3"],
       batch:["batch1", "batch2","all batch"],
       status:["Pending","Siap Interview","Preparation","Gagal","Menunggu Dokumen","lulus"],
-      data:constants.seederData,
+      data:[],
+      dataTable:[]
     };
   }
+  componentDidMount(){
+    this.setState({
+      data:getStudent(constants.data),
+      dataTable:getStudent(constants.data)
+    })
+  }
   dataStudent = (status) => {
+      console.log(this.state.dataTable)
       this.setState({
-            data: this.getDataBystatus(status),
+            dataTable: this.getDataBystatus(status),
         });   
     }
-  getDataBystatus  = (status) => {
-    return constants.seederData.filter((prop) => prop.status === status)
+  getDataBystatus  = (value) => {
+    return this.state.dataTable.filter((prop) => prop.status === value)
+  }
+  getDataByBatch = (value) => {
+    return this.state.dataTable.filter((prop)=> props.batch === value)
+  }
+  getDataByCampus = (value) => {
+    return this.state.dataTable.filter((prop) => props.campuses === value)
   }
   render() {
     return (
       <div > 
         <div className='container'>
-          <div>
-            <SelectFields title = {'Select Campus'} data={this.state.campus}/>
-            <SelectFields title = {'Select Batch'} data={this.state.campus}/>  
-            <MuiThemeProvider>
-              <RaisedButton label="Students" style={style} />
-            </MuiThemeProvider>
-          </div>
           <div className='table-item'>
             <div className='select-item'>
               <SelectFields title = {'Select Status'} data={this.state.status} dataStudent={this.dataStudent.bind(this)}/>
             </div>
             <MuiThemeProvider>
-              <TabsExampleControlled data={this.state.data}/>
+              <TableStudents data={this.state.dataTable}/>
             </MuiThemeProvider>
           </div>
         </div>
       </div>
     );
   }
+}
+
+function getStudent(data){
+    return data.reduce((acc,curr) => {return acc.concat(curr.student)},[])
 }
 
 export default StudentListPage;
