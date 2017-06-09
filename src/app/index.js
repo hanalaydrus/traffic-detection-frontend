@@ -16,6 +16,7 @@ import { Theme } from './theme.js'
 import { Header } from "./components/Header";
 import Login from './auth/login'
 import Dashboard from './containers/Dashboard'
+import Curriculum from './containers/Curriculum';
 import Hiring from './components/Hiring';
 
 class App extends React.Component{
@@ -26,6 +27,7 @@ class App extends React.Component{
           <div>
               <Route exact path="/" component={Login} />
               <Route path="/dashboard" component={Dashboard} />
+              <Route path="/curriculum" component={Curriculum} />
               <Route path="/hiring" component={Hiring} />
           </div>
         </Router>

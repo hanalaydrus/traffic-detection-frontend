@@ -14,12 +14,13 @@
   "author": "Refactory",
   "license": "ISC",
   "dependencies": {
+    "material-ui": "^0.18.1",
+    "moment": "^2.18.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "react-tap-event-plugin": "^2.0.1",
-    "material-ui": "^0.18.1"
+    "react-tap-event-plugin": "^2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
