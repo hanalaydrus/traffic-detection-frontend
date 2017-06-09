@@ -14,11 +14,12 @@ var config = {
   module: {
       loaders: [
         {
-          test: /\.js?/,
+          test: /\.jsx?$/,
           include: SRC_DIR,
-          loader: "babel-loader",
+          exclude: /node_modules/,
+          loader: 'babel-loader',
           query:{
-            presets: ["react","es2015","stage-2"]
+            presets: ['react','es2015','stage-2']
           }
         },
         {
@@ -26,11 +27,31 @@ var config = {
           include: SRC_DIR,
           loaders: ["style-loader", "css-loader", "sass-loader"]
         },
+        { test: /\.json$/, loader: 'json-loader' }
       ]
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+       $: 'jquery',
+       jQuery: 'jquery',
+       'window.jQuery': 'jquery'
+     })
+  ],
+  resolve: {
+    extensions: [ '.js', '.jsx' ],
+    alias: {
+      config: path.join(__dirname, 'config', process.env.NODE_ENV || 'local')
+    }
   },
   devServer: {
     historyApiFallback: true
-  }
+  },
+  node: {
+    console: true,
+    net: 'empty',
+    tls: 'empty',
+    dns: 'empty'
+   }
 }
 
 module.exports = config;
