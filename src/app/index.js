@@ -1,6 +1,12 @@
 import React from "react";
 import ReactDom from "react-dom";
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+//redux related
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import reducers from './reducers'
+import ReduxThunk from 'redux-thunk'
+import promise from 'redux-promise'
 
 // Import Browser History
 import createBrowserHistory from 'history/createBrowserHistory'
@@ -18,10 +24,16 @@ import Login from './auth/login'
 import Dashboard from './containers/Dashboard'
 import Curriculum from './containers/Curriculum';
 import Hiring from './components/Hiring';
+import GithubLogin from './authGithub/loginGithub';
+import getToken from './authGithub/getToken'
+
+export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
+export const store = createStoreWithMiddleware(reducers)
 
 class App extends React.Component{
   render(){
     return(
+    <Provider store={store}>
       <MuiThemeProvider muiTheme={Theme}>
         <Router history={history}>
           <div>
@@ -29,9 +41,12 @@ class App extends React.Component{
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/curriculum" component={Curriculum} />
               <Route path="/hiring" component={Hiring} />
+              <Route path="/githublogin" component={GithubLogin} />
+              <Route path="/github/callback" component={getToken} />
           </div>
         </Router>
       </MuiThemeProvider>
+    </Provider>
     );
   }
 }
