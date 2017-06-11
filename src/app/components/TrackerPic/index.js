@@ -4,7 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import {PageTitle} from '../PageTitle'
-import TrackingData from '../../../../temp-data/tempTrackImage'
+import TrackingData from '../../../../temp-data/tempTrackImage.json'
 import './styles.scss'
 import moment from 'moment'
 

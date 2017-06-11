@@ -24,7 +24,7 @@ export const refactoryAxios = axios.create({
  */
  export const debounceResourceGet = _.debounce( (endpoint, callback) => {
    // Make the request to the server
-   hydrogenAxios.get(`${endpoint}`, {
+   refactoryAxios.get(`${endpoint}`, {
      headers: {
        'Authorization': `Bearer ${TOKEN()}`
      }
@@ -44,7 +44,7 @@ export const refactoryAxios = axios.create({
  */
  export const debounceResourcePost = _.debounce( (endpoint, data, callback) => {
    // Make the request to the server
-   hydrogenAxios.post(`/${endpoint}`, data, {
+   refactoryAxios.post(`/${endpoint}`, data, {
      headers: {
        'Authorization': `Bearer ${TOKEN()}`
      }
@@ -65,7 +65,7 @@ export const refactoryAxios = axios.create({
  */
  export const debounceResourcePatch = _.debounce( (resource, resourceId, data, callback) => {
    // Make the request to the server
-   hydrogenAxios.patch(`/${resource}/${resourceId}`, data, {
+   refactoryAxios.patch(`/${resource}/${resourceId}`, data, {
      headers: {
        'Authorization': `Bearer ${TOKEN()}`
      }
@@ -85,7 +85,7 @@ export const refactoryAxios = axios.create({
  */
 export function deleteResourceRequest(resource, resourceId, callback) {
   // Make the request to the server
-  hydrogenAxios.delete(`/${resource}/${resourceId}`, {
+  refactoryAxios.delete(`/${resource}/${resourceId}`, {
     headers: {
       'Authorization': `Bearer ${TOKEN()}`
     }
@@ -316,7 +316,7 @@ export function isUrl(str) {
       break
   }
   // Make the search request to the server
-  hydrogenAxios.get(requestUrl, {
+  refactoryAxios.get(requestUrl, {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

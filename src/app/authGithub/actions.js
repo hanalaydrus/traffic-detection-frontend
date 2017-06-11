@@ -9,17 +9,17 @@ import {
   REDIRECT_URI,
   CLIENT_ID,
   PAYLOADS
-  // CLIENT_ASSERTION_TYPE,
-  // GRANT_TYPE
+
 } from './constants';
 
 const https = require('https');
 const querystring = require('querystring');
 
 import axios from 'axios';
-import {browserHistory} from 'react-router';
 import {setHtmlStorage,removeHtmlStorage} from '../../helpers';
-const jwt = require('jsonwebtoken');
+
+// Import Browser history
+import history from '../history.js'
 
 export function logIn() {
   return { type: AUTH_USER };
@@ -29,19 +29,24 @@ export function authenticateUser() {
   return dispatch => {
     window.receivedCode = (url) => {
         requestToken(getParameterByName('code',url))
+        .then((resp) => {
+            dispatch(logIn());
+            // Save JWT token to localStorage and set expiration
+            setHtmlStorage('token', resp.data.access_token, 3600);
+            // Redirect using react router
+            history.push('/');
+            window.location.reload();
+      });
     }
-
-    // const jwtToken = jwt.sign(TOKEN_PARAMS, CLIENT_SECRET);
 
     const url = buildUrl(ENDPOINT_AUTH, TOKEN_PARAMS);
 
-    const childWindow = window.open(url, 'ddd', 'width=800,height=300');
+    const childWindow = window.open(url, 'Login with Github', 'width=800,height=300');
   }
 };
 
-function buildUrl (endPoint, params, token) {
+function buildUrl (endPoint, params) {
   return `${endPoint}?${encodeQueryData(params)}`;
-  // return `${endPoint}?${encodeQueryData(params)}&request=${token}&success=receivedCode`;
 }
 
 function encodeQueryData(data) {
@@ -70,40 +75,9 @@ function requestToken(code) {
               'Accept':'application/json'}
   }
   const params_token = {
-    client_id:CLIENT_ID,
-    client_secret:CLIENT_SECRET,
-    code: code,
-    redirect_uri: REDIRECT_URI,
+    code: code
   }
-  const data = `client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${code}`
-  console.log(params_token)
 
-  // var request = new XMLHttpRequest();
-  // request.onreadystatechange = function() {
-  //   if (request.readyState == XMLHttpRequest.DONE) {
-  //       console.log(request.responseText);
-  //   }
-  // }
-  // request.open('POST', ENDPOINT, true);
-  // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  // request.setRequestHeader('Accept', 'application/json');
-  // request.send(data);
-
-  axios.post(ENDPOINT, querystring.stringify(params_token), config)
-  .then((response) => {
-    console.log(response)
-  })
-  .catch((response)=>{
-    console.log(response)
-  })
-//   .then((resp) => {
-//       // const name = jwt.decode(resp.data.id_token)
-//       console.log(resp)
-//       dispatch(logIn());
-//       // Save JWT token to localStorage and set expiration
-//       setHtmlStorage('token', resp.data.access_token, 3600);
-//       // Redirect using react router
-//       browserHistory.push('/');
-//
-// });
+  const accessToken = axios.post(ENDPOINT, params_token)
+  return accessToken
 }

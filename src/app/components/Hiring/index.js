@@ -10,7 +10,7 @@ import {
 } from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
-import HiringData from '../../../../temp-data/tempHiring'
+import HiringData from '../../../../temp-data/tempHiring.json'
 
 const styles = {
   propContainer: {

@@ -8,9 +8,8 @@ import reducers from './reducers'
 import ReduxThunk from 'redux-thunk'
 import promise from 'redux-promise'
 
-// Import Browser History
-import createBrowserHistory from 'history/createBrowserHistory'
-const history = createBrowserHistory()
+// Import Browser history
+import history from './history.js'
 
 //Import Material UI Related
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
