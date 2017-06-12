@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import {RaisedButton, TextField} from 'material-ui';
 import {orange600, orange500} from 'material-ui/styles/colors';
 import "./styles.scss";
-
+import {TOKEN} from '../../constants'
 
 const style = {
   orange: {
    borderColor: orange600,
   }
 };
-
-
 
 class Login extends Component {
   componentWillMount(){
@@ -20,6 +18,7 @@ class Login extends Component {
       document.body.style.backgroundColor = null;
   }
   render() {
+    console.log('Token : ',TOKEN())
     return (
         <div>
           <div className="login-card">

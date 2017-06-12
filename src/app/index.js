@@ -26,10 +26,29 @@ import WorkTodo from './containers/WorkTodo';
 import WorkTodoForm from './components/WorkTodoForm';
 import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
-import getToken from './authGithub/getToken'
+import getToken from './authGithub/getToken';
+import ListTicket from './containers/ListTicket';
 
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
 export const store = createStoreWithMiddleware(reducers)
+/**
+ *  Require authentication dependencies
+ */
+import RequireAuth from './authGithub/require_auth'
+import { AUTH_USER, UNAUTH_USER } from './authGithub/constants'
+import { statusHtmlStorage } from '../helpers'
+
+/**
+ *  Re-authenticate when the application is reloaded
+ */
+if(statusHtmlStorage('token')) {
+  // If token has returned true, the token exists
+  // It will be verified in the App onEnter
+  store.dispatch({ type: AUTH_USER })
+} else {
+  // Otherwise, it does not exist, log them out
+  store.dispatch({ type: UNAUTH_USER })
+}
 
 class App extends React.Component{
   render(){
@@ -46,6 +65,7 @@ class App extends React.Component{
               <Route path="/hiring" component={Hiring} />
               <Route path="/githublogin" component={GithubLogin} />
               <Route path="/github/callback" component={getToken} />
+              <Route path='/listticket' component={RequireAuth(ListTicket)} />
           </div>
         </Router>
       </MuiThemeProvider>

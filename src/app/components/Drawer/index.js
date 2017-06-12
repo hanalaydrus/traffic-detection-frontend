@@ -8,7 +8,7 @@ import SelectField from 'material-ui/SelectField';
 import { RaisedButton,MuiThemeProvider } from 'material-ui';
 import MenuItem from 'material-ui/MenuItem';
 /**
- * import 
+ * import
  */
 import * as constants from './constants'
 import {DrawerMenu} from './../DrawerMenu'
@@ -27,10 +27,10 @@ export class Drawer extends React.Component {
     };
   }
   getMenu = (data) => {
-    return (param) => data.map((data,index)=> (data === 'all') ? 
-    <MenuItem key={index.toString()} value={data} primaryText={`${data}`} /> 
+    return (param) => data.map((data,index)=> (data === 'all') ?
+    <MenuItem key={index.toString()} value={data} primaryText={`${data}`} />
     : <MenuItem key={index.toString()} value={data[param]} primaryText={`${data[param]}`} />)
-        
+
   }
   getMenuBatch = (campus) => {
       return (value) => campus.filter((data) => (data['city'] === 'all') ? false:data['city']===value)
@@ -43,7 +43,7 @@ export class Drawer extends React.Component {
       this.setState({
         value:value,
         batch:this.getMenuBatch(this.state.campus)(value)[0]['batches'].concat('all')
-      }) 
+      })
     }else if(value === 'all'){
       this.setState({
         value:value,
@@ -62,7 +62,7 @@ export class Drawer extends React.Component {
 
   render() {
     return (
-      <div className={this.props.drawerStyle}> 
+      <div className={this.props.drawerStyle}>
         <MuiThemeProvider className="select-field">
           <SelectField
           floatingLabelText={'Campus'}
@@ -78,8 +78,8 @@ export class Drawer extends React.Component {
           value={this.state.batchState}
           onChange={this.handleChangeBatch}
           >
-          {this.state.batch.length>0 ? 
-          this.state.batch.map((data,index) => <MenuItem key={index.toString()} value={data} primaryText={`${data}`} />) 
+          {this.state.batch.length>0 ?
+          this.state.batch.map((data,index) => <MenuItem key={index.toString()} value={data} primaryText={`${data}`} />)
           : <MenuItem value={'all'} primaryText={`all`} />}
           </SelectField>
         </MuiThemeProvider>
@@ -88,4 +88,3 @@ export class Drawer extends React.Component {
     );
   }
 }
-
