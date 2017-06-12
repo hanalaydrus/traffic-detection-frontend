@@ -1,7 +1,7 @@
 import React from "react";
 import './styles.scss';
 import RaisedButton from 'material-ui/RaisedButton';
-import ScoreCardData from '../../../../temp-data/tempScoreCard'
+import ScoreCardData from '../../../../temp-data/tempScoreCard.json'
 
 const styles = {
   button: {
