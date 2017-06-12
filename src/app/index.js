@@ -1,28 +1,55 @@
 import React from "react";
 import ReactDom from "react-dom";
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import createBrowserHistory from 'history/createBrowserHistory'
+//redux related
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import reducers from './reducers'
+import ReduxThunk from 'redux-thunk'
+import promise from 'redux-promise'
+
+// Import Browser history
+import history from './history.js'
+
+//Import Material UI Related
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
-const history = createBrowserHistory()
+import { Theme } from './theme.js'
 
 //Import Routes
 import { Header } from "./components/Header";
 import Login from './auth/login'
 import Dashboard from './containers/Dashboard'
+import Curriculum from './containers/Curriculum';
+import WorkTodo from './containers/WorkTodo';
+import WorkTodoForm from './components/WorkTodoForm';
+import Hiring from './components/Hiring';
+import GithubLogin from './authGithub/loginGithub';
+import getToken from './authGithub/getToken'
+
+export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
+export const store = createStoreWithMiddleware(reducers)
 
 class App extends React.Component{
   render(){
     return(
-      <MuiThemeProvider>
+    <Provider store={store}>
+      <MuiThemeProvider muiTheme={Theme}>
         <Router history={history}>
           <div>
               <Route exact path="/" component={Login} />
               <Route path="/dashboard" component={Dashboard} />
+              <Route path="/curriculum" component={Curriculum} />
+              <Route path="/worktodo" component={WorkTodo} />
+              <Route path="/worktodoform" component={WorkTodoForm } />
+              <Route path="/hiring" component={Hiring} />
+              <Route path="/githublogin" component={GithubLogin} />
+              <Route path="/github/callback" component={getToken} />
           </div>
         </Router>
       </MuiThemeProvider>
+    </Provider>
     );
   }
 }

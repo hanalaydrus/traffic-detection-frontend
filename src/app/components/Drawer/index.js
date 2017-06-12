@@ -11,6 +11,7 @@ import MenuItem from 'material-ui/MenuItem';
  * import 
  */
 import * as constants from './constants'
+import {DrawerMenu} from './../DrawerMenu'
 import './styles.scss';
 const style = {
   margin: 5,
@@ -82,6 +83,7 @@ export class Drawer extends React.Component {
           : <MenuItem value={'all'} primaryText={`all`} />}
           </SelectField>
         </MuiThemeProvider>
+        <DrawerMenu />
       </div>
     );
   }

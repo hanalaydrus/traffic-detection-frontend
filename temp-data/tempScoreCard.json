@@ -1,0 +1,78 @@
+{
+"data": [
+  {
+    "subjects": "Introduction and Overview",
+    "details": [
+        "Overview of Information Technology and Its Ecosystem",
+        "Internet, Web, and Software Development",
+        "Software Taxonomy: Operating System, Development Tools, and Application.",
+        "Introduction to Linux Core Components: Kernel, Userland, User Interface (Graphical and Text Based).",
+        "Linux Shell"
+    ]
+  },
+  {
+    "subjects": "Project Management and Version Control System",
+    "details": [
+        "Ecosystem of Software Development: Tools and Methodologies",
+        "Scrum Software Development Methodology",
+        "Git Version Control System",
+        "Using Scrum and Git for Project Management"
+    ]
+  },
+  {
+    "subjects": "Java",
+    "details": [
+        "Java and Its Variants: JSE, JEE, JME",
+        "Java, JRE, JDK, and OpenJDK",
+        "Getting Started with Java: Source Code, Compilation Process, Execute Result in Java Virtual Machine",
+        "Object Oriented Programming Concepts",
+        "Basic Constructs.",
+        "Classes and Objects",
+        "Java Libraries and Gradle Build Tools",
+        "Packages",
+        "Annotation",
+        "Interface and Inheritance",
+        "Generics",
+        "Exceptions",
+        "Basic I/O",
+        "Concurrency",
+        "Regular Expression",
+        "Data Structures: Enumeration, BitSet, Vector, Stack, Dictionary, HashTable, Properties.",
+        "Collections",
+        "Java and Design Patterns",
+        "Algorithms in Java",
+        "HTTP Client in Java"
+    ]
+  },
+  {
+    "subjects": "Android Application Development",
+    "details": [
+        "JDK",
+        "Android Studio",
+        "Gradle",
+        "Devices",
+        "Using Android Studio",
+        "Using SDK without Android Studio",
+        "Supporting different situation: (Devices, Screen, Languages/Cultures, Platform)",
+        "Testing Android app",
+        "Gradle for Java and Android",
+        "Accessing Backend Services",
+        "Dynamic UI with Activity and Fragments: UI and Lifecycle",
+        "Background Process: Service, Thread, AsyncTask, Thread Pool, PendingIntent, Broadcast Receiver",
+        "Using Common & Popular Library: Dagger, Butterknife, Retrofit",
+        "Data Storage",
+        "Activity and Intent for Interaction with Other Apps",
+        "System Permissions",
+        "Notification",
+        "Special Case: (Content Sharing, Multimedia, Graphics and Animation, Connectivity and Cloud, Location and Maps, Contacts and Signin, Account Manager)"
+    ]
+  },
+  {
+    "subjects": "Backend",
+    "details": [
+        "RESTful API",
+        "PHP: (Composer, Middleware and Service, Laravel, Create Laravel Package)"
+    ]
+  }
+]
+}

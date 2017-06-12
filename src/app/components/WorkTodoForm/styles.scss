@@ -1,0 +1,48 @@
+@import '../../../_variables.scss';
+.todo_form_card{
+  width: 100%;
+  margin: auto;
+  margin-top: 2%;
+  background-color: transparent !important;
+  box-shadow: 0 !important;
+}
+.form_card{
+  background-color: #333 !important;
+  padding: 0px 30px 30px;
+}
+.img_logo{
+  width: 150px;
+}
+.text_field_todo_form{
+  font-size: 20px !important;
+  label {
+    color :#FB8C00 !important;
+  }
+  input{
+    color: rgba(255,255,255,0.8) !important;
+  }
+}
+.btn_work{
+  text-align: center;
+}
+.btn_work_todo{
+  margin-top: 30px;
+  width: 50%;
+  color: white;
+}
+.date_picker_todo_form {
+  width: 100% !important;
+}
+.task_table{
+  width: 80%;
+  float: left;
+}
+.task_button{
+  margin-top: 30px;
+  float: right;
+  text-align: right;
+}
+.task_tablerow{
+  overflow-x: scroll !important;
+  text-overflow: clip !important;
+}

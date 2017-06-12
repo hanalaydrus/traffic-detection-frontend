@@ -1,5 +1,8 @@
-  .login-card{
-  width: 40%;
+body {
+  background-color: "#1a1a1a"
+}
+.login-card{
+  width: 35%;
   margin: auto;
   margin-top: 8%;
   text-align: center;
@@ -7,12 +10,12 @@
   box-shadow: 0 !important;
 }
 .form-card{
-  margin-top: 30px;
   background-color: #333 !important;
-  padding: 0px 30px 30px;
+  padding-top: 70px;
+  padding-bottom: 70px;
 }
 .img-logo{
-  width: 200px;
+  width: 150px;
 }
 .form-login{
   font-size: 20px !important;
@@ -25,5 +28,6 @@
 }
 .btn-login{
   margin-top: 30px;
-  width: 90%;
+  width: 50%;
+  color: white;
 }
