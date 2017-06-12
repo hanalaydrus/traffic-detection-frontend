@@ -4,54 +4,23 @@
 import React, { Component } from 'react';
 import { RaisedButton,MuiThemeProvider } from 'material-ui';
 import SelectFields from '../SelectField'
-import TableStudents from '../TableContainer'
+import TableStudents from '../TableStudents'
 import './styles.scss'
 import * as constants from '../Drawer/constants'
-
+const status = ["Pending","Siap Interview","Preparation","Gagal","Menunggu Dokumen","lulus"]
 
 class StudentListPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value:1,
-      campus: ["kampus1" , "kampus2","kampus3"],
-      batch:["batch1", "batch2","all batch"],
-      status:["Pending","Siap Interview","Preparation","Gagal","Menunggu Dokumen","lulus"],
-      data:[],
-      dataTable:[]
-    };
-  }
-  componentDidMount(){
-    this.setState({
-      data:getStudent(constants.data),
-      dataTable:getStudent(constants.data)
-    })
-  }
-  dataStudent = (status) => {
-      console.log(this.state.dataTable)
-      this.setState({
-            dataTable: this.getDataBystatus(status),
-        });   
-    }
-  getDataBystatus  = (value) => {
-    return this.state.dataTable.filter((prop) => prop.status === value)
-  }
-  getDataByBatch = (value) => {
-    return this.state.dataTable.filter((prop)=> props.batch === value)
-  }
-  getDataByCampus = (value) => {
-    return this.state.dataTable.filter((prop) => props.campuses === value)
-  }
+
   render() {
     return (
       <div > 
         <div className='container'>
           <div className='table-item'>
             <div className='select-item'>
-              <SelectFields title = {'Select Status'} data={this.state.status} dataStudent={this.dataStudent.bind(this)}/>
+              <SelectFields title = {'Select Status'} data={status} onEnterStatus={this.props.onEnterStatus.bind(this)}/>
             </div>
             <MuiThemeProvider>
-              <TableStudents data={this.state.dataTable}/>
+              <TableStudents  data={this.props.dataTable}/>
             </MuiThemeProvider>
           </div>
         </div>

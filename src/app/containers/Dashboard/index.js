@@ -1,3 +1,4 @@
+//@ flow
 import React, { Component } from 'react';
 import {RaisedButton, TextField} from 'material-ui';
 import {orange600, orange500} from 'material-ui/styles/colors';
@@ -35,9 +36,9 @@ class Dashboard extends Component {
         status:["Pending","Siap Interview","Preparation","Gagal","Menunggu Dokumen","lulus","all"],
         data:[],
         dataTable:[],
-        statsSelect:'all',
-        campusSelect:'all',
-        batchSelect:'all'
+        statsSelect:"all",
+        campusSelect:"all",
+        batchSelect:"all"
       };
     }
   
@@ -45,59 +46,69 @@ class Dashboard extends Component {
     this.setState({
       data:getStudent(constants.data),
       dataTable:getStudent(constants.data),
-      campus:getCampus(constants.data)['city']
+      campus:getCampus(constants.data)
     })
   }
 
   dataStatus = (value) => {
       this.setState({
             statsSelect:value,
-            dataTable: this.getDataBystatus(status),
+            dataTable: this.getDataBystatus(value),
         });   
   }
  
   dataBatch = (value) => {
       this.setState({
-            batchSelect:status,
-            dataTable: this.getDataBystatus(status),
+            batchSelect:value,
+            dataTable: this.getDataByBatch(value),
         });   
   }
   
-  dataCampus = (status) => {
+  dataCampus = (value) => {
       this.setState({
             campusSelect:value,
-            dataTable: this.getDataBystatus(status),
+            dataTable: this.getDataByCampus(value),
         });   
   }
    
   getDataBystatus  = (value) => {
-    if(value==='all' && this.state.batchSelect === 'all' && this.state.campusSelect === 'all'){
+
+   if(value === 'all' && this.state.campusSelect === 'all'  ){
       return this.state.data
-    }else if(value === 'all' && this.state.batchSelect !== 'all'|| value === 'all' && this.state.campusSelect !== 'all'){
-      return this.state.dataTable
-    }else{
-      return this.state.dataTable.filter((prop) => prop.status === value)
-    }     
+    } else if (value === 'all' && this.state.campusSelect !=="all" ){
+     return this.state.data.filter((prop) => prop['campuses'] === this.state.campusSelect)
+    } else if (this.state.campusSelect !== 'all'){
+      return this.state.data.filter((prop) => (prop['status'] === value && prop['campuses'] === this.state.campusSelect) )
+    } else {
+      return this.state.data.filter((prop) => prop['status'] === value )
+    } 
+    
   }
   
   getDataByBatch = (value) => {
-   if (value==='all' && this.state.statsSelect === 'all' && this.state.campusSelect === 'all') {
-      return this.state.data
-    }else if (value === 'all' && this.state.statsSelect !== 'all'|| value === 'all' && this.state.campusSelect !== 'all'){
-      return this.state.dataTable
+
+    if(value === 'all' && this.state.statsSelect==="all"){
+      return this.state.data.filter((prop) => prop['campuses'] === this.state.campusSelect )
+    } else if(value === 'all' && this.state.statsSelect!=="all"){
+      return this.state.data.filter((prop) => (prop['status'] === this.state.statsSelect && prop['campuses'] === this.state.campusSelect) )
     }else{
-      return this.state.dataTable.filter((prop) => prop.status === value)
-    }   
+      return this.state.data.filter((prop) => prop['batch'] === value)
+    }
+    
   }
   
   getDataByCampus = (value) => {
-    if (value==='all' && this.state.statsSelect === 'all' && this.state.batchSelect === 'all') {
+
+    if(value === 'all' && (this.state.statsSelect === 'all' ) ){
       return this.state.data
-    }else if (value === 'all' && this.state.statsSelect !== 'all'|| value === 'all' && this.state.batchSelect !== 'all'){
-      return this.state.dataTable
-    }else{
-      return this.state.dataTable.filter((prop) => prop.status === value)
-    }  
+    } else if (value === 'all' && this.state.statsSelect ){
+     return this.state.data.filter((prop) => prop['status'] === this.state.statsSelect)
+    } else if (this.state.statsSelect !== 'all' ){
+      return this.state.data.filter((prop) => (prop['campuses'] === value && prop['status'] === this.state.statsSelect) )
+    } else {
+      return this.state.data.filter((prop) => prop['campuses'] === value )
+    } 
+
   }
   
   handleChange = (Nav, Draw) => {
@@ -108,12 +119,22 @@ class Dashboard extends Component {
   }
 
   render() {
+
     return (
         <div style={{margin:0}}>
           <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
-          <Drawer drawerStyle={this.state.drawerStyle} />
+          <Drawer 
+            drawerStyle = {this.state.drawerStyle} 
+            campus = {this.state.campus}
+            onEnterBatch = {this.dataBatch.bind(this)}
+            onEnterCampus = {this.dataCampus.bind(this)}
+          />
           <div style={this.state.contentStyle}>
-            <StudentListPage />
+            <StudentListPage 
+              onEnterStatus = {this.dataStatus} 
+              status = {this.state.statsSelect}
+              dataTable = {this.state.dataTable}
+            />
           </div>
         </div>
     );
@@ -131,9 +152,5 @@ function getCampus(data){
     },[])
 }
 
-
-function getListBatch(data){
-    return data.reduce((acc,curr) => acc.concat(curr.batch),[])
-}
 
 export default Dashboard;

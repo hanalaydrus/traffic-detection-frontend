@@ -13,14 +13,15 @@ class SelectFields extends Component {
   }
   getMenu = (data) => {
       return data.map((data,index)=> {
-      return <MenuItem value={data.toLowerCase()} primaryText={`${data}`} />
+      return <MenuItem key={index.toString()} value={data.toLowerCase()} primaryText={`${data}`} />
   })}
 
   handleChange = (event, index, value) => {
-    this.props.dataStudent(value);
+    this.props.onEnterStatus(value);
     this.setState({value})
   };
   render() {
+    
     return (
       <div> 
         <MuiThemeProvider>
@@ -29,7 +30,7 @@ class SelectFields extends Component {
           value={this.state.value}
           onChange={this.handleChange}
           >
-          {this.getMenu(this.props.data)}
+          {this.getMenu(this.props.data.concat('all'))}
           </SelectField>
         </MuiThemeProvider>
       </div>

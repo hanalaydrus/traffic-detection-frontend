@@ -49,19 +49,19 @@ export default class TableStudents extends React.Component {
       <Table onRowSelection={this.handleRowSelection}>
             <TableHeader >
               <TableRow>
-                {constant.pending.map(prop =>(<TableHeaderColumn>{prop}</TableHeaderColumn>))}
+                {constant.pending.map((prop, index) =>(<TableHeaderColumn key={index.toString()}>{prop}</TableHeaderColumn>))}
               </TableRow>
             </TableHeader>
             <TableBody>
               {this.props.data.map((data,index)=>
-                <TableRow selected={this.isSelected(index)}>
-                <TableRowColumn>{index}</TableRowColumn>
-                <TableRowColumn>{data.fullname}</TableRowColumn>
-                <TableRowColumn>{data.email}</TableRowColumn>
-                <TableRowColumn>{data.phone}</TableRowColumn>
-                <TableRowColumn>{data.campuses}</TableRowColumn>
-                <TableRowColumn>{data.batch}</TableRowColumn>
-                <TableRowColumn>{data.status}</TableRowColumn>
+                <TableRow key={index.toString()} selected={this.isSelected(index)}>
+                <TableRowColumn key={index.toString()}>{index}</TableRowColumn>
+                <TableRowColumn key={index.toString()}>{data.fullname}</TableRowColumn>
+                <TableRowColumn key={index.toString()}>{data.email}</TableRowColumn>
+                <TableRowColumn key={index.toString()}>{data.phone}</TableRowColumn>
+                <TableRowColumn key={index.toString()}>{data.campuses}</TableRowColumn>
+                <TableRowColumn key={index.toString()}>{data.batch}</TableRowColumn>
+                <TableRowColumn key={index.toString()}>{data.status}</TableRowColumn>
                 </TableRow> 
               )}
             </TableBody>

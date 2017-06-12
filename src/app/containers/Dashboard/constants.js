@@ -10,7 +10,7 @@ export const data = [
                     'email':'jhonwick@hadouken.com',
                     'phone':'09322020',
                     "campuses":"bandung",
-                    "batch":'#2 bait',
+                    "batch":'nightwalker',
                     "status":"lulus"
                 },
                 {
@@ -18,7 +18,7 @@ export const data = [
                     'email':'franssinatra@hadouken.com',
                     'phone':'09322020',
                     "campuses":"bandung",
-                    "batch":'#2 bait',
+                    "batch":'nightwalker',
                     "status":"lulus"
                 },
                 {
@@ -26,46 +26,50 @@ export const data = [
                     'email':'billyjoel@hadouken.com',
                     'phone':'09322020',
                     "campuses":"bandung",
-                    "batch":'#1 boss',
+                    "batch":'daenrys',
                     "status":"gagal"
                 }
             ],
-            'batches': {
-                'total':4 
-         }
+            'batches': ['nightwalker','daenrys'] 
         },
         {
             'id': 2,
-            'city': 'jojga',
+            'city': 'yogya',
             'student':[
                 {
                     'fullname':"wicki",
                     'email':'jhonwick@hadouken.com',
                     'phone':'09322020',
-                    "campuses":"jogja",
-                    "batch":'#2 linting',
+                    "campuses":"yogya",
+                    "batch":'dark_night',
                     "status":"lulus"
                 },
                 {
                     'fullname':"lovee",
                     'email':'franssinatra@hadouken.com',
                     'phone':'09322020',
-                    "campuses":"jogja",
-                    "batch":'#3 linting',
+                    "campuses":"yogya",
+                    "batch":'dark_soul',
                     "status":"lulus"
                 },
                 {
                     'fullname':"mamamia",
                     'email':'billyjoel@hadouken.com',
                     'phone':'09322020',
-                    "campuses":"jogja",
-                    "batch":'#2 linting',
+                    "campuses":"yogya",
+                    "batch":'dark_night',
+                    "status":"gagal"
+                },
+                {
+                    'fullname':"mamamia2",
+                    'email':'billyjoel@hadouken.com',
+                    'phone':'09322020',
+                    "campuses":"yogya",
+                    "batch":'dark_night',
                     "status":"gagal"
                 }
             ],
-            'batches': {
-                'total':2 
-             }
+            'batches': ['dark_night','dark_soul'] 
         },
          {
             'id': 3,
@@ -76,7 +80,7 @@ export const data = [
                     'email':'jhonwick@hadouken.com',
                     'phone':'09322020',
                     "campuses":"kalimantan",
-                    "batch":'#3 doomed',
+                    "batch":'jhonny_walker',
                     "status":"lulus"
                 },
                 {
@@ -84,7 +88,7 @@ export const data = [
                     'email':'franssinatra@hadouken.com',
                     'phone':'09322020',
                     "campuses":"kalimantan",
-                    "batch":'#2 bratt',
+                    "batch":'babayaga',
                     "status":"menunggu dokumen"
                 },
                 {
@@ -92,13 +96,12 @@ export const data = [
                     'email':'billyjoel@hadouken.com',
                     'phone':'09322020',
                     "campuses":"kalimantan",
-                    "batch":'#2 bratt',
+                    "batch":'jhonwick',
                     "status":"gagal"
                 }
             ],
-            'batches': {
-                'total':3 
-             }
+            'batches': ['jhonny_walker','babayaga','jhonwick'] 
+            
         },
          {
             'id': 4,
@@ -109,7 +112,7 @@ export const data = [
                     'email':'jhonwick@hadouken.com',
                     'phone':'09322020',
                     "campuses":"bali",
-                    "batch":'#3 baschilici',
+                    "batch":'ameriki',
                     "status":"lulus"
                 },
                 {
@@ -117,7 +120,7 @@ export const data = [
                     'email':'franssinatra@hadouken.com',
                     'phone':'09322020',
                     "campuses":"bali",
-                    "batch":'#2 alpacino',
+                    "batch":'auora',
                     "status":"gagal"
                 },
                 {
@@ -125,13 +128,11 @@ export const data = [
                     'email':'billyjoel@hadouken.com',
                     'phone':'09322020',
                     "campuses":"bali",
-                    "batch":'#1 ajis',
+                    "batch":'alpacino',
                     "status":"pending"
                 }
             ],
-            'batches': {
-                'total':3 
-            }
+            'batches':['alpacino','auora','ameriki'] 
          },
         {
             'id': 5,
@@ -142,7 +143,7 @@ export const data = [
                     'email':'jhonwick@hadouken.com',
                     'phone':'09322020',
                     "campuses":"solo",
-                    "batch":'#1 Camora',
+                    "batch":'forestgump',
                     "status":"lulus"
                 },
                 {
@@ -150,7 +151,7 @@ export const data = [
                     'email':'franssinatra@hadouken.com',
                     'phone':'09322020',
                     "campuses":"solo",
-                    "batch":'#1 Camora',
+                    "batch":'forestgump',
                     "status":"lulus"
                 },
                 {
@@ -158,13 +159,11 @@ export const data = [
                     'email':'billyjoel@hadouken.com',
                     'phone':'09322020',
                     "campuses":"solo",
-                    "batch":'#1 Camora',
+                    "batch":'forestgump',
                     "status":"gagal"
                 }
             ],
-            'batches': {
-            'total':1 
-             }
+            'batches':['forestgump'] 
         } ,
         {
             'id': 6,
@@ -175,7 +174,7 @@ export const data = [
                     'email':'jhonwick@hadouken.com',
                     'phone':'09322020',
                     "campuses":"depok",
-                    "batch":2,
+                    "batch":'metalica',
                     "status":"preparation"
                 },
                 {
@@ -183,7 +182,7 @@ export const data = [
                     'email':'franssinataslidepokra@hadouken.com',
                     'phone':'09322020',
                     "campuses":"depok",
-                    "batch":2,
+                    "batch":'metalica',
                     "status":"lulus"
                 },
                 {
@@ -191,13 +190,12 @@ export const data = [
                     'email':'billyjoel@hadouken.com',
                     'phone':'09322020',
                     "campuses":"depok",
-                    "batch":2,
+                    "batch":'metalica',
                     "status":"lulus"
                 }
             ],
-            'batches': {
-            'total':2 
-         }
+            'batches':['metalica'] 
+        
         }
     ]
         
