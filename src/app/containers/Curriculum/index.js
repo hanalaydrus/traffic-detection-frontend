@@ -3,10 +3,12 @@ import {RaisedButton, TextField, Checkbox} from 'material-ui';
 import {orange600, orange500} from 'material-ui/styles/colors';
 import {Header} from "./../../components/Header";
 import {Drawer} from "./../../components/Drawer";
-import {Chart} from "./../../components/ChartTrackers";
+import {ChartTrackers} from "./../../components/ChartTrackers";
 import {PageTitle} from "./../../components/PageTitle";
 import {RangeDate} from "./../../components/RangeDate";
 import {TrackerPic} from "./../../components/TrackerPic";
+import {ScoreCard} from "./../../components/ScoreCard";
+
 const style = {
   orange: {
    borderColor: orange600,
@@ -25,7 +27,7 @@ const style = {
  }
 };
 
-class Dashboard extends Component {
+class Curriculum extends Component {
   constructor() {
     super()
     this.state = {
@@ -69,6 +71,9 @@ class Dashboard extends Component {
           <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
           <Drawer drawerStyle={this.state.drawerStyle} />
           <div style={this.state.contentStyle}>
+              <PageTitle title="Summary" />
+              <ChartTrackers />
+              <div className="clear"></div>
               <PageTitle title="Learning Tracker" />
               <RangeDate minDate={this.state.minDate} maxDate={this.state.maxDate} onChange={this.changeDate}/>
               <div className="clear"></div>
@@ -82,10 +87,12 @@ class Dashboard extends Component {
               <TrackerPic float="left" title="Duolingo" check={this.state.duolingo_check} minDate={this.state.minDate} maxDate={this.state.maxDate}/>
               <TrackerPic float="right" title="WPM" check={this.state.wpm_check} minDate={this.state.minDate} maxDate={this.state.maxDate}/>
               <div className="clear"></div>
+              <PageTitle title="Score Card" />
+              <ScoreCard />
           </div>
         </div>
     );
   }
 }
 
-export default Dashboard;
+export default Curriculum;
