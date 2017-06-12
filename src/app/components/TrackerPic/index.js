@@ -35,7 +35,6 @@ const styles = {
      const check = this.props.check
      const minDate = this.props.minDate
      const maxDate = this.props.maxDate
-     console.log(this.props);
      return data.filter(function (el) {
        if(check === true){
          return (el.type === type_data && moment(el.date).isSameOrAfter(minDate) && moment(el.date).isSameOrBefore(maxDate));
