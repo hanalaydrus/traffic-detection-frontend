@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {RaisedButton, TextField, Checkbox} from 'material-ui';
 import {orange600, orange500} from 'material-ui/styles/colors';
 import {Header} from "./../../components/Header";
-import {Drawer} from "./../../components/Drawer";
+import {Drawer} from "./../../components/DrawerBase";
 import {ChartTrackers} from "./../../components/ChartTrackers";
 import {PageTitle} from "./../../components/PageTitle";
 import {RangeDate} from "./../../components/RangeDate";

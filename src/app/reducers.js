@@ -7,7 +7,7 @@ import { combineReducers } from 'redux-immutable'
  *  All reducers used in the app must be declared here!
  */
 import AuthReducer from './authGithub/reducer'
-import ToogleDrawerReducer from './containers/Dashboard/reducer'
+import ToogleDrawerReducer from './containers/Template/reducer'
 /**
  *  Combine the reducers
  */

@@ -5,7 +5,7 @@ import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import moment from 'moment';
 import {Header} from "./../../components/Header";
-import {Drawer} from "./../../components/Drawer";
+import {Drawer} from "./../../components/DrawerBase";
 import {PageTitle} from "./../../components/PageTitle";
 import {InterviewForm} from "./../../components/InterviewForm";
 import {TechScreenings} from "./../../components/TechScreenings";
