@@ -6,8 +6,9 @@ import {Header} from "./../../components/Header";
 import {Drawer} from "./../../components/Drawer";
 import StudentListPage from "./../../components/StudentListPage";
 /**
- * 
+ * imported others Library 
  */
+import { Enhance } from '../../HOC/fetchingData'
 import *as constants from './constants'
 const style = {
   orange: {
@@ -119,7 +120,6 @@ class Dashboard extends Component {
   }
 
   render() {
-
     return (
         <div style={{margin:0}}>
           <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
@@ -152,5 +152,7 @@ function getCampus(data){
     },[])
 }
 
-
-export default Dashboard;
+/**
+ * insert with api we use for the data and replace constants with data 
+ */
+export default Enhance('https://jsonplaceholder.typicode.com/posts')(Dashboard);
