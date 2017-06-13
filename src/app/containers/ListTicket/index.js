@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import {Checkbox,
+import { bool, array, object, func } from 'prop-types'
+import { createStructuredSelector } from 'reselect'
+import { connect } from 'react-redux'
+import {
+  Checkbox,
   Table,
   TableBody,
   TableHeader,
@@ -12,19 +16,20 @@ import {Checkbox,
   DropDownMenu,
   MenuItem
 } from 'material-ui';
-import './styles.scss'
 
+import './styles.scss'
+import * as actions from './actions';
+import * as selectors from './selectors';
 import TicketData from '../../../../temp-data/ticketData.json'
 
-const tableData = TicketData.data
-
 class ListTicket extends Component {
-  constructor(props) {
-      super(props);
+  constructor() {
+      super();
       this.state = {
-        statusType: ["todo"],
-        data: tableData,
+        statusChecked: ["todo"],
         value: 1,
+        checkSelect: false,
+        dataTicket: [],
         fixedHeader: true,
         fixedFooter: false,
         stripedRows: false,
@@ -34,27 +39,26 @@ class ListTicket extends Component {
         deselectOnClickaway: true,
         enableSelectAll: false,
         showCheckboxes: false,
-        height: '100%'
+        height: '100%',
+        isDataReceive: false
       };
     }
 
   handleChangeDropDown = (index, value) => {
-    const newData = this.state.data;
-    newData[index].status = value.target.innerHTML;
+    const newData = this.props.data;
+    const data = Object.assign({}, newData[index]);
+    const tempStatus = data.status
+    newData[index].status = value;
+    this.props.patchTicketData(newData[index].repository.name, newData[index].number, tempStatus, value, newData)
     this.setState({
-      data: newData
+      dataTicket: newData
+    }, () => {
+      this.updateTicketData()
     });
-    this.updateTicketData()
   }
 
   handleFilter = (status) => {
-    const newStatusType = this.state.statusType
-    const statusIndex = newStatusType.findIndex((a) => { return a === status})
-    statusIndex === -1 ? newStatusType.push(status) : newStatusType.splice(statusIndex,1)
-    this.setState({
-      statusType: newStatusType
-    })
-    this.updateTicketData()
+    this.props.setFilter(status);
   }
 
   handleToggle = (event, toggled) => {
@@ -83,41 +87,61 @@ class ListTicket extends Component {
   }
 
   updateTicketData = () => {
-    const newTicketData = tableData
-    const newStatusType = this.state.statusType
-    const ticketData = newTicketData.filter((a) => {
+    // const newTicketData = this.props.data
+    const { data } = this.props
+    const newStatusType = this.state.statusChecked
+    const ticketData = data.filter((a) => {
       return ((a.status === newStatusType[0]) ||
               (a.status === newStatusType[1]) ||
               (a.status === newStatusType[2]))
     })
+    // const ticketData = filter(newTicketData)
+    console.log("Tiket Data", ticketData)
     this.setState({
-      data: ticketData
+      dataTicket: ticketData
     })
   }
+
   componentWillMount() {
-    this.updateTicketData()
+    this.props.fetchTicketData()
   }
+
+  componentWillReceiveProps() {
+    if ((this.props.data.length > 0) && (this.state.isDataReceive == false)) {
+      this.setState({
+        dataTicket: this.props.data,
+        isDataReceive: true
+      })
+      this.updateTicketData()
+    }
+  }
+
   render() {
-    console.log('statusType',this.state.statusType)
-    console.log('data',this.state.data)
+    // console.log("TODOS", this.props.todos)
+    // console.log("INPROGRESSES", this.props.inprogresses)
+    // console.log("DONES", this.props.dones)
+    // console.log("ARRAY", this.state.statusChecked)
     return (
       <div>
+        <div className={ "list_ticket_container" }>
         <div className={ "filter_container" }>
           <div className={"filter_title"}><b>Filter by :</b> </div>
           <div className={ "block" }>
             <Checkbox
-              defaultChecked = {true}
               label="To Do"
+              checked={ this.props.filters.indexOf("todo") >= 0  }
               style={ "checkbox" }
               onCheck={() => this.handleFilter("todo")}
             />
             <Checkbox
               label="In Progress"
+              checked={ this.props.filters.indexOf("inprogress") >= 0 }
               style={ "checkbox" }
               onCheck={() => this.handleFilter("inprogress")}
             />
             <Checkbox
               label="Done"
+              checked={ this.props.filters.indexOf("done") >= 0 }
               style={ "checkbox" }
               onCheck={() => this.handleFilter("done")}
             />
@@ -138,8 +162,7 @@ class ListTicket extends Component {
             >
               <TableRow style={{backgroundColor:'#f9bb00'}}>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Repository Name</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Ticket Number</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Ticket Name</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Ticket</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Label</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Status</TableHeaderColumn>
               </TableRow>
@@ -150,14 +173,17 @@ class ListTicket extends Component {
               showRowHover={this.state.showRowHover}
               stripedRows={this.state.stripedRows}
             >
-              {this.state.data.map( (row, index) => (
+              {this.props.data && this.props.data.filter((value) => {
+                const hasFilters = this.props.filters.length > 0;
+                const containsStatus = this.props.filters.indexOf(value.status) >= 0;
+                return !hasFilters || containsStatus;
+              }).map( (row, index) => (
                 <TableRow key={index} style={{borderBottom: '1px solid #424040'}}>
-                  <TableRowColumn style={{textAlign: 'center'}}>{row.repository.name}</TableRowColumn>
-                  <TableRowColumn style={{textAlign: 'center'}}>{row.number}</TableRowColumn>
-                  <TableRowColumn style={{textAlign: 'center'}}>{row.title}</TableRowColumn>
+                  <TableRowColumn style={{textAlign: 'center'}}><a href={row.repository.url} style={{color: 'white'}}>{row.repository.name}</a></TableRowColumn>
+                  <TableRowColumn style={{textAlign: 'center'}}><a href={row.url} style={{color: 'white'}}>#{row.number} {row.title}</a></TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     {
-                       row.labels.map( (content, index) => (
+                       row.labels.map( (content) => (
                         <div style={{
                           fontWeight: 'bold',
                           margin: '4px',
@@ -165,8 +191,8 @@ class ListTicket extends Component {
                           borderStyle: 'solid',
                           borderColor: '#' + this.labelColor(content.name),
                           borderRadius: '5px',
-                          backgroundColor: '#'+ this.labelColor(content.name),
-                          color: '#'+ this.labelFontColor(content.name)
+                          backgroundColor: '#' + this.labelColor(content.name),
+                          color: '#' + this.labelFontColor(content.name)
                         }}>
                             {content.name}
                         </div>
@@ -175,7 +201,7 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     {
-                      <DropDownMenu value={row.status} onChange={(value)=>this.handleChangeDropDown(index,value)} style={{width: '175px'}}>
+                      <DropDownMenu value={row.status} onChange={(event, number, value)=>this.handleChangeDropDown(index,value)} style={{width: '175px'}}>
                         <MenuItem value={"todo"} primaryText="To Do" />
                         <MenuItem value={"inprogress"} primaryText="In Progress" />
                         <MenuItem value={"done"} primaryText="Done" />
@@ -192,8 +218,30 @@ class ListTicket extends Component {
           </Table>
         </div>
       </div>
+      </div>
     );
   }
 }
 
-export default ListTicket;
+/**
+ *  Define component PropTypes
+ */
+ListTicket.propTypes = {
+  data: array.isRequired,
+  isFetching: bool.isRequired,
+  patchTicketData: func.isRequired
+}
+
+/**
+ *  Map redux state to component props
+ */
+const mapStateToProps = createStructuredSelector({
+  data: selectors.getTicketData(),
+  isFetching: selectors.getIsFetching(),
+  filters: selectors.getFilters(),
+});
+
+/**
+ *  Export the component
+ */
+export default connect(mapStateToProps, actions)(ListTicket);
