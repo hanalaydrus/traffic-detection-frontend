@@ -125,8 +125,6 @@ class WorkToDoForm extends Component {
         onTouchTap={this.handleClose}
       />,
     ];
-
-
     return (
         <div>
           <div className="todo_form_card">
