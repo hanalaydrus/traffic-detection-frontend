@@ -23,7 +23,7 @@ export const Theme = getMuiTheme({
     canvasColor: '#303030',
     borderColor: fade(fullWhite, 0.3),
     disabledColor: fade(fullWhite, 0.3),
-    pickerHeaderColor: fade(fullWhite, 0.12),
+    pickerHeaderColor: orange600,
     clockCircleColor: fade(fullWhite, 0.12),
   }
 });
