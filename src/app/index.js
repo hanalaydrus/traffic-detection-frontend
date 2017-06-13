@@ -23,7 +23,7 @@ import Login from './auth/login'
 import Dashboard from './containers/Dashboard'
 import Curriculum from './containers/Curriculum';
 import WorkTodo from './containers/WorkTodo';
-import WorkTodoForm from './components/WorkTodoForm';
+import Interview from './containers/Interview';
 import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
 import getToken from './authGithub/getToken'
@@ -42,7 +42,7 @@ class App extends React.Component{
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/curriculum" component={Curriculum} />
               <Route path="/worktodo" component={WorkTodo} />
-              <Route path="/worktodoform" component={WorkTodoForm } />
+              <Route path="/interview" component={Interview} />
               <Route path="/hiring" component={Hiring} />
               <Route path="/githublogin" component={GithubLogin} />
               <Route path="/github/callback" component={getToken} />

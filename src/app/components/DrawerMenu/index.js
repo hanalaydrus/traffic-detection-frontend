@@ -9,7 +9,7 @@ export class DrawerMenu extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{width:250}}>
         <br />
           <List>
             <ListItem primaryText="Students" />
