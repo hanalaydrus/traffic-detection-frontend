@@ -5,12 +5,33 @@
   border-bottom: 2px solid #f9bb00 !important;
   margin-bottom: 24px;
 }
+.score_and_filter {
+  display: inline-flex;
+  width: 100%;
+}
 .filter_container {
   display: inline-grid;
   margin: 16px 16px 16px 0;
+  width: 80%;
+  float: left;
+}
+.score_container {
+  margin: 16px 0 16px 0;
+  width: 30%;
+  float: right;
+}
+.score {
+  margin-left: 2.5px;
+  margin-top: 10px;
+  font-size: 25px;
+  text-align: end;
+  color: #f9bb00
 }
 .filter_title {
   margin-left: 2.5px;
+}
+.score_title {
+  text-align: end
 }
 .propContainer {
   overflow: 'hidden';

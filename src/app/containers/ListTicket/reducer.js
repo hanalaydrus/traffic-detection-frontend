@@ -20,7 +20,7 @@ function ticketDataReducer(state = initialState, action) {
     case UPDATE_IS_FETCHING:
       return state.set('isFetching', action.status)
     case UPDATE_NEW_TICKET:
-      return state.set('data', fromJS(action.payload))
+      return state.setIn(['data', 'tickets'], fromJS(action.payload))
     case SET_FILTER:
       return state.set('filters', fromJS(action.filters))
     default:

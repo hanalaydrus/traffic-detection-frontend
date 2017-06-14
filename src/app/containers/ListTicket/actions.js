@@ -77,7 +77,7 @@ export function patchTicketData (project_name, ticket_number, old_status, new_st
         'Authorization': `Bearer ${TOKEN()}`
       }
     }).then((response) => {
-      console.log('response', response);
+      console.log('update data', newData);
       dispatch({
         type: UPDATE_NEW_TICKET,
         payload: newData

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bool, array, object, func } from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
+import Loader from 'react-loader'
 import {
   Checkbox,
   Table,
@@ -20,7 +21,6 @@ import {
 import './styles.scss'
 import * as actions from './actions';
 import * as selectors from './selectors';
-import TicketData from '../../../../temp-data/ticketData.json'
 
 class ListTicket extends Component {
   constructor() {
@@ -29,7 +29,6 @@ class ListTicket extends Component {
         statusChecked: ["todo"],
         value: 1,
         checkSelect: false,
-        dataTicket: [],
         fixedHeader: true,
         fixedFooter: false,
         stripedRows: false,
@@ -44,17 +43,12 @@ class ListTicket extends Component {
       };
     }
 
-  handleChangeDropDown = (index, value) => {
-    const newData = this.props.data;
-    const data = Object.assign({}, newData[index]);
+  handleChangeDropDown = (index, value, ticketNumber) => {
+    const newData = this.props.data.tickets;
+    const data = newData.find((tckData) => {return tckData.number === ticketNumber})
     const tempStatus = data.status
-    newData[index].status = value;
-    this.props.patchTicketData(newData[index].repository.name, newData[index].number, tempStatus, value, newData)
-    this.setState({
-      dataTicket: newData
-    }, () => {
-      this.updateTicketData()
-    });
+    data.status = value;
+    this.props.patchTicketData(data.repository.name, data.number, tempStatus, value, newData)
   }
 
   handleFilter = (status) => {
@@ -87,16 +81,13 @@ class ListTicket extends Component {
   }
 
   updateTicketData = () => {
-    // const newTicketData = this.props.data
-    const { data } = this.props
+    const { tickets } = this.props.data
     const newStatusType = this.state.statusChecked
-    const ticketData = data.filter((a) => {
+    const ticketData = tickets.filter((a) => {
       return ((a.status === newStatusType[0]) ||
               (a.status === newStatusType[1]) ||
               (a.status === newStatusType[2]))
     })
-    // const ticketData = filter(newTicketData)
-    console.log("Tiket Data", ticketData)
     this.setState({
       dataTicket: ticketData
     })
@@ -106,45 +97,41 @@ class ListTicket extends Component {
     this.props.fetchTicketData()
   }
 
-  componentWillReceiveProps() {
-    if ((this.props.data.length > 0) && (this.state.isDataReceive == false)) {
-      this.setState({
-        dataTicket: this.props.data,
-        isDataReceive: true
-      })
-      this.updateTicketData()
-    }
-  }
-
   render() {
-    // console.log("TODOS", this.props.todos)
-    // console.log("INPROGRESSES", this.props.inprogresses)
-    // console.log("DONES", this.props.dones)
-    // console.log("ARRAY", this.state.statusChecked)
+    console.log('render props',this.props.data.tickets)
+    if (this.props.isFetching) {
+      return <Loader type="line-scale" active />
+    }
     return (
       <div>
         <div className={ "list_ticket_container" }>
-        <div className={ "filter_container" }>
-          <div className={"filter_title"}><b>Filter by :</b> </div>
-          <div className={ "block" }>
-            <Checkbox
-              label="To Do"
-              checked={ this.props.filters.indexOf("todo") >= 0  }
-              style={ "checkbox" }
-              onCheck={() => this.handleFilter("todo")}
-            />
-            <Checkbox
-              label="In Progress"
-              checked={ this.props.filters.indexOf("inprogress") >= 0 }
-              style={ "checkbox" }
-              onCheck={() => this.handleFilter("inprogress")}
-            />
-            <Checkbox
-              label="Done"
-              checked={ this.props.filters.indexOf("done") >= 0 }
-              style={ "checkbox" }
-              onCheck={() => this.handleFilter("done")}
-            />
+        <div className={ "score_and_filter" }>
+          <div className={ "filter_container" }>
+            <div className={"filter_title"}><b>Filter by</b> </div>
+            <div className={ "block" }>
+              <Checkbox
+                label="To Do"
+                checked={ this.props.filters.indexOf("todo") >= 0  }
+                style={ "checkbox" }
+                onCheck={() => this.handleFilter("todo")}
+              />
+              <Checkbox
+                label="In Progress"
+                checked={ this.props.filters.indexOf("inprogress") >= 0 }
+                style={ "checkbox" }
+                onCheck={() => this.handleFilter("inprogress")}
+              />
+              <Checkbox
+                label="Done"
+                checked={ this.props.filters.indexOf("done") >= 0 }
+                style={ "checkbox" }
+                onCheck={() => this.handleFilter("done")}
+              />
+            </div>
+          </div>
+          <div className={ "score_container "}>
+            <div className={"score_title"}><b>Your Score</b> </div>
+            <div className={"score"}><b>{this.props.data.total_score}</b> </div>
           </div>
         </div>
         <div className={ "table_container" }>
@@ -173,7 +160,7 @@ class ListTicket extends Component {
               showRowHover={this.state.showRowHover}
               stripedRows={this.state.stripedRows}
             >
-              {this.props.data && this.props.data.filter((value) => {
+              {this.props.data.tickets && this.props.data.tickets.filter((value) => {
                 const hasFilters = this.props.filters.length > 0;
                 const containsStatus = this.props.filters.indexOf(value.status) >= 0;
                 return !hasFilters || containsStatus;
@@ -201,7 +188,7 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     {
-                      <DropDownMenu value={row.status} onChange={(event, number, value)=>this.handleChangeDropDown(index,value)} style={{width: '175px'}}>
+                      <DropDownMenu value={row.status} onChange={(event, number, value)=>this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
                         <MenuItem value={"todo"} primaryText="To Do" />
                         <MenuItem value={"inprogress"} primaryText="In Progress" />
                         <MenuItem value={"done"} primaryText="Done" />
