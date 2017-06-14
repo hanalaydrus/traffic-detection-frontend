@@ -50,7 +50,7 @@ export class TechScreenings extends React.Component {
                 </Table>
               </div>
             }
-            {row.id != 1 && row.content.map( (row2, index2) => (
+            {row.id != 1 && row.id != 4 && row.content.map( (row2, index2) => (
                   <div key={index2.toString()}>
                     <h4 className="question" style={{color:orange500}}>{row2.question}</h4>
                     {Array.isArray(row2.answer) ?
