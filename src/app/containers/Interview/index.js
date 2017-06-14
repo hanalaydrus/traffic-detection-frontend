@@ -4,13 +4,17 @@ import {green500, blue500, orange500, orange600} from 'material-ui/styles/colors
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import moment from 'moment';
-import {Header} from "./../../components/Header";
-import {Drawer} from "./../../components/DrawerBase";
-import {PageTitle} from "./../../components/PageTitle";
-import {InterviewForm} from "./../../components/InterviewForm";
-import {TechScreenings} from "./../../components/TechScreenings";
+import {Header} from './../../components/Header';
+import {Drawer} from './../../components/DrawerBase';
+import {PageTitle} from './../../components/PageTitle';
+import {InterviewForm} from './../../components/InterviewForm';
+import {TechScreenings} from './../../components/TechScreenings';
+import {Editor} from './../../components/AceEditor';
 import './styles.scss';
+import tempScreenings from '../../../../temp-data/tempScreenings.json'
 
+const data = tempScreenings.data[3].content.script1
+const data2 = tempScreenings.data[3].content.script2
 
 const style = {
   orange: {
@@ -84,6 +88,8 @@ class Interview extends Component {
               <div className="clear"></div>
             </div>
             <TechScreenings />
+            <Editor title="Script 1" data={data}/>
+            <Editor title="Script 2" data={data2}/>
           </div>
         </div>
     );
