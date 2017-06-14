@@ -14,7 +14,7 @@ import ToogleDrawerReducer from './containers/Template/reducer'
  */
 const rootReducer = combineReducers({
   authGithub: AuthReducer,
-  ticketData: TicketDataReducer
+  ticketData: TicketDataReducer,
   toggleDrawer: ToogleDrawerReducer
 })
 
