@@ -3,6 +3,9 @@ import { bool, array, object, func } from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import Loader from 'react-loader'
+import RichTextEditor from 'react-rte'
+import marked from 'marked'
+import moment from 'moment'
 import {
   Checkbox,
   Table,
@@ -15,7 +18,12 @@ import {
   Toggle,
   TableFooter,
   DropDownMenu,
-  MenuItem
+  MenuItem,
+  Drawer,
+  RaisedButton,
+  Card,
+  CardHeader,
+  CardText
 } from 'material-ui';
 
 import './styles.scss'
@@ -33,13 +41,17 @@ class ListTicket extends Component {
         fixedFooter: false,
         stripedRows: false,
         showRowHover: true,
-        selectable: false,
+        selectable: true,
         multiSelectable: false,
         deselectOnClickaway: true,
         enableSelectAll: false,
         showCheckboxes: false,
         height: '100%',
-        isDataReceive: false
+        isDataReceive: false,
+        drawerOpen: false,
+        valueMarkdown: RichTextEditor.createEmptyValue(),
+        selectedProjectName: '',
+        selectedTicketNumber: -1
       };
     }
 
@@ -64,6 +76,33 @@ class ListTicket extends Component {
   handleChange = (event) => {
     this.setState({height: event.target.value});
   };
+
+  onMarkdownChange = (valueMarkdown) => {
+    console.log('text', valueMarkdown.toString('markdown'))
+    this.setState({valueMarkdown});
+    if (this.props.onMarkdownChange) {
+      this.props.onMarkdownChange(
+        valueMarkdown.toString('html')
+      );
+    }
+  };
+
+  handleDrawerToggle = (projectName,ticketNumber) => {
+    this.props.fetchCommentData(projectName,ticketNumber)
+    this.setState({
+      drawerOpen: !this.state.drawerOpen,
+      selectedProjectName: projectName,
+      selectedTicketNumber: ticketNumber
+    })
+  }
+
+  handleSubmitComment = (projectName, ticketNumber, body) => {
+    this.props.submitCommentData(projectName, ticketNumber, body)
+    this.props.fetchCommentData(projectName,ticketNumber)
+    this.setState({
+      valueMarkdown: RichTextEditor.createEmptyValue()
+    })
+  }
 
   labelColor = (labelName) => {
       return labelName === 'feature' ? 'ffe100' :
@@ -98,7 +137,7 @@ class ListTicket extends Component {
   }
 
   render() {
-    console.log('render props',this.props.data.tickets)
+    console.log('comment data', this.props.commentData)
     if (this.props.isFetching) {
       return <Loader type="line-scale" active />
     }
@@ -150,8 +189,10 @@ class ListTicket extends Component {
               <TableRow style={{backgroundColor:'#f9bb00'}}>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Repository Name</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Ticket</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Label</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Status</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Label</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Status</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Change Status</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Action</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody
@@ -168,10 +209,36 @@ class ListTicket extends Component {
                 <TableRow key={index} style={{borderBottom: '1px solid #424040'}}>
                   <TableRowColumn style={{textAlign: 'center'}}><a href={row.repository.url} style={{color: 'white'}}>{row.repository.name}</a></TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}><a href={row.url} style={{color: 'white'}}>#{row.number} {row.title}</a></TableRowColumn>
-                  <TableRowColumn style={{textAlign: 'center'}}>
+                  <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
                     {
                        row.labels.map( (content) => (
-                        <div style={{
+                         ((content.name !== 'inprogress') &&
+                          (content.name !== 'todo') &&
+                          (content.name !== 'done')
+                         ) ? 
+                       ( <div style={{
+                          fontWeight: 'bold',
+                          margin: '4px',
+                          float: 'left',
+                          borderStyle: 'solid',
+                          borderColor: '#' + this.labelColor(content.name),
+                          borderRadius: '5px',
+                          backgroundColor: '#' + this.labelColor(content.name),
+                          color: '#' + this.labelFontColor(content.name)
+                        }}> 
+                            {content.name}
+                        </div> ) : ' '
+                      ))
+                    }
+                  </TableRowColumn>
+                  <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
+                    {
+                       row.labels.map( (content) => (
+                         ((content.name === 'inprogress') ||
+                          (content.name === 'todo') ||
+                          (content.name === 'done')
+                         ) ? 
+                        (<div style={{
                           fontWeight: 'bold',
                           margin: '4px',
                           float: 'left',
@@ -182,7 +249,7 @@ class ListTicket extends Component {
                           color: '#' + this.labelFontColor(content.name)
                         }}>
                             {content.name}
-                        </div>
+                        </div> ) : ' '
                       ))
                     }
                   </TableRowColumn>
@@ -195,6 +262,12 @@ class ListTicket extends Component {
                       </DropDownMenu>
                     }
                   </TableRowColumn>
+                  <TableRowColumn style={{textAlign: 'center'}}>
+                    <RaisedButton
+                      label="DETAIL"
+                      onTouchTap={ () => this.handleDrawerToggle(row.repository.name,row.number) }
+                    />
+                  </TableRowColumn>
                 </TableRow>
                 ))}
             </TableBody>
@@ -204,6 +277,56 @@ class ListTicket extends Component {
             </TableFooter>
           </Table>
         </div>
+        <Drawer 
+          open={this.state.drawerOpen} 
+          width={500}
+          docked={false}
+          onRequestChange={(drawerOpen) => this.setState({drawerOpen})}
+        >
+          <div className={"markdown_container"} >
+            <div className={"show_comment"}>
+            {this.props.isFetchingComment ?
+              (<Loader type="line-scale" active />) :
+              (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
+                <Card>
+                  <div className={"card_header"}>
+                    <CardHeader
+                      title={row.user.login}
+                      subtitle={moment(row.created_at, ["YYYY", moment.ISO_8601]).format("MMMM Do YYYY hh:mm")}
+                      avatar={row.user.avatar_url}
+                      titleColor='#000'
+                      subtitleColor="#000"
+                    />
+                  </div>
+                  <CardText>
+                    <div dangerouslySetInnerHTML={{__html:marked(row.body)}} />
+                  </CardText>
+                </Card>)))}
+            </div>
+            <div className={"markdown_editor"} >
+              <div className={"markdown_editor_detail"}>
+                <RichTextEditor
+                  value={this.state.valueMarkdown}
+                  onChange={this.onMarkdownChange}
+                />
+              </div>
+              <div className={"markdown_button_submit"} >
+                <RaisedButton
+                  backgroundColor="#f9bb00"
+                  labelColor="#000"
+                  label="SUBMIT"
+                  onClick={
+                    () => this.handleSubmitComment(
+                      this.state.selectedProjectName, 
+                      this.state.selectedTicketNumber, 
+                      this.state.valueMarkdown.toString('markdown')
+                  )}
+                />
+              </div>
+            </div>
+
+          </div>
+        </Drawer>
       </div>
       </div>
     );
@@ -216,7 +339,8 @@ class ListTicket extends Component {
 ListTicket.propTypes = {
   data: array.isRequired,
   isFetching: bool.isRequired,
-  patchTicketData: func.isRequired
+  patchTicketData: func.isRequired,
+  onMarkdownChange: func
 }
 
 /**
@@ -226,6 +350,8 @@ const mapStateToProps = createStructuredSelector({
   data: selectors.getTicketData(),
   isFetching: selectors.getIsFetching(),
   filters: selectors.getFilters(),
+  isFetchingComment: selectors.getIsFetchingComment(),
+  commentData: selectors.getCommentData()
 });
 
 /**

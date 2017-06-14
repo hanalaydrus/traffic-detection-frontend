@@ -27,3 +27,13 @@ export const getFilters = () => createSelector(
   selectTicketData(),
   (state) => state.get('filters').toJS()
 )
+
+export const getIsFetchingComment = () => createSelector(
+  selectTicketData(),
+  (state) => state.get('isFetchingComment')
+)
+
+export const getCommentData = () => createSelector(
+  selectTicketData(),
+  (state) => state.get('commentData').toJS()
+)
