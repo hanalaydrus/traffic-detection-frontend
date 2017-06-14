@@ -9,7 +9,11 @@ import moment from 'moment';
 
 
 import './styles.scss';
+window.onerror = (msg, url, linenumber) => {
+  console.log('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
 
+  return true;
+}
 
 
 export class Editor extends React.Component {
@@ -28,21 +32,27 @@ export class Editor extends React.Component {
   }
 
   onClick = () => {
-    this.setState({result:''})
-    const editor = this.ace.editor;
-    const newCode = editor.getValue()
-    this.setState({code:newCode})
-    const klass = this;
-    console.log = (newCode) => {
-      this.setState((prevState) => {
-        return { result: prevState.result + '#ff%&' + newCode }
-      })
-    };
-    let s = document.createElement('script');
-    s.type = 'text/javascript';
-    s.async = true;
-    s.innerHTML = newCode;
-    this.instance.appendChild(s);
+    try{
+      this.setState({result:''})
+      const editor = this.ace.editor;
+      const newCode = editor.getValue()
+      this.setState({code:newCode})
+      const klass = this;
+      console.log = (newCode) => {
+        this.setState((prevState) => {
+          return { result: prevState.result + '#ff%&' + newCode }
+        })
+      };
+      let s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.async = true;
+      s.innerHTML = newCode;
+      this.instance.appendChild(s);
+    }
+    catch (e) {
+      console.log("hai");
+    }
+
   }
 
     render(){
