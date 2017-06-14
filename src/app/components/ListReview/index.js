@@ -11,15 +11,18 @@ import styles from "./styles.scss"
 import {PageTitle} from '../PageTitle'
 import Preparation from '../../../../temp-data/preparationPic.json'
 
+const Data = Preparation.data
+
+
 export default class ListReview extends  React.Component {
-  constructor(props){
+  constructor(props, i){
     super(props);
     this.state = {
-      isClick:false,
-      label:this.props.prep.label,
-      id:this.props.prep.id,
-      img:this.props.prep.img,
-      status:this.props.prep.status
+      isClick: false,
+      label: this.props.prep.label,
+      id: this.props.prep.id,
+      images: this.props.images,
+      status: this.props.prep.status
     }
   }
 
@@ -29,29 +32,36 @@ export default class ListReview extends  React.Component {
       isClick:true
     })
   }
-  render () {
-    return (
-      <div>
-        <GridTile
-          className="review" >
-          <label>{this.state.status}</label>
-        </GridTile>
-        <GridTile
-          key={this.state.id}
-          title={this.state.label}
-          actionIcon={<IconButton></IconButton>}
-          className="box"
-        >
-          <img
-            src={this.state.img}
-            style={{height: 270}}
 
-          />
-        </GridTile>
-        <div className="space">
-          <RaisedButton label="Verify" style={{marginRight:'10px'}} disabled ={this.state.isClick} onClick ={() => this.onChangeStatus('Verified')}/>
-          <RaisedButton label="Reject" disabled={this.state.isClick} onClick ={() => this.onChangeStatus('Rejected')}/>
-        </div>
+  render () {
+    return (        
+        <div className="gridTile" style={{height:'auto'}}>
+          <GridTile
+            className="review" >
+            <label>{this.state.status}</label>
+          </GridTile>
+          <GridTile
+            key={this.state.id}
+            title={this.state.label}
+            actionIcon={<IconButton></IconButton>}
+            className="box"
+          >
+          {
+            this.state.images.map( (file) => {
+              return (
+                <div style={{display: 'block', border: 3}}>
+                  <img 
+                  src={file}
+                  style={{height:270}}/>
+                </div>
+              )
+            })
+          }          
+          </GridTile>
+          <div className="space">
+            <RaisedButton label="Verify" style={{marginRight:'10px'}} disabled ={this.state.isClick} onClick ={() => this.onChangeStatus('Verified')}/>
+            <RaisedButton label="Reject" disabled={this.state.isClick} onClick ={() => this.onChangeStatus('Rejected')}/>
+          </div>
       </div>
     )
   }

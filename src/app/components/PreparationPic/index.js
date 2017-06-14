@@ -10,7 +10,6 @@ import {orange600, orange500} from 'material-ui/styles/colors'
 import './styles.scss'
 
 //import dependency component
-
 import ListReview from '../ListReview'
 
 const prepData = Preparation.data
@@ -19,13 +18,20 @@ export class PreparationPic extends React.Component {
 
   render() {
    return (
-     <div className="prep_container" style={{float:this.props.float}}>
+     <div className="prep_container">
       <div className='root'> 
         <GridList
           cellHeight={400}
           className='gridList'
         >
-        {prepData.map( (prep, index) => <ListReview prep={prep} />)}
+        {prepData.map( (prep, index) => 
+          <ListReview 
+            key={index}
+            prep={prep}
+            images={prep.img}
+            />
+          )
+        }
         </GridList>
       </div>
     </div>

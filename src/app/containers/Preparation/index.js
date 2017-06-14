@@ -5,7 +5,7 @@ import {orange600, orange500} from 'material-ui/styles/colors';
 // import dependencies
 
 import {Header} from "./../../components/Header";
-import {Drawer} from "./../../components/Drawer";
+import {Drawer} from "./../../components/DrawerBase";
 import {PageTitle} from "./../../components/PageTitle";
 import {PreparationPic} from "./../../components/PreparationPic";
 import PrepData from '../../../../temp-data/preparationPic.json';

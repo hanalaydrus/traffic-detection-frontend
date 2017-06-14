@@ -9,11 +9,6 @@
     padding-top: 30px;
     padding-bottom: 20px;
   },
-.gridList {
-    width: 800px;
-    overflowY: visible;
-    background-color:#33353F;
-}
 .review {
     margin-bottom: 10px;
     margin-right: 10px;
@@ -26,9 +21,18 @@
     border-bottom-style: inset;
     background-color: #303030;
     padding: 6px 0px 6px 8px;
-}
+},
 .box {
     margin-right: 10px;
     background-color: #33353F;
     margin-bottom: 10px;
+    height: auto !important;
+},
+.space {
+    margin-bottom: 20px;
+}
+.gridList {
+    div {
+        height: auto !important;
+    }
 }
