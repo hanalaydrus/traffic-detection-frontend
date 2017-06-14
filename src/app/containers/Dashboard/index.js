@@ -6,8 +6,9 @@ import {Header} from "./../../components/Header";
 import {Drawer} from "./../../components/Drawer";
 import StudentListPage from "./../../components/StudentListPage";
 /**
- * 
+ * imported others Library
  */
+import { Enhance } from '../../HOC/fetchingData'
 import *as constants from './constants'
 const style = {
   orange: {
@@ -41,7 +42,7 @@ class Dashboard extends Component {
         batchSelect:"all"
       };
     }
-  
+
   componentWillMount(){
     this.setState({
       data:getStudent(constants.data),
@@ -54,23 +55,23 @@ class Dashboard extends Component {
       this.setState({
             statsSelect:value,
             dataTable: this.getDataBystatus(value),
-        });   
+        });
   }
- 
+
   dataBatch = (value) => {
       this.setState({
             batchSelect:value,
             dataTable: this.getDataByBatch(value),
-        });   
+        });
   }
-  
+
   dataCampus = (value) => {
       this.setState({
             campusSelect:value,
             dataTable: this.getDataByCampus(value),
-        });   
+        });
   }
-   
+
   getDataBystatus  = (value) => {
 
    if(value === 'all' && this.state.campusSelect === 'all'  ){
@@ -81,10 +82,10 @@ class Dashboard extends Component {
       return this.state.data.filter((prop) => (prop['status'] === value && prop['campuses'] === this.state.campusSelect) )
     } else {
       return this.state.data.filter((prop) => prop['status'] === value )
-    } 
-    
+    }
+
   }
-  
+
   getDataByBatch = (value) => {
 
     if(value === 'all' && this.state.statsSelect==="all"){
@@ -94,9 +95,9 @@ class Dashboard extends Component {
     }else{
       return this.state.data.filter((prop) => prop['batch'] === value)
     }
-    
+
   }
-  
+
   getDataByCampus = (value) => {
 
     if(value === 'all' && (this.state.statsSelect === 'all' ) ){
@@ -107,10 +108,10 @@ class Dashboard extends Component {
       return this.state.data.filter((prop) => (prop['campuses'] === value && prop['status'] === this.state.statsSelect) )
     } else {
       return this.state.data.filter((prop) => prop['campuses'] === value )
-    } 
+    }
 
   }
-  
+
   handleChange = (Nav, Draw) => {
     this.setState({ navStyle: Nav })
     this.setState({ drawerStyle: Draw })
@@ -119,19 +120,18 @@ class Dashboard extends Component {
   }
 
   render() {
-
     return (
         <div style={{margin:0}}>
           <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
-          <Drawer 
-            drawerStyle = {this.state.drawerStyle} 
+          <Drawer
+            drawerStyle = {this.state.drawerStyle}
             campus = {this.state.campus}
             onEnterBatch = {this.dataBatch.bind(this)}
             onEnterCampus = {this.dataCampus.bind(this)}
           />
           <div style={this.state.contentStyle}>
-            <StudentListPage 
-              onEnterStatus = {this.dataStatus} 
+            <StudentListPage
+              onEnterStatus = {this.dataStatus}
               status = {this.state.statsSelect}
               dataTable = {this.state.dataTable}
             />
@@ -152,5 +152,7 @@ function getCampus(data){
     },[])
 }
 
-
-export default Dashboard;
+/**
+ * insert with api we use for the data and replace constants with data
+ */
+export default Enhance('https://jsonplaceholder.typicode.com/posts')(Dashboard);

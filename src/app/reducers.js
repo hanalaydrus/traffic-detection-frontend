@@ -8,12 +8,14 @@ import { combineReducers } from 'redux-immutable'
  */
 import AuthReducer from './authGithub/reducer'
 import TicketDataReducer from './containers/ListTicket/reducer'
+import ToogleDrawerReducer from './containers/Template/reducer'
 /**
  *  Combine the reducers
  */
 const rootReducer = combineReducers({
   authGithub: AuthReducer,
   ticketData: TicketDataReducer
+  toggleDrawer: ToogleDrawerReducer
 })
 
 /**
