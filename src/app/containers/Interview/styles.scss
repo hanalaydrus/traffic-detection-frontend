@@ -1,0 +1,38 @@
+@import '../../../_variables.scss';
+.date_time{
+  margin-top:20px;
+  padding-top: 10px;
+}
+.confirmed{
+  margin-top:20px;
+  margin-left: 20px;
+}
+.inputStyle{
+  div{
+    width: 150px !important;
+
+    label{
+      color: #FB8C00 !important;
+    }
+    div{
+      hr{
+        border-bottom: 1px solid rgba(255, 255, 255, 1) !important;
+      }
+    }
+  }
+}
+.inputTimeStyle{
+    width: 75px !important;
+    label{
+      color: #FB8C00 !important;
+    }
+    div{
+      hr{
+        border-bottom: 1px solid rgba(255, 255, 255, 1) !important;
+      }
+    }
+}
+.save_btn{
+  margin-top: 2%;
+  width: 12%;
+}
