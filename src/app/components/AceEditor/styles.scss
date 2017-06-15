@@ -1,0 +1,19 @@
+@import '../../../_variables.scss';
+.editor_container{
+  width: 55%;
+  float: left;
+}
+.run_container{
+  float:right;
+  width: 40%;
+}
+.result{
+  text-align: left;
+  background-color: $insideBg;
+  width: 95%;
+  height: 184px;
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 14px;
+  overflow: auto;
+}

@@ -1,16 +1,68 @@
 .list_ticket_container {
   margin: 0 10% 0 10% !important;
 }
+.card_header {
+  background-color:#f9bb00;
+  color: black !important;
+}
+.markdown_container {
+  overflow: hidden; 
+  color: black;
+  width: 100%;
+  height: 100%
+}
+.markdown_editor {
+  background-color: white
+}
+.markdown_editor_detail {
+  max-height: 300px;
+  .public-DraftEditor-content {
+    min-height: 0 !important;
+    height: 80px !important;
+    overflow: scroll !important;
+    overflow-x: hidden !important
+  }
+}
+.markdown_button_submit {
+  padding: 10px;
+  text-align: right
+}
+.show_comment {
+  overflow: auto;
+  width: 100%;
+  height: 64%;
+}
 .table_container {
   border-bottom: 2px solid #f9bb00 !important;
   margin-bottom: 24px;
 }
+.score_and_filter {
+  display: inline-flex;
+  width: 100%;
+}
 .filter_container {
   display: inline-grid;
   margin: 16px 16px 16px 0;
+  width: 80%;
+  float: left;
+}
+.score_container {
+  margin: 16px 0 16px 0;
+  width: 30%;
+  float: right;
+}
+.score {
+  margin-left: 2.5px;
+  margin-top: 10px;
+  font-size: 25px;
+  text-align: end;
+  color: #f9bb00
 }
 .filter_title {
   margin-left: 2.5px;
+}
+.score_title {
+  text-align: end
 }
 .propContainer {
   overflow: 'hidden';

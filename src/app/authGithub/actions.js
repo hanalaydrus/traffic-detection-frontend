@@ -6,10 +6,7 @@ import {
   CLIENT_SECRET,
   TOKEN_PARAMS,
   ENDPOINT,
-  REDIRECT_URI,
-  CLIENT_ID,
-  PAYLOADS
-
+  CLIENT_ID
 } from './constants';
 
 const https = require('https');

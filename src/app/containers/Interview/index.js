@@ -4,14 +4,18 @@ import {green500, blue500, orange500, orange600} from 'material-ui/styles/colors
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import moment from 'moment';
-import {Header} from "./../../components/Header";
-import {Drawer} from "./../../components/DrawerBase";
-import {PageTitle} from "./../../components/PageTitle";
-import {InterviewForm} from "./../../components/InterviewForm";
-import {TechScreenings} from "./../../components/TechScreenings";
-import MainMenu from '../MainMenu'
-import './styles.scss';
+import {Header} from './../../components/Header';
+import {Drawer} from './../../components/DrawerBase';
+import {PageTitle} from './../../components/PageTitle';
+import {InterviewForm} from './../../components/InterviewForm';
+import {TechScreenings} from './../../components/TechScreenings';
+import {Editor} from './../../components/AceEditor';
 
+import './styles.scss';
+import tempScreenings from '../../../../temp-data/tempScreenings.json'
+
+const data = tempScreenings.data[3].content.script1
+const data2 = tempScreenings.data[3].content.script2
 
 const style = {
   orange: {
@@ -53,7 +57,6 @@ class Interview extends Component {
 
   render() {
     return (
-          <MainMenu >
             <div style={this.state.contentStyle}>
               <PageTitle title="Interview Time" />
               <div className="date_time float_left" style={{width:300}}>
@@ -84,8 +87,19 @@ class Interview extends Component {
               </div>
               <TechScreenings />
             </div>
-          </MainMenu>
-    
+            <PageTitle title="Interview Result" />
+            <div style={{textAlign:'right'}}>
+              <InterviewForm float="float_left" title="Tech"/>
+              <InterviewForm float="float_right" title="NonTech"/>
+              <RaisedButton label="Save" primary={true} className="save_btn" />
+              <div className="clear"></div>
+            </div>
+            <TechScreenings />
+            <Editor title="Script 1" data={data}/>
+            <Editor title="Script 2" data={data2}/>
+          </div>
+        </div>
+
     );
   }
 }
