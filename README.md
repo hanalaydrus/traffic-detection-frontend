@@ -19,7 +19,7 @@ Setup variable in `/config/local.js`
 
 | Variable | Description | Example |
 | ------------- | ------------- | --------------|
-| API_BASE_URL | Client ID of the Gluu instance | |
+| API_BASE_URL | Client ID of the Github instance | |
 | GITHUB_CLIENT_ID | Client ID of the Github |  |
 | GITHUB_CLIENT_SECRET | Client ID of the Github |  |
 | GITHUB_CLIENT_BASE_URI | Base URI of Github | github.com |
