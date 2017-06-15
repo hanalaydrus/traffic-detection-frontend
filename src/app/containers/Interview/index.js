@@ -9,6 +9,7 @@ import {Drawer} from "./../../components/DrawerBase";
 import {PageTitle} from "./../../components/PageTitle";
 import {InterviewForm} from "./../../components/InterviewForm";
 import {TechScreenings} from "./../../components/TechScreenings";
+import MainMenu from '../MainMenu'
 import './styles.scss';
 
 
@@ -52,40 +53,39 @@ class Interview extends Component {
 
   render() {
     return (
-        <div style={{margin:0}}>
-          <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
-          <Drawer drawerStyle={this.state.drawerStyle} />
-          <div style={this.state.contentStyle}>
-            <PageTitle title="Interview Time" />
-            <div className="date_time float_left" style={{width:300}}>
-              {this.state.date} at {this.state.time}
-            </div>
-            <div className="confirmed float_left">
-              <RaisedButton label="Confirmed" backgroundColor={green500} style={{width:150}}/>
-            </div>
-            <div className="clear"></div>
-            <div style={{marginBottom:30}}>
-              <div className="float_left" style={{width:150}}>
-                <DatePicker floatingLabelText="Date" className="inputStyle" />
+          <MainMenu >
+            <div style={this.state.contentStyle}>
+              <PageTitle title="Interview Time" />
+              <div className="date_time float_left" style={{width:300}}>
+                {this.state.date} at {this.state.time}
               </div>
-              <div className="float_left" style={{marginLeft:20, width:150}}>
-                <TimePicker format="24hr" floatingLabelText="Time" className="inputTimeStyle"/>
-              </div>
-              <div className="float_left" style={{marginTop:28}}>
-                <RaisedButton label="Reschedule" backgroundColor={blue500} style={{width:150}}/>
+              <div className="confirmed float_left">
+                <RaisedButton label="Confirmed" backgroundColor={green500} style={{width:150}}/>
               </div>
               <div className="clear"></div>
+              <div style={{marginBottom:30}}>
+                <div className="float_left" style={{width:150}}>
+                  <DatePicker floatingLabelText="Date" className="inputStyle" />
+                </div>
+                <div className="float_left" style={{marginLeft:20, width:150}}>
+                  <TimePicker format="24hr" floatingLabelText="Time" className="inputTimeStyle"/>
+                </div>
+                <div className="float_left" style={{marginTop:28}}>
+                  <RaisedButton label="Reschedule" backgroundColor={blue500} style={{width:150}}/>
+                </div>
+                <div className="clear"></div>
+              </div>
+              <PageTitle title="Interview Result" />
+              <div style={{textAlign:'right'}}>
+                <InterviewForm float="float_left" title="Tech"/>
+                <InterviewForm float="float_right" title="NonTech"/>
+                <RaisedButton label="Save" primary={true} className="save_btn" />
+                <div className="clear"></div>
+              </div>
+              <TechScreenings />
             </div>
-            <PageTitle title="Interview Result" />
-            <div style={{textAlign:'right'}}>
-              <InterviewForm float="float_left" title="Tech"/>
-              <InterviewForm float="float_right" title="NonTech"/>
-              <RaisedButton label="Save" primary={true} className="save_btn" />
-              <div className="clear"></div>
-            </div>
-            <TechScreenings />
-          </div>
-        </div>
+          </MainMenu>
+    
     );
   }
 }
