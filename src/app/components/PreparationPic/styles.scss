@@ -1,0 +1,92 @@
+@import '../../../_variables.scss';
+
+
+.prepContainer {
+    float: left;
+    .img_style{
+      height: 10%;
+
+    }    
+    .gridContainer {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: #33353F;
+        margin-top: 32px;
+        padding-left: 100px;
+        padding-top: 30px;
+        padding-bottom: 20px;
+        .gridList {
+            width: 800px;
+            overflow-y: visible;
+            background-color:#33353F;
+            div {
+                height: auto !important;             
+            }
+            .gridTile {
+                height: auto;
+                div {
+                        font-weight: bold; 
+                        min-height: 24px !important;
+                        div {
+                            margin-bottom: 0px;
+                            padding-top: 0px;
+                            div {
+                                margin-bottom: 0px;
+                                padding-top: 0px;
+                                title {
+                                    font-weight: bold;
+                                    margin-top: 0px !important;
+                                    background-color: #FF9800 !important;
+                                }           
+                            }        
+                        }              
+                }
+                .boxImage {
+                    margin-right: 12px;
+                    background-color: #33353F;
+                    margin-bottom: 12px;
+                    height: auto !important;
+                    .imgStyle {
+                        background-color: none !important;   
+                        bottom: 12px;
+                        color: #2F3039 !important;         
+                    }     
+                }
+                .review {
+                    margin-right: 12px;
+                    font-size: 20px;
+                    font-style: italic;
+                    font-weight: bold;
+                    height: 24px;
+                    border-width: 2px;
+                    border-bottom-color: #EEE;
+                    border-bottom-style: inset;
+                    background-color: #FF9800;
+                    color: #2F3039 !important;
+                    padding: 8px 0px 8px 8px;
+                } 
+
+            }
+
+
+
+            .space {
+                margin-bottom: 24px;
+            }
+            .buttonStyle {
+                margin-bottom: 10px;
+                padding-bottom: 4px;
+                //background-color: #FF9800 !important;
+                font-weight: 800px;
+                .buttonStyleLeft {
+                    margin-right: 10px;
+                }
+            }
+            .imgStyle {
+                margin-bottom: 8px !important;
+                margin-right: 32px !important;
+            }
+        }    
+    }
+}
+

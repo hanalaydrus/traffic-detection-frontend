@@ -18,17 +18,20 @@ injectTapEventPlugin();
 import { Theme } from './theme.js'
 
 //Import Routes
-import { Header } from "./components/Header";
 import Login from './auth/login'
 import Dashboard from './containers/Dashboard'
 import Curriculum from './containers/Curriculum';
 import WorkTodo from './containers/WorkTodo';
+import Preparation from './containers/Preparation'
+import { Header } from "./components/Header";
+import WorkTodoForm from './components/WorkTodoForm';
 import Interview from './containers/Interview';
 import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
 import getToken from './authGithub/getToken';
 import ListTicket from './containers/ListTicket';
 import StudentDetail from './components/StudentDetail'
+import CampusListTable from './containers/CampusListTable'
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
 export const store = createStoreWithMiddleware(reducers)
 /**
@@ -66,7 +69,9 @@ class App extends React.Component{
               <Route path="/studentlist" component={StudentDetail} />
               <Route path="/githublogin" component={GithubLogin} />
               <Route path="/github/callback" component={getToken} />
+              <Route path="/preparation" component={Preparation} />
               <Route path='/listticket' component={RequireAuth(ListTicket)} />
+              <Route path='/campuslist' component={CampusListTable} />
           </div>
         </Router>
       </MuiThemeProvider>

@@ -7,7 +7,10 @@ import {
   UPDATE_IS_FETCHING,
   UPDATE_NEW_TICKET,
   SET_FILTER,
-  FILTER_TICKET
+  FILTER_TICKET,
+  FETCH_COMMENT_DATA,
+  UPDATE_IS_FETCHING_COMMENT,
+  UPDATE_COMMENT_DATA
 } from './constants'
 
 import { TOKEN } from '../../../constants'
@@ -56,16 +59,6 @@ export function updateIsFetching(status) {
 export function patchTicketData (project_name, ticket_number, old_status, new_status, newData) {
   return (dispatch, getState) => {
 
-    const data = getState().getIn(
-      ["ticketData", "data"]
-    )
-    console.log('sent data', {
-      project_name,
-      ticket_number,
-      old_status,
-      new_status
-    });
-
     refactoryAxios.patch('/api/tickets/status', {
       project_name,
       ticket_number,
@@ -77,12 +70,59 @@ export function patchTicketData (project_name, ticket_number, old_status, new_st
         'Authorization': `Bearer ${TOKEN()}`
       }
     }).then((response) => {
-      console.log('response', response);
       dispatch({
         type: UPDATE_NEW_TICKET,
         payload: newData
       })
     }).catch(err => console.log('error', err));
   }
+}
 
+export function updateIsFetchingComment(status) {
+  return {
+    type: UPDATE_IS_FETCHING_COMMENT,
+    status
+  }
+}
+
+export function fetchCommentData(projectName,ticketNumber) {
+ return (dispatch) => {
+   // Set fetching to true
+   dispatch(updateIsFetchingComment(true))
+   // Make the request for contacts
+   refactoryAxios.get(`/api/tickets/${projectName}/${ticketNumber}`, {
+     headers: {
+       Authorization: `Bearer ${TOKEN()}`,
+       Accept : 'application/json'
+    }
+   }).then( (response) => {
+     // Load the timeline data data into the reducer
+     dispatch({
+       type: FETCH_COMMENT_DATA,
+       payload: response.data.data
+     })
+     // Set fetching to false
+     dispatch(updateIsFetchingComment(false))
+   })
+ }
+}
+
+export function submitCommentData (projectName, ticketNumber, body) {
+  return (dispatch, getState) => {
+
+    refactoryAxios.post(`/api/tickets/${projectName}/${ticketNumber}/comment`, {
+      body
+    }, {
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${TOKEN()}`
+      }
+    }).then((response) => {
+      console.log('response comment', response.data)
+      dispatch({
+        type: UPDATE_COMMENT_DATA,
+        payload: response.data.data
+      })
+    }).catch(err => console.log('error', err));
+  }
 }
