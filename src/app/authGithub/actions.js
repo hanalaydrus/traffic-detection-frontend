@@ -34,7 +34,7 @@ export function authenticateUser() {
             // Save JWT token to localStorage and set expiration
             setHtmlStorage('token', resp.data.access_token, 3600);
             // Redirect using react router
-            history.push('/');
+            history.push('/listticket');
             window.location.reload();
       });
     }
@@ -57,7 +57,6 @@ function encodeQueryData(data) {
 }
 
 function getParameterByName(name, url) {
-
   name = name.replace(/[\[\]]/g, "\\$&");
   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
   results = regex.exec(url);
@@ -68,8 +67,6 @@ function getParameterByName(name, url) {
 }
 
 function requestToken(code) {
-
-  // const token = jwt.sign(PAYLOADS, CLIENT_SECRET);
   const config = {
     headers: {'Content-Type': 'application/x-www-form-urlencoded',
               'Accept':'application/json'}

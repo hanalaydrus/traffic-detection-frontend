@@ -4,7 +4,7 @@
 import React, { Component } from 'react'
 import { func } from 'prop-types'
 import { connect } from 'react-redux'
-
+import {TOKEN} from '../../constants'
 /**
  *  Import other dependencies
  */
@@ -26,6 +26,7 @@ class GithubLogin extends Component {
   }
 
   render() {
+    console.log('Token : ',TOKEN())
     return (
       <MuiThemeProvider>
         <div>
