@@ -10,7 +10,7 @@ import {orange600, orange500} from 'material-ui/styles/colors'
 import './styles.scss'
 
 //import dependency component
-import ListReview from '../ListReview'
+import {ListReview} from '../ListReview'
 
 const prepData = Preparation.data
 
@@ -18,8 +18,8 @@ export class PreparationPic extends React.Component {
 
   render() {
    return (
-     <div className="prep_container">
-      <div className='root'> 
+     <div className="prepContainer">
+      <div className='gridContainer'> 
         <GridList
           cellHeight={400}
           className='gridList'
@@ -28,7 +28,7 @@ export class PreparationPic extends React.Component {
           <ListReview 
             key={index}
             prep={prep}
-            images={prep.img}
+            images={prep.images}
             />
           )
         }

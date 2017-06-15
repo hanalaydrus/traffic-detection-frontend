@@ -4,7 +4,6 @@ import IconButton from 'material-ui/IconButton'
 import StarBorder from 'material-ui/svg-icons/toggle/star-border'
 import {RaisedButton, TextField, Checkbox} from 'material-ui'
 import {orange600, orange500} from 'material-ui/styles/colors'
-import styles from "./styles.scss"
 
 //import dependency components
 
@@ -14,14 +13,14 @@ import Preparation from '../../../../temp-data/preparationPic.json'
 const Data = Preparation.data
 
 
-export default class ListReview extends  React.Component {
-  constructor(props, i){
+export class ListReview extends  React.Component {
+  constructor(props){
     super(props);
     this.state = {
       isClick: false,
       label: this.props.prep.label,
       id: this.props.prep.id,
-      images: this.props.images,
+      image: this.props.images,
       status: this.props.prep.status
     }
   }
@@ -35,22 +34,24 @@ export default class ListReview extends  React.Component {
 
   render () {
     return (        
-        <div className="gridTile" style={{height:'auto'}}>
+        <div className="gridTile">
           <GridTile
             className="review" >
             <label>{this.state.status}</label>
           </GridTile>
-          <GridTile
+          <GridTile 
+          titleStyle={{marginTop: 8}}
+            titleBackground='#303030'
             key={this.state.id}
             title={this.state.label}
-            actionIcon={<IconButton></IconButton>}
-            className="box"
+            className="boxImage"
           >
           {
-            this.state.images.map( (file) => {
+            this.state.image.map( (file, index) => {
               return (
-                <div style={{display: 'block', border: 3}}>
-                  <img 
+                <div className="imgStyle"
+                  key={index}>
+                  <img
                   src={file}
                   style={{height:270}}/>
                 </div>
@@ -58,10 +59,19 @@ export default class ListReview extends  React.Component {
             })
           }          
           </GridTile>
-          <div className="space">
-            <RaisedButton label="Verify" style={{marginRight:'10px'}} disabled ={this.state.isClick} onClick ={() => this.onChangeStatus('Verified')}/>
-            <RaisedButton label="Reject" disabled={this.state.isClick} onClick ={() => this.onChangeStatus('Rejected')}/>
-          </div>
+          <div className="buttonStyle">
+            <RaisedButton 
+              backgroundColor='#FF9800'
+              className="buttonStyleLeft" 
+              label="Verify" 
+              disabled ={this.state.isClick} 
+              onClick ={() => this.onChangeStatus('Verified')}/>
+            <RaisedButton className="buttonStyle" 
+              backgroundColor='#FF9800'
+              label="Reject" 
+              disabled={this.state.isClick} 
+              onClick ={() => this.onChangeStatus('Rejected')}/>
+            </div>
       </div>
     )
   }

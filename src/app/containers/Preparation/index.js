@@ -57,7 +57,7 @@ class Preparation extends Component {
           <div style={this.state.contentStyle}>
             <PageTitle title="Preparation" />
             <div className="clear"></div>
-              <PreparationPic />
+              <PreparationPic />  
           </div>
         </div>
     );
