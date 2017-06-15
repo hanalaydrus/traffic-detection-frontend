@@ -60,7 +60,8 @@ class App extends React.Component{
       <MuiThemeProvider muiTheme={Theme}>
         <Router history={history}>
           <div>
-              <Route exact path="/" component={Login} />
+              <Route exact path="/" component={GithubLogin} />
+              <Route path="/loginadmin" component={Login} />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/curriculum" component={Curriculum} />
               <Route path="/worktodo" component={WorkTodo} />
