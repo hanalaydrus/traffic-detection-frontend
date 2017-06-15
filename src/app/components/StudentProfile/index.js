@@ -68,7 +68,7 @@ function handleActive(tab) {
   alert(`A tab with this route property ${tab.props['data-route']} was activated.`);
 }
 
-export default class CardExampleControlled extends React.Component {
+export default class StudentProfile extends React.Component {
 
   constructor(props) {
     super(props);

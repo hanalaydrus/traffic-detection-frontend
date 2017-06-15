@@ -28,7 +28,7 @@ import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
 import getToken from './authGithub/getToken';
 import ListTicket from './containers/ListTicket';
-import StudentDetail from './components/StudentDetail'
+import StudentDetail from './components/StudentProfile'
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
 export const store = createStoreWithMiddleware(reducers)
 /**
