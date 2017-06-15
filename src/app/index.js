@@ -18,11 +18,13 @@ injectTapEventPlugin();
 import { Theme } from './theme.js'
 
 //Import Routes
-import { Header } from "./components/Header";
 import Login from './auth/login'
 import Dashboard from './containers/Dashboard'
 import Curriculum from './containers/Curriculum';
 import WorkTodo from './containers/WorkTodo';
+import Preparation from './containers/Preparation'
+import { Header } from "./components/Header";
+import WorkTodoForm from './components/WorkTodoForm';
 import Interview from './containers/Interview';
 import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
@@ -65,6 +67,7 @@ class App extends React.Component{
               <Route path="/hiring" component={Hiring} />
               <Route path="/githublogin" component={GithubLogin} />
               <Route path="/github/callback" component={getToken} />
+              <Route path="/preparation" component={Preparation} />
               <Route path='/listticket' component={RequireAuth(ListTicket)} />
           </div>
         </Router>
