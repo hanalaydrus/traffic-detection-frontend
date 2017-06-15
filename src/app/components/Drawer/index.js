@@ -1,21 +1,22 @@
 /**
  * import from library
  */
-import React from "react";
-import {AppBar} from 'material-ui';
-import {orange600, orange500} from 'material-ui/styles/colors';
-import SelectField from 'material-ui/SelectField';
-import { RaisedButton,MuiThemeProvider } from 'material-ui';
-import MenuItem from 'material-ui/MenuItem';
+import React from "react"
+import {AppBar} from 'material-ui'
+import {orange600, orange500} from 'material-ui/styles/colors'
+import SelectField from 'material-ui/SelectField'
+import { RaisedButton,MuiThemeProvider } from 'material-ui'
+import MenuItem from 'material-ui/MenuItem'
 /**
  * import
  */
 import * as constants from './constants'
 import {DrawerMenu} from './../DrawerMenu'
-import './styles.scss';
+import './styles.scss'
 const style = {
   margin: 5,
-};
+}
+
 export class Drawer extends React.Component {
     constructor(props) {
     super(props);

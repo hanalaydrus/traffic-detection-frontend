@@ -1,11 +1,11 @@
-import React from 'react';
-import {List, ListItem} from 'material-ui/List';
+import React from 'react'
+import {List, ListItem} from 'material-ui/List'
 
 export class DrawerMenu extends React.Component {
 
   state = {
     open: false,
-  };
+  }
 
   render() {
     return (
