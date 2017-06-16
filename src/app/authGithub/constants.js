@@ -6,6 +6,7 @@ const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CLIENT_BASE_URI, API_BASE
 /**
 *  Define Constants
 */
+export const AUTH_IS_PROCESSING = 'src/app/authGithub/AUTH_IS_PROCESSING'
 export const AUTH_USER = 'src/app/authGithub/AUTH_USER'
 export const UNAUTH_USER = 'src/app/authGithub/UNAUTH_USER'
 export const LOAD_USER = 'src/app/authGithub/LOAD_USER'
