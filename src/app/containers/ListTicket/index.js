@@ -6,6 +6,8 @@ import Loader from 'react-loader'
 import RichTextEditor from 'react-rte'
 import marked from 'marked'
 import moment from 'moment'
+import ReactMarkdown from 'react-markdown'
+
 import {
   Checkbox,
   Table,
@@ -68,6 +70,7 @@ class ListTicket extends Component {
     }
 
   handleChangeDropDown = (value, ticketNumber) => {
+    console.log(value, ticketNumber);
     const newData = this.props.data.tickets;
     const data = newData.find((tckData) => {return tckData.number === ticketNumber})
     const tempStatus = data.status
@@ -149,6 +152,7 @@ class ListTicket extends Component {
 
   componentWillMount() {
     this.props.fetchTicketData()
+    this.props.fetchProfileData()
   }
 
   render() {
@@ -265,7 +269,7 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     {
-                      <Dropdown currentValue={row.status} onChangeFunction={() => this.handleChangeDropDown(value,row.number)} menuItemValues={STATUS_TICKET} width={'175px'}/>
+                      <Dropdown currentValue={row.status} onChangeFunction={(value) => this.handleChangeDropDown(value,row.number)} menuItemValues={STATUS_TICKET} width={'175px'}/>
                     }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
@@ -291,13 +295,32 @@ class ListTicket extends Component {
         >
           <div className={"markdown_container"} >
             <div className={"show_comment"}>
-            {this.props.isFetchingComment ?
-              (<Loader type="line-scale" color="#fff" active />) :
+              <Card style={{padding: 4}}>
+                <div className={"card_header"}>
+                  <CardHeader
+                    title={<b>{this.props.isFetchingComment ? '' : "#" + this.props.commentData.number + " " + this.props.commentData.title}</b>}
+                    titleColor='#222'
+                  />
+                </div>
+                <CardText>
+                  <div>
+                    <div>
+                    </div>
+                    <div>
+                      Ticket details : 
+                      <ReactMarkdown source={this.props.commentData.body} />
+                    </div>
+                  </div>
+                </CardText>
+              </Card>
+             {this.props.isFetchingComment ?
+              (<Loader type="line-scale" active />) :
+
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
                 <Card style={{padding: 4}}>
                   <div className={"card_header"}>
                     <CardHeader
-                      title={row.user.login + " commented on #" + this.props.commentData.number + " " + this.props.commentData.title}
+                      title={row.user.login}
                       subtitle={moment(row.created_at, ["YYYY", moment.ISO_8601]).format("MMMM Do YYYY hh:mm")}
                       avatar={row.user.avatar_url}
                       titleColor='#000'
@@ -312,11 +335,13 @@ class ListTicket extends Component {
                 </Card>
                 )))}
             </div>
+
             <div className={"markdown_editor"} >
               <div className={"markdown_editor_detail"}>
                 <RichTextEditor
                   value={this.state.valueMarkdown}
                   onChange={this.onMarkdownChange}
+                  placeholder={'Leave a comment'}
                 />
               </div>
               <div className={"markdown_button_submit"} >
@@ -368,7 +393,9 @@ const mapStateToProps = createStructuredSelector({
   isFetching: selectors.getIsFetching(),
   filters: selectors.getFilters(),
   isFetchingComment: selectors.getIsFetchingComment(),
-  commentData: selectors.getCommentData()
+  commentData: selectors.getCommentData(),
+  profileData: selectors.getProfileData(),
+  isFetchingProfile: selectors.getIsFetchingProfile()
 });
 
 /**

@@ -13,9 +13,8 @@ class Dropdown extends Component {
         }
     }
 
-    handleChange = (event, index, value, onChangeFunction) => {
-        this.setState({value})
-        onChangeFunction()
+    handleChange = (value) => {
+        this.props.onChangeFunction(value)
     }
 
     componentWillMount() {
@@ -29,7 +28,7 @@ class Dropdown extends Component {
         const {onChangeFunction, menuItemValues, width} = this.props
 
         return (
-            <DropDownMenu value={this.state.value} onChange={() => this.handleChange(event, index, value, onChangeFunction)} style={{width: width}}>
+            <DropDownMenu value={this.state.value} onChange={(event, index, value) => this.handleChange(value)} style={{width: width}}>
                 {this.props.menuItemValues && this.props.menuItemValues.map((row) => (
                     <MenuItem value={row.value} primaryText={row.text} />
                 ))}
