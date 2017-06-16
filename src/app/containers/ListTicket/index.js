@@ -70,6 +70,7 @@ class ListTicket extends Component {
     }
 
   handleChangeDropDown = (value, ticketNumber) => {
+    console.log(value, ticketNumber);
     const newData = this.props.data.tickets;
     const data = newData.find((tckData) => {return tckData.number === ticketNumber})
     const tempStatus = data.status
@@ -269,7 +270,7 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     {
-                      <Dropdown currentValue={row.status} onChangeFunction={() => this.handleChangeDropDown(value,row.number)} menuItemValues={STATUS_TICKET} width={'175px'}/>
+                      <Dropdown currentValue={row.status} onChangeFunction={(value) => this.handleChangeDropDown(value,row.number)} menuItemValues={STATUS_TICKET} width={'175px'}/>
                     }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
