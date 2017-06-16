@@ -55,7 +55,7 @@ class Header extends React.Component {
           </div>
           <div className="menu">
                <IconMenu
-                  iconButtonElement={<IconButton><img src="/images/Refactory-icon.png" /></IconButton>}
+                  iconButtonElement={<IconButton><img src="/images/Refactory-icon.png" style={{height:40, marginTop:0, marginLeft:30}/></IconButton>}
                   anchorOrigin={{horizontal: 'left', vertical: 'top'}}
                   targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
                   style={{marginRight:30}}
