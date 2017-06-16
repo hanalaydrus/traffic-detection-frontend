@@ -23,7 +23,8 @@ import {
   RaisedButton,
   Card,
   CardHeader,
-  CardText
+  CardText,
+  CardTitle
 } from 'material-ui';
 
 import './styles.scss'
@@ -36,6 +37,8 @@ const STATUS_TICKET = [
   {value:'inprogress',text:'In Progress'},
   {value:'done',text:'Done'}
 ]
+
+import {Header} from './../../components/HeaderUser'
 
 class ListTicket extends Component {
   constructor() {
@@ -85,7 +88,6 @@ class ListTicket extends Component {
   };
 
   onMarkdownChange = (valueMarkdown) => {
-    console.log('text', valueMarkdown.toString('markdown'))
     this.setState({valueMarkdown});
     if (this.props.onMarkdownChange) {
       this.props.onMarkdownChange(
@@ -144,14 +146,13 @@ class ListTicket extends Component {
   }
 
   render() {
-    // console.log('comment data', this.props.commentData)
-    console.log('is fetching', this.props.isFetching)
     if (this.props.isFetching) {
       return <Loader type="line-scale" color="#fff" active />
     }
     console.log('status type', STATUS_TICKET)
     return (
       <div>
+        <Header />
         <div className={ "list_ticket_container" }>
         <div className={ "score_and_filter" }>
           <div className={ "filter_container" }>
@@ -159,15 +160,9 @@ class ListTicket extends Component {
             <div className={ "block" }>
               <Checkbox
                 label="To Do"
-                checked={ this.props.filters.indexOf("todo") >= 0  }
+                checked={ this.props.filters.indexOf("todo") >= 0 || this.props.filters.indexOf("inprogress") >= 0}
                 style={ "checkbox" }
                 onCheck={() => this.handleFilter("todo")}
-              />
-              <Checkbox
-                label="In Progress"
-                checked={ this.props.filters.indexOf("inprogress") >= 0 }
-                style={ "checkbox" }
-                onCheck={() => this.handleFilter("inprogress")}
               />
               <Checkbox
                 label="Done"
@@ -179,7 +174,7 @@ class ListTicket extends Component {
           </div>
           <div className={ "score_container "}>
             <div className={"score_title"}><b>Your Score</b> </div>
-            <div className={"score"}><b>{this.props.data.total_score}</b> </div>
+            <div className={"score"}><b>{this.props.data.total_score + " pts"}</b> </div>
           </div>
         </div>
         <div className={ "table_container" }>
@@ -196,9 +191,9 @@ class ListTicket extends Component {
               enableSelectAll={this.state.enableSelectAll}
             >
               <TableRow style={{backgroundColor:'#f9bb00'}}>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Repository Name</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Repository</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Ticket</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Label</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Type</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Status</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Change Status</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Action</TableHeaderColumn>
@@ -220,11 +215,11 @@ class ListTicket extends Component {
                   <TableRowColumn style={{textAlign: 'center'}}><a href={row.url} style={{color: 'white'}}>#{row.number} {row.title}</a></TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
                     {
-                       row.labels.map( (content) => (
+                       row.labels.map( (content, index2) => (
                          ((content.name !== 'inprogress') &&
                           (content.name !== 'todo') &&
                           (content.name !== 'done')
-                         ) ? 
+                         ) ?
                        ( <div style={{
                           fontWeight: 'bold',
                           margin: '4px',
@@ -234,7 +229,8 @@ class ListTicket extends Component {
                           borderRadius: '5px',
                           backgroundColor: '#' + this.labelColor(content.name),
                           color: '#' + this.labelFontColor(content.name)
-                        }}> 
+                        }}
+                        key={index2}>
                             {content.name}
                         </div> ) : ' '
                       ))
@@ -246,7 +242,7 @@ class ListTicket extends Component {
                          ((content.name === 'inprogress') ||
                           (content.name === 'todo') ||
                           (content.name === 'done')
-                         ) ? 
+                         ) ?
                         (<div style={{
                           fontWeight: 'bold',
                           margin: '4px',
@@ -269,7 +265,7 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     <RaisedButton
-                      label="DETAIL"
+                      label="DISCUSS"
                       onTouchTap={ () => this.handleDrawerToggle(row.repository.name,row.number) }
                     />
                   </TableRowColumn>
@@ -282,9 +278,9 @@ class ListTicket extends Component {
             </TableFooter>
           </Table>
         </div>
-        <Drawer 
-          open={this.state.drawerOpen} 
-          width={500}
+        <Drawer
+          open={this.state.drawerOpen}
+          width={600}
           docked={false}
           onRequestChange={(drawerOpen) => this.setState({drawerOpen})}
         >
@@ -293,7 +289,7 @@ class ListTicket extends Component {
             {this.props.isFetchingComment ?
               (<Loader type="line-scale" color="#fff" active />) :
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
-                <Card>
+                <Card style={{maxWidth: '96%'}}>
                   <div className={"card_header"}>
                     <CardHeader
                       title={row.user.login}
@@ -304,7 +300,9 @@ class ListTicket extends Component {
                     />
                   </div>
                   <CardText>
-                    <div dangerouslySetInnerHTML={{__html:marked(row.body)}} />
+                    <div className={ "cardTextContainer" }>
+                      <div dangerouslySetInnerHTML={{__html:marked(row.body)}}/>
+                    </div>
                   </CardText>
                 </Card>)))}
             </div>
@@ -322,14 +320,13 @@ class ListTicket extends Component {
                   label="SUBMIT"
                   onClick={
                     () => this.handleSubmitComment(
-                      this.state.selectedProjectName, 
-                      this.state.selectedTicketNumber, 
+                      this.state.selectedProjectName,
+                      this.state.selectedTicketNumber,
                       this.state.valueMarkdown.toString('markdown')
                   )}
                 />
               </div>
             </div>
-
           </div>
         </Drawer>
       </div>

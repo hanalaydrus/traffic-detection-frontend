@@ -37,10 +37,16 @@ export function fetchTicketData() {
 }
 
 export function setFilter(filter) {
-  return (dispatch, getState) => {
+  return (dispatch, getState) => {  
     const oldFilters = getState().getIn(['ticketData', 'filters']).toJS();
     const hasStored = oldFilters.findIndex((status) => filter === status) >= 0;
-    const filters = !hasStored ? oldFilters.concat(filter) : oldFilters.filter((value) => value !== filter);
+    const filters = !hasStored ? (
+        (filter === 'todo') ? (oldFilters.concat(filter, 'inprogress')) : oldFilters.concat(filter)
+      ) : 
+      (
+        (filter === 'todo') ? (oldFilters.filter((value) => (value !== filter) && (value !== 'inprogress'))) : oldFilters.filter((value) => value !== filter)
+      );
+    console.log('oldFilters', oldFilters, 'filters', filters)
     dispatch({
       type: SET_FILTER,
       filters
