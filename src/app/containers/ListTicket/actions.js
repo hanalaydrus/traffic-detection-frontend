@@ -38,16 +38,15 @@ export function fetchTicketData() {
 }
 
 export function setFilter(filter) {
-  return (dispatch, getState) => {  
+  return (dispatch, getState) => {
     const oldFilters = getState().getIn(['ticketData', 'filters']).toJS();
     const hasStored = oldFilters.findIndex((status) => filter === status) >= 0;
     const filters = !hasStored ? (
         (filter === 'todo') ? (oldFilters.concat(filter, 'inprogress')) : oldFilters.concat(filter)
-      ) : 
+      ) :
       (
         (filter === 'todo') ? (oldFilters.filter((value) => (value !== filter) && (value !== 'inprogress'))) : oldFilters.filter((value) => value !== filter)
       );
-    console.log('oldFilters', oldFilters, 'filters', filters)
     dispatch({
       type: SET_FILTER,
       filters
@@ -86,7 +85,7 @@ export function patchTicketData (project_name, ticket_number, old_status, new_st
         type: UPDATE_SCORE,
         newScore: doneData.length
       })
-    }).catch(err => console.log('error', err));
+    }).catch(err => err);
   }
 }
 
@@ -130,11 +129,10 @@ export function submitCommentData (projectName, ticketNumber, body) {
         'Authorization': `Bearer ${TOKEN()}`
       }
     }).then((response) => {
-      console.log('response comment', response.data)
       dispatch({
         type: UPDATE_COMMENT_DATA,
         payload: response.data.data
       })
-    }).catch(err => console.log('error', err));
+    }).catch(err => err);
   }
 }
