@@ -31,7 +31,7 @@ import './styles.scss'
 import * as actions from './actions';
 import * as selectors from './selectors';
 
-import {Header} from './../../components/HeaderUser'
+import Header from './../../components/HeaderUser'
 
 class ListTicket extends Component {
   constructor() {
@@ -139,7 +139,6 @@ class ListTicket extends Component {
   }
 
   render() {
-    console.log("data : ", this.props);
     if (this.props.isFetching) {
       return <Loader type="line-scale" active />
     }
