@@ -28,8 +28,6 @@ class GithubLogin extends Component {
   }
 
   render() {
-    console.log('Token : ',TOKEN())
-    console.log('status:', this.props.isUserLoggedIn)
     return (
       <MuiThemeProvider>
         <div>

@@ -10,7 +10,8 @@ import {
   FILTER_TICKET,
   FETCH_COMMENT_DATA,
   UPDATE_IS_FETCHING_COMMENT,
-  UPDATE_COMMENT_DATA
+  UPDATE_COMMENT_DATA,
+  UPDATE_IS_PATCHING_TICKET_DATA
 } from './constants'
 
 import { TOKEN } from '../../../constants'
@@ -58,7 +59,8 @@ export function updateIsFetching(status) {
 
 export function patchTicketData (project_name, ticket_number, old_status, new_status, newData) {
   return (dispatch, getState) => {
-
+    dispatch(updateIsPatchingTicketData(true))
+    console.log('im here')
     refactoryAxios.patch('/api/tickets/status', {
       project_name,
       ticket_number,
@@ -74,7 +76,15 @@ export function patchTicketData (project_name, ticket_number, old_status, new_st
         type: UPDATE_NEW_TICKET,
         payload: newData
       })
+       dispatch(updateIsPatchingTicketData(false))
     }).catch(err => console.log('error', err));
+  }
+}
+
+export function updateIsPatchingTicketData(status) {
+  return {
+    type: UPDATE_IS_PATCHING_TICKET_DATA,
+    status
   }
 }
 
