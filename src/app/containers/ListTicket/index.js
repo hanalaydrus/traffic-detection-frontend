@@ -144,9 +144,10 @@ class ListTicket extends Component {
   }
 
   render() {
-    console.log('comment data', this.props.commentData)
+    // console.log('comment data', this.props.commentData)
+    console.log('is fetching', this.props.isFetching)
     if (this.props.isFetching) {
-      return <Loader type="line-scale" active />
+      return <Loader type="line-scale" color="#fff" active />
     }
     console.log('status type', STATUS_TICKET)
     return (
@@ -290,7 +291,7 @@ class ListTicket extends Component {
           <div className={"markdown_container"} >
             <div className={"show_comment"}>
             {this.props.isFetchingComment ?
-              (<Loader type="line-scale" active />) :
+              (<Loader type="line-scale" color="#fff" active />) :
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
                 <Card>
                   <div className={"card_header"}>
