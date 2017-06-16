@@ -23,7 +23,8 @@ import {
   RaisedButton,
   Card,
   CardHeader,
-  CardText
+  CardText,
+  CardTitle
 } from 'material-ui';
 
 import './styles.scss'
@@ -150,15 +151,9 @@ class ListTicket extends Component {
             <div className={ "block" }>
               <Checkbox
                 label="To Do"
-                checked={ this.props.filters.indexOf("todo") >= 0  }
+                checked={ this.props.filters.indexOf("todo") >= 0 || this.props.filters.indexOf("inprogress") >= 0}
                 style={ "checkbox" }
                 onCheck={() => this.handleFilter("todo")}
-              />
-              <Checkbox
-                label="In Progress"
-                checked={ this.props.filters.indexOf("inprogress") >= 0 }
-                style={ "checkbox" }
-                onCheck={() => this.handleFilter("inprogress")}
               />
               <Checkbox
                 label="Done"
@@ -170,7 +165,7 @@ class ListTicket extends Component {
           </div>
           <div className={ "score_container "}>
             <div className={"score_title"}><b>Your Score</b> </div>
-            <div className={"score"}><b>{this.props.data.total_score}</b> </div>
+            <div className={"score"}><b>{this.props.data.total_score + " pts"}</b> </div>
           </div>
         </div>
         <div className={ "table_container" }>
@@ -187,9 +182,9 @@ class ListTicket extends Component {
               enableSelectAll={this.state.enableSelectAll}
             >
               <TableRow style={{backgroundColor:'#f9bb00'}}>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Repository Name</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Repository</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Ticket</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Label</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Type</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Status</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Change Status</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Action</TableHeaderColumn>
@@ -215,7 +210,7 @@ class ListTicket extends Component {
                          ((content.name !== 'inprogress') &&
                           (content.name !== 'todo') &&
                           (content.name !== 'done')
-                         ) ? 
+                         ) ?
                        ( <div style={{
                           fontWeight: 'bold',
                           margin: '4px',
@@ -225,7 +220,7 @@ class ListTicket extends Component {
                           borderRadius: '5px',
                           backgroundColor: '#' + this.labelColor(content.name),
                           color: '#' + this.labelFontColor(content.name)
-                        }}> 
+                        }}>
                             {content.name}
                         </div> ) : ' '
                       ))
@@ -237,7 +232,7 @@ class ListTicket extends Component {
                          ((content.name === 'inprogress') ||
                           (content.name === 'todo') ||
                           (content.name === 'done')
-                         ) ? 
+                         ) ?
                         (<div style={{
                           fontWeight: 'bold',
                           margin: '4px',
@@ -264,7 +259,7 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     <RaisedButton
-                      label="DETAIL"
+                      label="DISCUSS"
                       onTouchTap={ () => this.handleDrawerToggle(row.repository.name,row.number) }
                     />
                   </TableRowColumn>
@@ -277,9 +272,9 @@ class ListTicket extends Component {
             </TableFooter>
           </Table>
         </div>
-        <Drawer 
-          open={this.state.drawerOpen} 
-          width={500}
+        <Drawer
+          open={this.state.drawerOpen}
+          width={600}
           docked={false}
           onRequestChange={(drawerOpen) => this.setState({drawerOpen})}
         >
@@ -288,7 +283,7 @@ class ListTicket extends Component {
             {this.props.isFetchingComment ?
               (<Loader type="line-scale" active />) :
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
-                <Card>
+                <Card style={{maxWidth: '96%'}}>
                   <div className={"card_header"}>
                     <CardHeader
                       title={row.user.login}
@@ -297,9 +292,11 @@ class ListTicket extends Component {
                       titleColor='#000'
                       subtitleColor="#000"
                     />
-                  </div>
+                  </div>               
                   <CardText>
-                    <div dangerouslySetInnerHTML={{__html:marked(row.body)}} />
+                    <div className={ "cardTextContainer" }>
+                      <div dangerouslySetInnerHTML={{__html:marked(row.body)}}/>                  
+                    </div>
                   </CardText>
                 </Card>)))}
             </div>
@@ -317,14 +314,13 @@ class ListTicket extends Component {
                   label="SUBMIT"
                   onClick={
                     () => this.handleSubmitComment(
-                      this.state.selectedProjectName, 
-                      this.state.selectedTicketNumber, 
+                      this.state.selectedProjectName,
+                      this.state.selectedTicketNumber,
                       this.state.valueMarkdown.toString('markdown')
                   )}
                 />
               </div>
             </div>
-
           </div>
         </Drawer>
       </div>
