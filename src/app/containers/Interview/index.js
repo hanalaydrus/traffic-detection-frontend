@@ -57,6 +57,9 @@ class Interview extends Component {
 
   render() {
     return (
+      <div style={{margin:0}} >
+        <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
+        <Drawer drawerStyle={this.state.drawerStyle} />
             <div style={this.state.contentStyle}>
               <PageTitle title="Interview Time" />
               <div className="date_time float_left" style={{width:300}}>
@@ -78,15 +81,6 @@ class Interview extends Component {
                 </div>
                 <div className="clear"></div>
               </div>
-              <PageTitle title="Interview Result" />
-              <div style={{textAlign:'right'}}>
-                <InterviewForm float="float_left" title="Tech"/>
-                <InterviewForm float="float_right" title="NonTech"/>
-                <RaisedButton label="Save" primary={true} className="save_btn" />
-                <div className="clear"></div>
-              </div>
-              <TechScreenings />
-            </div>
             <PageTitle title="Interview Result" />
             <div style={{textAlign:'right'}}>
               <InterviewForm float="float_left" title="Tech"/>
