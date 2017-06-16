@@ -33,6 +33,9 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 import Dropdown from '../../components/Dropdown';
 
+
+import Header from './../../components/HeaderUser'
+
 const STATUS_TICKET = [
   {value:'todo',text:'To Do'},
   {value:'inprogress',text:'In Progress'},
