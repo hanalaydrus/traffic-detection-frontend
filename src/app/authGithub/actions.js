@@ -6,10 +6,15 @@ import {
   CLIENT_SECRET,
   TOKEN_PARAMS,
   ENDPOINT,
+<<<<<<< Updated upstream
   REDIRECT_URI,
   CLIENT_ID,
   PAYLOADS
 
+=======
+  CLIENT_ID,
+  AUTH_IS_PROCESSING
+>>>>>>> Stashed changes
 } from './constants';
 
 const https = require('https');
@@ -23,6 +28,13 @@ import history from '../history.js'
 
 export function logIn() {
   return { type: AUTH_USER };
+}
+
+export function authIsProcessing(status) {
+  return {
+    type: AUTH_IS_PROCESSING,
+    status
+  }
 }
 
 export function authenticateUser() {

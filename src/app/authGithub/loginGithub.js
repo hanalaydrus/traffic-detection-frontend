@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { func } from 'prop-types'
 import { connect } from 'react-redux'
 import {TOKEN} from '../../constants'
+import Loader from 'react-loader'
 /**
  *  Import other dependencies
  */
@@ -12,6 +13,7 @@ import {RaisedButton, TextField, MuiThemeProvider} from 'material-ui';
 import {orange600, orange500} from 'material-ui/styles/colors';
 import styles from './styles.scss'
 import * as actions from './actions'
+import * as selectors from './selectors'
 
 const style = {
   orange: {
@@ -27,6 +29,7 @@ class GithubLogin extends Component {
 
   render() {
     console.log('Token : ',TOKEN())
+    console.log('status:', this.props.isUserLoggedIn)
     return (
       <MuiThemeProvider>
         <div>
@@ -34,12 +37,14 @@ class GithubLogin extends Component {
             <div className="form-card">
                 <img src="/images/GitHub-Mark-Light-120px-plus.png" className="img-logo" />
                 <br/>
+                { 
                 <RaisedButton
                   label="Login with Github"
                   backgroundColor={orange500}
                   className="btn-login"
                   onClick= {() => this.handleGithubLoginAttempt()}
                   />
+                }
             </div>
           </div>
         </div>
@@ -54,6 +59,12 @@ class GithubLogin extends Component {
 GithubLogin.propTypes = {
   authenticateUser: func.isRequired
 }
+/**
+ *  Map redux state to component props
+ */
+const mapStateToProps = createStructuredSelector({
+  isUserLoggedIn: selectors.getIsUserLoggedIn()
+});
 
 /**
  *  Export the component
