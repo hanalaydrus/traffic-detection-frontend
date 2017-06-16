@@ -272,11 +272,15 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     {
+<<<<<<< HEAD
                       <DropDownMenu value={row.status} onChange={(event, number, value) => this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
                         <MenuItem value={"todo"} primaryText="To Do" />
                         <MenuItem value={"inprogress"} primaryText="In Progress" />
                         <MenuItem value={"done"} primaryText="Done" />
                       </DropDownMenu>
+=======
+                      <Dropdown currentValue={row.status} onChangeFunction={(value) => this.handleChangeDropDown(value,row.number)} menuItemValues={STATUS_TICKET} width={'175px'}/>
+>>>>>>> e3e6ccbc5e5e7e8f511260f7e0f34b6376d441d3
                     }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
