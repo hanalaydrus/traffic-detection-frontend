@@ -6,19 +6,7 @@ import {
   CLIENT_SECRET,
   TOKEN_PARAMS,
   ENDPOINT,
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-  REDIRECT_URI,
-  CLIENT_ID,
-  PAYLOADS
-
-=======
-  CLIENT_ID,
-  AUTH_IS_PROCESSING
->>>>>>> Stashed changes
-=======
   CLIENT_ID
->>>>>>> 40a9cfcc7f37d5b71e4aedec36f2a2378e79e31f
 } from './constants';
 
 const https = require('https');

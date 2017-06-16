@@ -38,8 +38,6 @@ const STATUS_TICKET = [
   {value:'done',text:'Done'}
 ]
 
-import {Header} from './../../components/HeaderUser'
-
 class ListTicket extends Component {
   constructor() {
       super();
