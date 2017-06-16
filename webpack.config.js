@@ -27,6 +27,11 @@ var config = {
           include: SRC_DIR,
           loaders: ["style-loader", "css-loader", "sass-loader"]
         },
+        {
+          test: /\.css$/,
+          loader: 'style-loader!css-loader?modules',
+          include: /flexboxgrid/
+          },
         { test: /\.json$/, loader: 'json-loader' }
       ]
   },

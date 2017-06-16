@@ -30,6 +30,10 @@ import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
 import getToken from './authGithub/getToken';
 import ListTicket from './containers/ListTicket';
+import StudentDetail from './components/StudentProfile'
+
+import City from './containers/City';
+
 
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
 export const store = createStoreWithMiddleware(reducers)
@@ -59,12 +63,15 @@ class App extends React.Component{
       <MuiThemeProvider muiTheme={Theme}>
         <Router history={history}>
           <div>
-              <Route exact path="/" component={Login} />
+              <Route exact path="/" component={RequireAuth(ListTicket)} />
+              <Route path="/loginadmin" component={Login} />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/curriculum" component={Curriculum} />
               <Route path="/worktodo" component={WorkTodo} />
               <Route path="/interview" component={Interview} />
               <Route path="/hiring" component={Hiring} />
+              <Route path="/studentlist" component={StudentDetail} />
+              <Route path="/city" component={City} />
               <Route path="/githublogin" component={GithubLogin} />
               <Route path="/github/callback" component={getToken} />
               <Route path="/preparation" component={Preparation} />
