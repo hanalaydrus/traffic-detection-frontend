@@ -32,6 +32,7 @@ import getToken from './authGithub/getToken';
 import ListTicket from './containers/ListTicket';
 import StudentDetail from './components/StudentDetail'
 import CampusListTable from './containers/CampusListTable'
+import PartnerList from './containers/PartnerList'
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
 export const store = createStoreWithMiddleware(reducers)
 /**
@@ -72,6 +73,7 @@ class App extends React.Component{
               <Route path="/preparation" component={Preparation} />
               <Route path='/listticket' component={RequireAuth(ListTicket)} />
               <Route path='/campuslist' component={CampusListTable} />
+              <Route path='/partnerlist' component={PartnerList}/>
           </div>
         </Router>
       </MuiThemeProvider>
