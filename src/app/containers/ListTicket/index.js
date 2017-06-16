@@ -6,6 +6,8 @@ import Loader from 'react-loader'
 import RichTextEditor from 'react-rte'
 import marked from 'marked'
 import moment from 'moment'
+import ReactMarkdown from 'react-markdown'
+
 import {
   Checkbox,
   Table,
@@ -285,13 +287,31 @@ class ListTicket extends Component {
         >
           <div className={"markdown_container"} >
             <div className={"show_comment"}>
-            {this.props.isFetchingComment ?
+              <Card style={{padding: 4}}>
+                <div className={"card_header"}>
+                  <CardHeader
+                    title={<b>{this.props.isFetchingComment ? '' : "#" + this.props.commentData.number + " " + this.props.commentData.title}</b>}
+                    titleColor='#222'
+                  />
+                </div>
+                <CardText>
+                  <div>
+                    <div>
+                    </div>
+                    <div>
+                      Ticket details : 
+                      <ReactMarkdown source={this.props.commentData.body} />
+                    </div>
+                  </div>
+                </CardText>
+              </Card>
+             {this.props.isFetchingComment ?
               (<Loader type="line-scale" active />) :
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
                 <Card style={{padding: 4}}>
                   <div className={"card_header"}>
                     <CardHeader
-                      title={row.user.login + " commented on #" + this.props.commentData.number + " " + this.props.commentData.title}
+                      title={row.user.login}
                       subtitle={moment(row.created_at, ["YYYY", moment.ISO_8601]).format("MMMM Do YYYY hh:mm")}
                       avatar={row.user.avatar_url}
                       titleColor='#000'
@@ -306,11 +326,13 @@ class ListTicket extends Component {
                 </Card>
                 )))}
             </div>
+
             <div className={"markdown_editor"} >
               <div className={"markdown_editor_detail"}>
                 <RichTextEditor
                   value={this.state.valueMarkdown}
                   onChange={this.onMarkdownChange}
+                  placeholder={'Leave a comment'}
                 />
               </div>
               <div className={"markdown_button_submit"} >
