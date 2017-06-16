@@ -10,8 +10,10 @@ import {
   FILTER_TICKET,
   FETCH_COMMENT_DATA,
   UPDATE_IS_FETCHING_COMMENT,
+  UPDATE_SCORE,
+  UPDATE_IS_FETCHING_PROFILE,
   UPDATE_COMMENT_DATA,
-  UPDATE_SCORE
+  FETCH_PROFILE_DATA
 } from './constants'
 
 import { TOKEN } from '../../../constants'
@@ -36,14 +38,35 @@ export function fetchTicketData() {
    })
  }
 }
+export function fetchProfileData() {
+ return (dispatch) => {
+   // Set fetching to true
+   dispatch(updateIsFetching(true))
+   // Make the request for contacts
+   refactoryAxios.get(`/api/profile`, {
+     headers: {
+       Accept: "aplication/json",
+       Authorization: `Bearer ${TOKEN()}`
+    }
+   }).then( (response) => {
+     // Load the timeline data data into the reducer
+     dispatch({
+       type: FETCH_PROFILE_DATA,
+       payload: response.data.data
+     })
+     // Set fetching to false
+     dispatch(updateIsFetching(false))
+   })
+ }
+}
 
 export function setFilter(filter) {
-  return (dispatch, getState) => {  
+  return (dispatch, getState) => {
     const oldFilters = getState().getIn(['ticketData', 'filters']).toJS();
     const hasStored = oldFilters.findIndex((status) => filter === status) >= 0;
     const filters = !hasStored ? (
         (filter === 'todo') ? (oldFilters.concat(filter, 'inprogress')) : oldFilters.concat(filter)
-      ) : 
+      ) :
       (
         (filter === 'todo') ? (oldFilters.filter((value) => (value !== filter) && (value !== 'inprogress'))) : oldFilters.filter((value) => value !== filter)
       );
@@ -59,6 +82,12 @@ export function setFilter(filter) {
 export function updateIsFetching(status) {
   return {
     type: UPDATE_IS_FETCHING,
+    status
+  }
+}
+export function updateIsFetchingProfile(status) {
+  return {
+    type: UPDATE_IS_FETCHING_PROFILE,
     status
   }
 }

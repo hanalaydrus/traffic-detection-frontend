@@ -149,6 +149,7 @@ class ListTicket extends Component {
 
   componentWillMount() {
     this.props.fetchTicketData()
+    this.props.fetchProfileData()
   }
 
   render() {
@@ -369,7 +370,9 @@ const mapStateToProps = createStructuredSelector({
   isFetching: selectors.getIsFetching(),
   filters: selectors.getFilters(),
   isFetchingComment: selectors.getIsFetchingComment(),
-  commentData: selectors.getCommentData()
+  commentData: selectors.getCommentData(),
+  profileData: selectors.getProfileData(),
+  isFetchingProfile: selectors.getIsFetchingProfile()
 });
 
 /**
