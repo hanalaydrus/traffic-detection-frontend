@@ -21,6 +21,7 @@ import {
   MenuItem,
   Drawer,
   RaisedButton,
+  FlatButton,
   Card,
   CardHeader,
   CardText,
@@ -30,8 +31,16 @@ import {
 import './styles.scss'
 import * as actions from './actions';
 import * as selectors from './selectors';
+import Dropdown from '../../components/Dropdown';
+
 
 import Header from './../../components/HeaderUser'
+
+const STATUS_TICKET = [
+  {value:'todo',text:'To Do'},
+  {value:'inprogress',text:'In Progress'},
+  {value:'done',text:'Done'}
+]
 
 class ListTicket extends Component {
   constructor() {
@@ -58,7 +67,7 @@ class ListTicket extends Component {
       };
     }
 
-  handleChangeDropDown = (index, value, ticketNumber) => {
+  handleChangeDropDown = (value, ticketNumber) => {
     const newData = this.props.data.tickets;
     const data = newData.find((tckData) => {return tckData.number === ticketNumber})
     const tempStatus = data.status
@@ -106,6 +115,10 @@ class ListTicket extends Component {
     })
   }
 
+  handleRefreshComment = (projectName, ticketNumber) => {
+    this.props.fetchCommentData(projectName,ticketNumber)
+  }
+
   labelColor = (labelName) => {
       return labelName === 'feature' ? 'ffe100' :
       labelName === 'tweak' ? '0083ff' :
@@ -140,8 +153,9 @@ class ListTicket extends Component {
 
   render() {
     if (this.props.isFetching) {
-      return <Loader type="line-scale" active />
+      return <Loader type="line-scale" color="#fff" active />
     }
+    console.log('status type', STATUS_TICKET)
     return (
       <div>
         <Header />
@@ -252,11 +266,7 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     {
-                      <DropDownMenu value={row.status} onChange={(event, number, value)=>this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
-                        <MenuItem value={"todo"} primaryText="To Do" />
-                        <MenuItem value={"inprogress"} primaryText="In Progress" />
-                        <MenuItem value={"done"} primaryText="Done" />
-                      </DropDownMenu>
+                      <Dropdown currentValue={row.status} onChangeFunction={() => this.handleChangeDropDown(value,row.number)} menuItemValues={STATUS_TICKET} width={'175px'}/>
                     }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
@@ -283,12 +293,12 @@ class ListTicket extends Component {
           <div className={"markdown_container"} >
             <div className={"show_comment"}>
             {this.props.isFetchingComment ?
-              (<Loader type="line-scale" active />) :
+              (<Loader type="line-scale" color="#fff" active />) :
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
-                <Card style={{maxWidth: '96%'}}>
+                <Card style={{padding: 4}}>
                   <div className={"card_header"}>
                     <CardHeader
-                      title={row.user.login}
+                      title={row.user.login + " commented on #" + this.props.commentData.number + " " + this.props.commentData.title}
                       subtitle={moment(row.created_at, ["YYYY", moment.ISO_8601]).format("MMMM Do YYYY hh:mm")}
                       avatar={row.user.avatar_url}
                       titleColor='#000'
@@ -300,7 +310,8 @@ class ListTicket extends Component {
                       <div dangerouslySetInnerHTML={{__html:marked(row.body)}}/>
                     </div>
                   </CardText>
-                </Card>)))}
+                </Card>
+                )))}
             </div>
             <div className={"markdown_editor"} >
               <div className={"markdown_editor_detail"}>
@@ -310,6 +321,15 @@ class ListTicket extends Component {
                 />
               </div>
               <div className={"markdown_button_submit"} >
+                <FlatButton 
+                  label="Refresh" 
+                  primary={true}
+                  onClick={
+                    () => this.handleRefreshComment(
+                      this.state.selectedProjectName,
+                      this.state.selectedTicketNumber
+                  )}
+                />
                 <RaisedButton
                   backgroundColor="#f9bb00"
                   labelColor="#000"

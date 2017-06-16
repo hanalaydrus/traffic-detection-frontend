@@ -25,6 +25,13 @@ export function logOut() {
   return { type: UNAUTH_USER };
 }
 
+export function authIsProcessing(status) {
+  return {
+    type: AUTH_IS_PROCESSING,
+    status
+  }
+}
+
 export function authenticateUser() {
   return dispatch => {
     window.receivedCode = (url) => {

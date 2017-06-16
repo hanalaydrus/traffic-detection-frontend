@@ -26,8 +26,15 @@ body {
     color: rgba(255,255,255,0.8) !important;
   }
 }
+.loader-login {
+  margin-top: 60px;
+  .spinner{
+    position: relative !important;
+  }
+}
 .btn-login{
   margin-top: 30px;
   width: 50%;
   color: white;
 }
+

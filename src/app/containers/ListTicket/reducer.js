@@ -7,7 +7,8 @@ import {
   SET_FILTER,
   FETCH_COMMENT_DATA,
   UPDATE_IS_FETCHING_COMMENT,
-  UPDATE_COMMENT_DATA
+  UPDATE_COMMENT_DATA,
+  UPDATE_SCORE
 } from './constants'
 
 const initialState = fromJS({
@@ -34,6 +35,10 @@ function ticketDataReducer(state = initialState, action) {
       return state.set('commentData', fromJS(action.payload))
     case UPDATE_COMMENT_DATA:
       return state.setIn(['commentData', 'comments'], fromJS(action.payload))
+    case UPDATE_SCORE:
+      return state.setIn([
+        'data', 'total_score'
+      ], action.newScore)
     default:
       return state
   }
