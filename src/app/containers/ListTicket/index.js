@@ -21,6 +21,7 @@ import {
   MenuItem,
   Drawer,
   RaisedButton,
+  FlatButton,
   Card,
   CardHeader,
   CardText,
@@ -109,6 +110,10 @@ class ListTicket extends Component {
     this.setState({
       valueMarkdown: RichTextEditor.createEmptyValue()
     })
+  }
+
+  handleRefreshComment = (projectName, ticketNumber) => {
+    this.props.fetchCommentData(projectName,ticketNumber)
   }
 
   labelColor = (labelName) => {
@@ -287,10 +292,10 @@ class ListTicket extends Component {
             {this.props.isFetchingComment ?
               (<Loader type="line-scale" color="#fff" active />) :
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
-                <Card style={{maxWidth: '96%'}}>
+                <Card style={{padding: 4}}>
                   <div className={"card_header"}>
                     <CardHeader
-                      title={row.user.login}
+                      title={row.user.login + " commented on #" + this.props.commentData.number + " " + this.props.commentData.title}
                       subtitle={moment(row.created_at, ["YYYY", moment.ISO_8601]).format("MMMM Do YYYY hh:mm")}
                       avatar={row.user.avatar_url}
                       titleColor='#000'
@@ -302,7 +307,8 @@ class ListTicket extends Component {
                       <div dangerouslySetInnerHTML={{__html:marked(row.body)}}/>
                     </div>
                   </CardText>
-                </Card>)))}
+                </Card>
+                )))}
             </div>
             <div className={"markdown_editor"} >
               <div className={"markdown_editor_detail"}>
@@ -312,6 +318,15 @@ class ListTicket extends Component {
                 />
               </div>
               <div className={"markdown_button_submit"} >
+                <FlatButton 
+                  label="Refresh" 
+                  primary={true}
+                  onClick={
+                    () => this.handleRefreshComment(
+                      this.state.selectedProjectName,
+                      this.state.selectedTicketNumber
+                  )}
+                />
                 <RaisedButton
                   backgroundColor="#f9bb00"
                   labelColor="#000"
