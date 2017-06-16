@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 
-export const Enhance = (url) => (WrappedComponent) => class extends Component{  
+export const Enhance = (url) => (WrappedComponent) => class extends Component{
     constructor(){
         super(...arguments)
         this.state = {
@@ -19,13 +19,13 @@ export const Enhance = (url) => (WrappedComponent) => class extends Component{
             this.setState({
             dataFetch:response
         })})
-        .catch((e) => console.log(e))
+        .catch(e => e)
     }
 
     render() {
         if(this.state.dataFetch){
             return <WrappedComponent data = {this.state.dataFetch} {...this.props}/>
-        } 
+        }
             return (<div>
                         <h1>Loading......................</h1>
                         <CircularProgress size={60} thickness={7} />
