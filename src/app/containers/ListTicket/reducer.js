@@ -12,7 +12,7 @@ import {
 
 const initialState = fromJS({
   data: [],
-  filters: ["todo"],
+  filters: ["todo", "inprogress"],
   isFetching: false,
   isFetchingComment: false,
   commentData: {}
