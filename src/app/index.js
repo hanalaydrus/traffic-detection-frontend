@@ -30,7 +30,10 @@ import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
 import getToken from './authGithub/getToken';
 import ListTicket from './containers/ListTicket';
+import StudentDetail from './components/StudentProfile'
+
 import City from './containers/City';
+
 
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
 export const store = createStoreWithMiddleware(reducers)
@@ -66,6 +69,7 @@ class App extends React.Component{
               <Route path="/worktodo" component={WorkTodo} />
               <Route path="/interview" component={Interview} />
               <Route path="/hiring" component={Hiring} />
+              <Route path="/studentlist" component={StudentDetail} />
               <Route path="/city" component={City} />
               <Route path="/githublogin" component={GithubLogin} />
               <Route path="/github/callback" component={getToken} />
