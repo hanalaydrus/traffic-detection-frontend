@@ -159,7 +159,6 @@ class ListTicket extends Component {
     if (this.props.isFetching) {
       return <Loader type="line-scale" color="#fff" active />
     }
-    console.log('status type', STATUS_TICKET)
     return (
       <div>
         <Header />
@@ -171,13 +170,13 @@ class ListTicket extends Component {
               <Checkbox
                 label="To Do"
                 checked={ this.props.filters.indexOf("todo") >= 0 || this.props.filters.indexOf("inprogress") >= 0}
-                style={ "checkbox" }
+                style={{marginRight:30}}
                 onCheck={() => this.handleFilter("todo")}
               />
               <Checkbox
                 label="Done"
                 checked={ this.props.filters.indexOf("done") >= 0 }
-                style={ "checkbox" }
+                style={{}}
                 onCheck={() => this.handleFilter("done")}
               />
             </div>
@@ -346,8 +345,8 @@ class ListTicket extends Component {
                 />
               </div>
               <div className={"markdown_button_submit"} >
-                <FlatButton 
-                  label="Refresh" 
+                <FlatButton
+                  label="Refresh"
                   primary={true}
                   onClick={
                     () => this.handleRefreshComment(

@@ -18,7 +18,6 @@ class Login extends Component {
       document.body.style.backgroundColor = null;
   }
   render() {
-    console.log('Token : ',TOKEN())
     return (
         <div>
           <div className="login-card">

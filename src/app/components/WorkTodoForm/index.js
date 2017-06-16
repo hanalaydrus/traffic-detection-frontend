@@ -89,7 +89,6 @@ class WorkToDoForm extends Component {
     })
   }
   deleteRow = () => {
-    console.log(tilesData);
     tilesData.splice(this.state.selected,1);
     this.setState({data: tilesData})
 
