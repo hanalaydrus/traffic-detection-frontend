@@ -2,10 +2,11 @@
  * Import node modules
  */
 import React, { Component } from 'react'
-import { func } from 'prop-types'
+import { func, bool } from 'prop-types'
 import { connect } from 'react-redux'
 import {TOKEN} from '../../constants'
 import Loader from 'react-loader'
+import { createStructuredSelector } from 'reselect'
 /**
  *  Import other dependencies
  */
@@ -14,6 +15,7 @@ import {orange600, orange500} from 'material-ui/styles/colors';
 import styles from './styles.scss'
 import * as actions from './actions'
 import * as selectors from './selectors'
+import history from '../history.js'
 
 const style = {
   orange: {
@@ -22,11 +24,18 @@ const style = {
 };
 
 class GithubLogin extends Component {
-
+  constructor(){
+    super()
+    this.state= {
+      authIsProcessing: false
+    }
+  }
   handleGithubLoginAttempt() {
     this.props.authenticateUser()
+    this.setState({
+      authIsProcessing: true
+    })
   }
-
   render() {
     return (
       <MuiThemeProvider>
@@ -35,12 +44,13 @@ class GithubLogin extends Component {
             <div className="form-card">
                 <img src="/images/GitHub-Mark-Light-120px-plus.png" className="img-logo" />
                 <br/>
-                { 
-                <RaisedButton
-                  label="Login with Github"
-                  backgroundColor={orange500}
-                  className="btn-login"
-                  onClick= {() => this.handleGithubLoginAttempt()}
+                { this.state.authIsProcessing ?
+                  <div className="loader-login"><Loader type="line-scale" color="#fff" active /></div> :
+                  <RaisedButton
+                    label="Login with Github"
+                    backgroundColor={orange500}
+                    className="btn-login"
+                    onClick= {() => this.handleGithubLoginAttempt()}
                   />
                 }
             </div>
@@ -67,4 +77,4 @@ const mapStateToProps = createStructuredSelector({
 /**
  *  Export the component
  */
-export default connect(null, actions)(GithubLogin)
+export default connect(mapStateToProps, actions)(GithubLogin)

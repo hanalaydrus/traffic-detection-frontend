@@ -6,19 +6,7 @@ import {
   CLIENT_SECRET,
   TOKEN_PARAMS,
   ENDPOINT,
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-  REDIRECT_URI,
-  CLIENT_ID,
-  PAYLOADS
-
-=======
-  CLIENT_ID,
-  AUTH_IS_PROCESSING
->>>>>>> Stashed changes
-=======
   CLIENT_ID
->>>>>>> 40a9cfcc7f37d5b71e4aedec36f2a2378e79e31f
 } from './constants';
 
 const https = require('https');
@@ -32,6 +20,9 @@ import history from '../history.js'
 
 export function logIn() {
   return { type: AUTH_USER };
+}
+export function logOut() {
+  return { type: UNAUTH_USER };
 }
 
 export function authIsProcessing(status) {
@@ -58,6 +49,17 @@ export function authenticateUser() {
     const url = buildUrl(ENDPOINT_AUTH, TOKEN_PARAMS);
 
     const childWindow = window.open(url, 'Login with Github', 'width=800,height=300');
+  }
+};
+
+export function unauthenticateUser() {
+  return dispatch => {
+            dispatch(logOut());
+            // Save JWT token to localStorage and set expiration
+            removeHtmlStorage('token');
+            // Redirect using react router
+            history.push('/');
+            window.location.reload();
   }
 };
 
