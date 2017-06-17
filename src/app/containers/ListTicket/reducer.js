@@ -9,6 +9,7 @@ import {
   FETCH_COMMENT_DATA,
   UPDATE_IS_FETCHING_COMMENT,
   UPDATE_COMMENT_DATA,
+  UPDATE_IS_PATCHING_TICKET_DATA,
   UPDATE_SCORE,
   UPDATE_IS_FETCHING_PROFILE
 } from './constants'
@@ -18,8 +19,9 @@ const initialState = fromJS({
   filters: ["todo", "inprogress"],
   isFetching: false,
   isFetchingComment: false,
-  isFetchingProfile: false,
+  isPatchingTicketData: false,
   commentData: {},
+  isFetchingProfile: false,
   profileData: {}
 })
 
@@ -39,6 +41,8 @@ function ticketDataReducer(state = initialState, action) {
       return state.set('filters', fromJS(action.filters))
     case UPDATE_IS_FETCHING_COMMENT:
       return state.set('isFetchingComment', action.status)
+    case UPDATE_IS_PATCHING_TICKET_DATA:
+      return state.set('isPatchingTicketData', action.status)
     case FETCH_COMMENT_DATA:
       return state.set('commentData', fromJS(action.payload))
     case UPDATE_COMMENT_DATA:

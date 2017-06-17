@@ -10,6 +10,7 @@ import {
   FILTER_TICKET,
   FETCH_COMMENT_DATA,
   UPDATE_IS_FETCHING_COMMENT,
+  UPDATE_IS_PATCHING_TICKET_DATA,
   UPDATE_SCORE,
   UPDATE_IS_FETCHING_PROFILE,
   UPDATE_COMMENT_DATA,
@@ -93,7 +94,7 @@ export function updateIsFetchingProfile(status) {
 
 export function patchTicketData (project_name, ticket_number, old_status, new_status, newData) {
   return (dispatch, getState) => {
-
+    dispatch(updateIsPatchingTicketData(true))
     refactoryAxios.patch('/api/tickets/status', {
       project_name,
       ticket_number,
@@ -105,16 +106,23 @@ export function patchTicketData (project_name, ticket_number, old_status, new_st
         'Authorization': `Bearer ${TOKEN()}`
       }
     }).then((response) => {
-      const doneData = newData.filter(obj => obj.status === "done")
       dispatch({
         type: UPDATE_NEW_TICKET,
         payload: newData
       })
-      dispatch({
-        type: UPDATE_SCORE,
-        newScore: doneData.length
-      })
+      // dispatch({
+      //   type: UPDATE_SCORE,
+      //   newScore: new
+      // })
+      dispatch(updateIsPatchingTicketData(false))
     }).catch(err => err);
+  }
+}
+
+export function updateIsPatchingTicketData(status) {
+  return {
+    type: UPDATE_IS_PATCHING_TICKET_DATA,
+    status
   }
 }
 

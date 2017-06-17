@@ -42,6 +42,11 @@ export const getIsFetchingComment = () => createSelector(
   (state) => state.get('isFetchingComment')
 )
 
+export const getIsPatchingTicketData = () => createSelector(
+  selectTicketData(),
+  (state) => state.get('isPatchingTicketData')
+)
+
 export const getCommentData = () => createSelector(
   selectTicketData(),
   (state) => state.get('commentData').toJS()

@@ -92,7 +92,6 @@ function requestToken(code) {
   const params_token = {
     code: code
   }
-
   const accessToken = axios.post(ENDPOINT, params_token)
   return accessToken
 }

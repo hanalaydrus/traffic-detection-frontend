@@ -33,16 +33,7 @@ import {
 import './styles.scss'
 import * as actions from './actions';
 import * as selectors from './selectors';
-import Dropdown from '../../components/Dropdown';
-
-
 import Header from './../../components/HeaderUser'
-
-const STATUS_TICKET = [
-  {value:'todo',text:'To Do'},
-  {value:'inprogress',text:'In Progress'},
-  {value:'done',text:'Done'}
-]
 
 class ListTicket extends Component {
   constructor() {
@@ -65,17 +56,20 @@ class ListTicket extends Component {
         drawerOpen: false,
         valueMarkdown: RichTextEditor.createEmptyValue(),
         selectedProjectName: '',
-        selectedTicketNumber: -1
+        selectedTicketNumberForDiscuss: -1,
+        selectedTicketNumberForDropdown: -1,
       };
     }
 
-  handleChangeDropDown = (value, ticketNumber) => {
-    console.log(value, ticketNumber);
+  handleChangeDropDown = (index, value, ticketNumber) => {
     const newData = this.props.data.tickets;
     const data = newData.find((tckData) => {return tckData.number === ticketNumber})
     const tempStatus = data.status
     data.status = value;
     this.props.patchTicketData(data.repository.name, data.number, tempStatus, value, newData)
+    this.setState({
+      selectedTicketNumberForDropdown: ticketNumber
+    })
   }
 
   handleFilter = (status) => {
@@ -106,7 +100,7 @@ class ListTicket extends Component {
     this.setState({
       drawerOpen: !this.state.drawerOpen,
       selectedProjectName: projectName,
-      selectedTicketNumber: ticketNumber
+      selectedTicketNumberForDiscuss: ticketNumber
     })
   }
 
@@ -214,7 +208,8 @@ class ListTicket extends Component {
               showRowHover={this.state.showRowHover}
               stripedRows={this.state.stripedRows}
             >
-              {this.props.data.tickets && this.props.data.tickets.filter((value) => {
+
+              { this.props.data.tickets && this.props.data.tickets.filter((value) => {
                 const hasFilters = this.props.filters.length > 0;
                 const containsStatus = this.props.filters.indexOf(value.status) >= 0;
                 return !hasFilters || containsStatus;
@@ -247,29 +242,29 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
                     {
-                       row.labels.map( (content) => (
-                         ((content.name === 'inprogress') ||
-                          (content.name === 'todo') ||
-                          (content.name === 'done')
-                         ) ?
-                        (<div style={{
+                        <div style={{
                           fontWeight: 'bold',
                           margin: '4px',
                           float: 'left',
                           borderStyle: 'solid',
-                          borderColor: '#' + this.labelColor(content.name),
+                          borderColor: '#' + this.labelColor(row.status),
                           borderRadius: '5px',
-                          backgroundColor: '#' + this.labelColor(content.name),
-                          color: '#' + this.labelFontColor(content.name)
+                          backgroundColor: '#' + this.labelColor(row.status),
+                          color: '#' + this.labelFontColor(row.status)
                         }}>
-                            {content.name}
-                        </div> ) : ' '
-                      ))
-                    }
+                            {row.status}
+                        </div>
+                       }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
-                    {
-                      <Dropdown currentValue={row.status} onChangeFunction={(value) => this.handleChangeDropDown(value,row.number)} menuItemValues={STATUS_TICKET} width={'175px'}/>
+                    { 
+                      (this.props.isPatchingTicketData && (this.state.selectedTicketNumberForDropdown === row.number)) ?
+                      (<div className="loader-ticket"><Loader type="line-scale" color="#fff" scale={0.80} active /></div>) :
+                      (<DropDownMenu value={row.status} onChange={(event, number, value) => this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
+                        <MenuItem value={"todo"} primaryText="To Do" />
+                        <MenuItem value={"inprogress"} primaryText="In Progress" />
+                        <MenuItem value={"done"} primaryText="Done" />
+                      </DropDownMenu>)
                     }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
@@ -351,7 +346,7 @@ class ListTicket extends Component {
                   onClick={
                     () => this.handleRefreshComment(
                       this.state.selectedProjectName,
-                      this.state.selectedTicketNumber
+                      this.state.selectedTicketNumberForDiscuss
                   )}
                 />
                 <RaisedButton
@@ -361,7 +356,7 @@ class ListTicket extends Component {
                   onClick={
                     () => this.handleSubmitComment(
                       this.state.selectedProjectName,
-                      this.state.selectedTicketNumber,
+                      this.state.selectedTicketNumberForDiscuss,
                       this.state.valueMarkdown.toString('markdown')
                   )}
                 />
@@ -394,6 +389,7 @@ const mapStateToProps = createStructuredSelector({
   filters: selectors.getFilters(),
   isFetchingComment: selectors.getIsFetchingComment(),
   commentData: selectors.getCommentData(),
+  isPatchingTicketData: selectors.getIsPatchingTicketData(),
   profileData: selectors.getProfileData(),
   isFetchingProfile: selectors.getIsFetchingProfile()
 });

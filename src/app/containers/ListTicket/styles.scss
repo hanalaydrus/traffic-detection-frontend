@@ -97,3 +97,12 @@
   background-color: #f29513;
   color: black
 }
+.loader-ticket {
+  text-align: center;
+  margin: auto;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  .spinner{
+    position: relative !important;
+  }
+}

@@ -12,3 +12,4 @@ export const FETCH_COMMENT_DATA = 'src/app/containers/ListTicket/FETCH_COMMENT_D
 export const UPDATE_IS_FETCHING_COMMENT = 'src/app/containers/ListTicket/UPDATE_IS_FETCHING_COMMENT'
 export const UPDATE_COMMENT_DATA = 'src/app/containers/ListTicket/UPDATE_COMMENT_DATA'
 export const UPDATE_SCORE = 'src/app/containers/ListTicket/UPDATE_SCORE'
+export const UPDATE_IS_PATCHING_TICKET_DATA = 'src/app/containers/ListTicket/UPDATE_IS_PATCHING_TICKET_DATA'
