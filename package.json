@@ -20,7 +20,6 @@
     "jsonapi-normalizer": "^1.2.0",
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
-    "marked": "^0.3.6",
     "material-ui": "^0.18.1",
     "moment": "^2.18.1",
     "normalizr": "^3.2.3",

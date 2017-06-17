@@ -4,7 +4,6 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import Loader from 'react-loader'
 import RichTextEditor from 'react-rte'
-import marked from 'marked'
 import moment from 'moment'
 import ReactMarkdown from 'react-markdown'
 
@@ -62,11 +61,11 @@ class ListTicket extends Component {
     }
 
   handleChangeDropDown = (index, value, ticketNumber) => {
-    const newData = this.props.data.tickets;
-    const data = newData.find((tckData) => {return tckData.number === ticketNumber})
+    const newData = this.props.data;
+    const data = newData.tickets.find((tckData) => {return tckData.number === ticketNumber})
     const tempStatus = data.status
     data.status = value;
-    this.props.patchTicketData(data.repository.name, data.number, tempStatus, value, newData)
+    this.props.patchTicketData(data.repository.name, ticketNumber, tempStatus, value, newData)
     this.setState({
       selectedTicketNumberForDropdown: ticketNumber
     })
@@ -131,25 +130,13 @@ class ListTicket extends Component {
       labelName === 'enhancement' ? 'ffffff' : '000000'
   }
 
-  updateTicketData = () => {
-    const { tickets } = this.props.data
-    const newStatusType = this.state.statusChecked
-    const ticketData = tickets.filter((a) => {
-      return ((a.status === newStatusType[0]) ||
-              (a.status === newStatusType[1]) ||
-              (a.status === newStatusType[2]))
-    })
-    this.setState({
-      dataTicket: ticketData
-    })
-  }
-
   componentWillMount() {
     this.props.fetchTicketData()
     this.props.fetchProfileData()
   }
 
   render() {
+    console.log('cek data index', this.props.data)
     if (this.props.isFetching) {
       return <Loader type="line-scale" color="#fff" active />
     }
@@ -177,7 +164,11 @@ class ListTicket extends Component {
           </div>
           <div className={ "score_container "}>
             <div className={"score_title"}><b>Your Score</b> </div>
-            <div className={"score"}><b>{this.props.data.total_score + " pts"}</b> </div>
+            {
+              this.props.isPatchingTicketData ? 
+              <div className="loader-score"><Loader type="line-scale" color="#fff" scale={0.70} active /></div> :
+              <div className={"score"}><b>{this.props.data.total_score + " pts"}</b> </div>
+            }
           </div>
         </div>
         <div className={ "table_container" }>
@@ -324,7 +315,7 @@ class ListTicket extends Component {
                   </div>
                   <CardText>
                     <div className={ "cardTextContainer" }>
-                      <div dangerouslySetInnerHTML={{__html:marked(row.body)}}/>
+                      <ReactMarkdown source={row.body} />
                     </div>
                   </CardText>
                 </Card>
@@ -374,7 +365,7 @@ class ListTicket extends Component {
  *  Define component PropTypes
  */
 ListTicket.propTypes = {
-  data: array.isRequired,
+  data: object.isRequired,
   isFetching: bool.isRequired,
   patchTicketData: func.isRequired,
   onMarkdownChange: func
