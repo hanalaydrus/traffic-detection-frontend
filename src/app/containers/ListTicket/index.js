@@ -136,7 +136,6 @@ class ListTicket extends Component {
   }
 
   render() {
-    console.log('cek data index', this.props.data)
     if (this.props.isFetching) {
       return <Loader type="line-scale" color="#fff" active />
     }

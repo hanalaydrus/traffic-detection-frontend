@@ -95,7 +95,6 @@ export function updateIsFetchingProfile(status) {
 }
 
 export function patchTicketData (project_name, ticket_number, old_status, new_status, newData) {
-  console.log('cek data action patch', newData)
   return (dispatch, getState) => {
     dispatch(updateIsPatchingTicketData(true))
     refactoryAxios.patch('/api/tickets/status', {
@@ -132,13 +131,11 @@ export function fetchScoreData(newData) {
       }
    }).then( (response) => {
      // Load the score data into the reducer
-     console.log('nyari score', response.data.data.total_score)
      newData.total_score = response.data.data.total_score;
      dispatch({
        type: UPDATE_NEW_SCORE,
        payload: newData
      })
-     console.log('cek data action fetch score', newData)
     //  Set fetching to false
      dispatch(updateIsPatchingTicketData(false))
    })
