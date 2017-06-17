@@ -57,8 +57,8 @@ export class Editor extends React.Component {
     render(){
     return (
       <div >
-        <h4 style={{color:orange500}}>{this.props.title}</h4> {/*Script 1 or Script 2*/}
-        <div className="editor_container">
+        <h4 style={styles.orange}>{this.props.title}</h4> {/*Script 1 or Script 2*/}
+        <div className={styles.run_container}>
           {/*AceEditor*/}
           <AceEditor
               mode="javascript"
@@ -72,7 +72,7 @@ export class Editor extends React.Component {
               ref={instance => { this.ace = instance; }}
           />
         </div>
-        <div className="run_container">
+        <div className={styles.run_container}>
           {/*RUN button*/}
           <RaisedButton label="Run" primary={true} onClick={this.onClick} style={{float:'left'}}/>
           <div style={{float:'right', paddingTop:10}}>

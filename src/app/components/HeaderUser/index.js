@@ -37,15 +37,8 @@ class Header extends React.Component {
 
   }
   handleGithubLogoutAttempt= () => {
-    console.log("OnClick");
     this.props.unauthenticateUser()
   }
-  /*
-    handleChange = () => {
-      const Nav = this.props.navStyle === 'nav' ? 'nav-full' : 'nav';
-      const Draw = this.props.drawerStyle === 'menu-drawer' ? 'menu-lost' : 'menu-drawer';
-      this.props.onClick(Nav, Draw);
-    }*/
 
     render(){
     return (

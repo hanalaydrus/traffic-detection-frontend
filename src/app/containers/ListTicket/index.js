@@ -164,13 +164,13 @@ class ListTicket extends Component {
               <Checkbox
                 label="To Do"
                 checked={ this.props.filters.indexOf("todo") >= 0 || this.props.filters.indexOf("inprogress") >= 0}
-                style={ "checkbox" }
+                style={{marginRight:30}}
                 onCheck={() => this.handleFilter("todo")}
               />
               <Checkbox
                 label="Done"
                 checked={ this.props.filters.indexOf("done") >= 0 }
-                style={ "checkbox" }
+                style={{}}
                 onCheck={() => this.handleFilter("done")}
               />
             </div>
@@ -214,16 +214,7 @@ class ListTicket extends Component {
                 const containsStatus = this.props.filters.indexOf(value.status) >= 0;
                 return !hasFilters || containsStatus;
               }).map( (row, index) => (
-                (this.props.isPatchingTicketData && (this.state.selectedTicketNumberForDropdown === row.number)) ? 
-                ( <TableRow key={index} style={{borderBottom: '1px solid #424040', textAlign: 'center'}}>
-                    <TableRowColumn />
-                    <TableRowColumn />
-                    <TableRowColumn />
-                    <div className="loader-ticket"><Loader type="line-scale" color="#fff" scale={0.80} active /></div>
-                    <TableRowColumn />
-                    <TableRowColumn />
-                  </TableRow>) :
-                (<TableRow key={index} style={{borderBottom: '1px solid #424040'}}>
+                <TableRow key={index} style={{borderBottom: '1px solid #424040'}}>
                   <TableRowColumn style={{textAlign: 'center'}}><a href={row.repository.url} style={{color: 'white'}}>{row.repository.name}</a></TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}><a href={row.url} style={{color: 'white'}}>#{row.number} {row.title}</a></TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
@@ -251,12 +242,7 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
                     {
-                       row.labels.map( (content) => (
-                         ((content.name === 'inprogress') ||
-                          (content.name === 'todo') ||
-                          (content.name === 'done')
-                         ) ?
-                        (<div style={{
+                        <div style={{
                           fontWeight: 'bold',
                           margin: '4px',
                           float: 'left',
@@ -267,20 +253,18 @@ class ListTicket extends Component {
                           color: '#' + this.labelFontColor(row.status)
                         }}>
                             {row.status}
-                        </div>) : ''))
+                        </div>
                        }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
-                    {
-<<<<<<< HEAD
-                      <DropDownMenu value={row.status} onChange={(event, number, value) => this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
+                    { 
+                      (this.props.isPatchingTicketData && (this.state.selectedTicketNumberForDropdown === row.number)) ?
+                      (<div className="loader-ticket"><Loader type="line-scale" color="#fff" scale={0.80} active /></div>) :
+                      (<DropDownMenu value={row.status} onChange={(event, number, value) => this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
                         <MenuItem value={"todo"} primaryText="To Do" />
                         <MenuItem value={"inprogress"} primaryText="In Progress" />
                         <MenuItem value={"done"} primaryText="Done" />
-                      </DropDownMenu>
-=======
-                      <Dropdown currentValue={row.status} onChangeFunction={(value) => this.handleChangeDropDown(value,row.number)} menuItemValues={STATUS_TICKET} width={'175px'}/>
->>>>>>> e3e6ccbc5e5e7e8f511260f7e0f34b6376d441d3
+                      </DropDownMenu>)
                     }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
@@ -289,7 +273,7 @@ class ListTicket extends Component {
                       onTouchTap={ () => this.handleDrawerToggle(row.repository.name,row.number) }
                     />
                   </TableRowColumn>
-                </TableRow>)
+                </TableRow>
                 ))}
             </TableBody>
             <TableFooter
@@ -356,8 +340,8 @@ class ListTicket extends Component {
                 />
               </div>
               <div className={"markdown_button_submit"} >
-                <FlatButton 
-                  label="Refresh" 
+                <FlatButton
+                  label="Refresh"
                   primary={true}
                   onClick={
                     () => this.handleRefreshComment(
