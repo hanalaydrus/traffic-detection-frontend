@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom";
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 //redux related
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -56,6 +56,37 @@ if(statusHtmlStorage('token')) {
   store.dispatch({ type: UNAUTH_USER })
 }
 
+const IndexPage = () => {
+  return(
+    <div>
+      <Redirect from="/" to="/student/listticket" />
+    </div>
+  )
+}
+
+const StudenPage = () => {
+  return(
+    <div>
+      <Route path='/student/listticket' component={ListTicket} />
+    </div>
+  )
+}
+
+const AdminPage = () => {
+  return(
+  <div>
+    <Route path="/admin/dashboard" component={Dashboard} />
+    <Route path="/admin/curriculum" component={Curriculum} />
+    <Route path="/admin/worktodo" component={WorkTodo} />
+    <Route path="/admin/interview" component={Interview} />
+    <Route path="/admin/hiring" component={Hiring} />
+    <Route path="/admin/studentlist" component={StudentDetail} />
+    <Route path="/admin/city" component={City} />
+    <Route path="/admin/preparation" component={Preparation} />
+  </div>
+)
+}
+
 class App extends React.Component{
   render(){
     return(
@@ -63,19 +94,12 @@ class App extends React.Component{
       <MuiThemeProvider muiTheme={Theme}>
         <Router history={history}>
           <div>
-              <Route exact path="/" component={RequireAuth(ListTicket)} />
-              <Route path="/loginadmin" component={Login} />
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/curriculum" component={Curriculum} />
-              <Route path="/worktodo" component={WorkTodo} />
-              <Route path="/interview" component={Interview} />
-              <Route path="/hiring" component={Hiring} />
-              <Route path="/studentlist" component={StudentDetail} />
-              <Route path="/city" component={City} />
-              <Route path="/githublogin" component={GithubLogin} />
-              <Route path="/github/callback" component={getToken} />
-              <Route path="/preparation" component={Preparation} />
-              <Route path='/listticket' component={RequireAuth(ListTicket)} />
+            <Route exact path="/" component={IndexPage} />
+            <Route path="/githublogin" component={GithubLogin} />
+            <Route path="/github/callback" component={getToken} />
+            <Route path="/loginadmin" component={Login} />
+            <Route path="/student" component={RequireAuth(StudenPage)} />
+            <Route path="/admin" component={AdminPage} />
           </div>
         </Router>
       </MuiThemeProvider>

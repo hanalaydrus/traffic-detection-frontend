@@ -34,7 +34,7 @@ export default function(ComposedComponent) {
     componentWillMount() {
       if(!this.props.authenticated) {
         history.push('/githublogin')
-        window.location.reload();
+        location.href = location.href
       }
     }
 
@@ -42,7 +42,7 @@ export default function(ComposedComponent) {
     componentWillUpdate(nextProps) {
       if(!this.props.authenticated) {
         history.push('/githublogin')
-        window.location.reload();
+        location.href = location.href
       }
     }
 

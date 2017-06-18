@@ -24,10 +24,27 @@ const style = {
 };
 
 class GithubLogin extends Component {
+  static propTypes = {
+    authenticated: bool
+  }
   constructor(){
     super()
     this.state= {
       authIsProcessing: false
+    }
+  }
+  componentWillMount() {
+    if(this.props.isUserLoggedIn) {
+      history.push('/student/listticket')
+      location.href = location.href
+    }
+  }
+
+  // Push to login route if not authenticated on update
+  componentWillUpdate(nextProps) {
+    if(this.props.isUserLoggedIn) {
+      history.push('/student/listticket')
+      location.href = location.href
     }
   }
   handleGithubLoginAttempt() {

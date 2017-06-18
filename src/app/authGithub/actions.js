@@ -41,8 +41,8 @@ export function authenticateUser() {
             // Save JWT token to localStorage and set expiration
             setHtmlStorage('token', resp.data.access_token, 3600);
             // Redirect using react router
-            history.push('/listticket');
-            window.location.reload();
+            history.push('/student/listticket');
+            location.href = location.href
       });
     }
 
@@ -59,7 +59,7 @@ export function unauthenticateUser() {
             removeHtmlStorage('token');
             // Redirect using react router
             history.push('/');
-            window.location.reload();
+            location.href = location.href
   }
 };
 

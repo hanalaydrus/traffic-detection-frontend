@@ -57,8 +57,8 @@ export class Editor extends React.Component {
     render(){
     return (
       <div >
-        <h4 style={styles.orange}>{this.props.title}</h4> {/*Script 1 or Script 2*/}
-        <div className={styles.run_container}>
+        <h4 className={ "orange" }>{this.props.title}</h4> {/*Script 1 or Script 2*/}
+        <div className={ "editor_container" }>
           {/*AceEditor*/}
           <AceEditor
               mode="javascript"
@@ -72,20 +72,20 @@ export class Editor extends React.Component {
               ref={instance => { this.ace = instance; }}
           />
         </div>
-        <div className={styles.run_container}>
+        <div className={ "run_container" }>
           {/*RUN button*/}
           <RaisedButton label="Run" primary={true} onClick={this.onClick} style={{float:'left'}}/>
           <div style={{float:'right', paddingTop:10}}>
           Duration : {this.timeConverter(this.state.duration)/* Show duration*/}
           </div>
-          <div className="clear"></div>
-          <div className="result">
+          <div className={ "clear" }></div>
+          <div className={ "result" }>
             {this.state.result.match(/#ff%&/gi) ? this.state.result.split('#ff%&').map( (item, idx) => {
               return ( <div key={idx}>{item}</div> )
             }) : null }
           </div>
         </div>
-        <div className="clear" ></div>
+        <div className={ "clear" } ></div>
           <div ref={(el) => (this.instance = el)} />
     </div>
     );
