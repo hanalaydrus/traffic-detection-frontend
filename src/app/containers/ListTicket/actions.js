@@ -11,10 +11,10 @@ import {
   FETCH_COMMENT_DATA,
   UPDATE_IS_FETCHING_COMMENT,
   UPDATE_IS_PATCHING_TICKET_DATA,
-  UPDATE_SCORE,
   UPDATE_IS_FETCHING_PROFILE,
   UPDATE_COMMENT_DATA,
-  FETCH_PROFILE_DATA
+  FETCH_PROFILE_DATA,
+  UPDATE_NEW_SCORE
 } from './constants'
 
 import { TOKEN } from '../../../constants'
@@ -39,6 +39,7 @@ export function fetchTicketData() {
    })
  }
 }
+
 export function fetchProfileData() {
  return (dispatch) => {
    // Set fetching to true
@@ -85,6 +86,7 @@ export function updateIsFetching(status) {
     status
   }
 }
+
 export function updateIsFetchingProfile(status) {
   return {
     type: UPDATE_IS_FETCHING_PROFILE,
@@ -106,17 +108,38 @@ export function patchTicketData (project_name, ticket_number, old_status, new_st
         'Authorization': `Bearer ${TOKEN()}`
       }
     }).then((response) => {
+      if (new_status === 'done' || old_status === 'done') {
+        dispatch(fetchScoreData(newData))
+      } else {
+        dispatch(updateIsPatchingTicketData(false))
+      }
       dispatch({
-        type: UPDATE_NEW_TICKET,
-        payload: newData
-      })
-      // dispatch({
-      //   type: UPDATE_SCORE,
-      //   newScore: new
-      // })
-      dispatch(updateIsPatchingTicketData(false))
+          type: UPDATE_NEW_TICKET,
+          payload: newData
+        })
     }).catch(err => err);
   }
+}
+
+export function fetchScoreData(newData) {
+ return (dispatch) => {
+   // Make the request for scores
+   refactoryAxios.get(`/api/tickets/score`, {
+     headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${TOKEN()}`
+      }
+   }).then( (response) => {
+     // Load the score data into the reducer
+     newData.total_score = response.data.data.total_score;
+     dispatch({
+       type: UPDATE_NEW_SCORE,
+       payload: newData
+     })
+    //  Set fetching to false
+     dispatch(updateIsPatchingTicketData(false))
+   })
+ }
 }
 
 export function updateIsPatchingTicketData(status) {

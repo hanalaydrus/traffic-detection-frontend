@@ -106,3 +106,15 @@
     position: relative !important;
   }
 }
+
+.loader-score {
+  text-align: center;
+  margin: auto;
+  float: right;
+  padding-top: 27px;
+  padding-bottom: 12px;
+  padding-right: 36px;
+  .spinner{
+    position: relative !important;
+  }
+}
