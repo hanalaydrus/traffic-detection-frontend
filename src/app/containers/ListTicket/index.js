@@ -164,7 +164,7 @@ class ListTicket extends Component {
           <div className={ "score_container "}>
             <div className={"score_title"}><b>Your Score</b> </div>
             {
-              this.props.isPatchingTicketData ? 
+              this.props.isPatchingTicketData ?
               <div className="loader-score"><Loader type="line-scale" color="#fff" scale={0.70} active /></div> :
               <div className={"score"}><b>{this.props.data.total_score + " pts"}</b> </div>
             }
@@ -247,7 +247,7 @@ class ListTicket extends Component {
                        }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
-                    { 
+                    {
                       (this.props.isPatchingTicketData && (this.state.selectedTicketNumberForDropdown === row.number)) ?
                       (<div className="loader-ticket"><Loader type="line-scale" color="#fff" scale={0.80} active /></div>) :
                       (<DropDownMenu value={row.status} onChange={(event, number, value) => this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
@@ -292,7 +292,7 @@ class ListTicket extends Component {
                     <div>
                     </div>
                     <div>
-                      Ticket details : 
+                      Ticket details :
                       <ReactMarkdown source={this.props.commentData.body} />
                     </div>
                   </div>
