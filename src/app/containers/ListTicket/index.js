@@ -4,8 +4,9 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import Loader from 'react-loader'
 import RichTextEditor from 'react-rte'
-import marked from 'marked'
 import moment from 'moment'
+import ReactMarkdown from 'react-markdown'
+
 import {
   Checkbox,
   Table,
@@ -21,14 +22,17 @@ import {
   MenuItem,
   Drawer,
   RaisedButton,
+  FlatButton,
   Card,
   CardHeader,
-  CardText
+  CardText,
+  CardTitle
 } from 'material-ui';
 
 import './styles.scss'
 import * as actions from './actions';
 import * as selectors from './selectors';
+import Header from './../../components/HeaderUser'
 
 class ListTicket extends Component {
   constructor() {
@@ -51,16 +55,20 @@ class ListTicket extends Component {
         drawerOpen: false,
         valueMarkdown: RichTextEditor.createEmptyValue(),
         selectedProjectName: '',
-        selectedTicketNumber: -1
+        selectedTicketNumberForDiscuss: -1,
+        selectedTicketNumberForDropdown: -1,
       };
     }
 
   handleChangeDropDown = (index, value, ticketNumber) => {
-    const newData = this.props.data.tickets;
-    const data = newData.find((tckData) => {return tckData.number === ticketNumber})
+    const newData = this.props.data;
+    const data = newData.tickets.find((tckData) => {return tckData.number === ticketNumber})
     const tempStatus = data.status
     data.status = value;
-    this.props.patchTicketData(data.repository.name, data.number, tempStatus, value, newData)
+    this.props.patchTicketData(data.repository.name, ticketNumber, tempStatus, value, newData)
+    this.setState({
+      selectedTicketNumberForDropdown: ticketNumber
+    })
   }
 
   handleFilter = (status) => {
@@ -78,7 +86,6 @@ class ListTicket extends Component {
   };
 
   onMarkdownChange = (valueMarkdown) => {
-    console.log('text', valueMarkdown.toString('markdown'))
     this.setState({valueMarkdown});
     if (this.props.onMarkdownChange) {
       this.props.onMarkdownChange(
@@ -92,7 +99,7 @@ class ListTicket extends Component {
     this.setState({
       drawerOpen: !this.state.drawerOpen,
       selectedProjectName: projectName,
-      selectedTicketNumber: ticketNumber
+      selectedTicketNumberForDiscuss: ticketNumber
     })
   }
 
@@ -102,6 +109,10 @@ class ListTicket extends Component {
     this.setState({
       valueMarkdown: RichTextEditor.createEmptyValue()
     })
+  }
+
+  handleRefreshComment = (projectName, ticketNumber) => {
+    this.props.fetchCommentData(projectName,ticketNumber)
   }
 
   labelColor = (labelName) => {
@@ -119,30 +130,18 @@ class ListTicket extends Component {
       labelName === 'enhancement' ? 'ffffff' : '000000'
   }
 
-  updateTicketData = () => {
-    const { tickets } = this.props.data
-    const newStatusType = this.state.statusChecked
-    const ticketData = tickets.filter((a) => {
-      return ((a.status === newStatusType[0]) ||
-              (a.status === newStatusType[1]) ||
-              (a.status === newStatusType[2]))
-    })
-    this.setState({
-      dataTicket: ticketData
-    })
-  }
-
   componentWillMount() {
     this.props.fetchTicketData()
+    this.props.fetchProfileData()
   }
 
   render() {
-    console.log('comment data', this.props.commentData)
     if (this.props.isFetching) {
-      return <Loader type="line-scale" active />
+      return <Loader type="line-scale" color="#fff" active />
     }
     return (
       <div>
+        <Header />
         <div className={ "list_ticket_container" }>
         <div className={ "score_and_filter" }>
           <div className={ "filter_container" }>
@@ -150,27 +149,25 @@ class ListTicket extends Component {
             <div className={ "block" }>
               <Checkbox
                 label="To Do"
-                checked={ this.props.filters.indexOf("todo") >= 0  }
-                style={ "checkbox" }
+                checked={ this.props.filters.indexOf("todo") >= 0 || this.props.filters.indexOf("inprogress") >= 0}
+                style={{marginRight:30}}
                 onCheck={() => this.handleFilter("todo")}
-              />
-              <Checkbox
-                label="In Progress"
-                checked={ this.props.filters.indexOf("inprogress") >= 0 }
-                style={ "checkbox" }
-                onCheck={() => this.handleFilter("inprogress")}
               />
               <Checkbox
                 label="Done"
                 checked={ this.props.filters.indexOf("done") >= 0 }
-                style={ "checkbox" }
+                style={{}}
                 onCheck={() => this.handleFilter("done")}
               />
             </div>
           </div>
           <div className={ "score_container "}>
             <div className={"score_title"}><b>Your Score</b> </div>
-            <div className={"score"}><b>{this.props.data.total_score}</b> </div>
+            {
+              this.props.isPatchingTicketData ?
+              <div className="loader-score"><Loader type="line-scale" color="#fff" scale={0.70} active /></div> :
+              <div className={"score"}><b>{this.props.data.total_score + " pts"}</b> </div>
+            }
           </div>
         </div>
         <div className={ "table_container" }>
@@ -187,9 +184,9 @@ class ListTicket extends Component {
               enableSelectAll={this.state.enableSelectAll}
             >
               <TableRow style={{backgroundColor:'#f9bb00'}}>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Repository Name</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Repository</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Ticket</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Label</TableHeaderColumn>
+                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Type</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Status</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Change Status</TableHeaderColumn>
                 <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Action</TableHeaderColumn>
@@ -201,7 +198,8 @@ class ListTicket extends Component {
               showRowHover={this.state.showRowHover}
               stripedRows={this.state.stripedRows}
             >
-              {this.props.data.tickets && this.props.data.tickets.filter((value) => {
+
+              { this.props.data.tickets && this.props.data.tickets.filter((value) => {
                 const hasFilters = this.props.filters.length > 0;
                 const containsStatus = this.props.filters.indexOf(value.status) >= 0;
                 return !hasFilters || containsStatus;
@@ -211,11 +209,11 @@ class ListTicket extends Component {
                   <TableRowColumn style={{textAlign: 'center'}}><a href={row.url} style={{color: 'white'}}>#{row.number} {row.title}</a></TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
                     {
-                       row.labels.map( (content) => (
+                       row.labels.map( (content, index2) => (
                          ((content.name !== 'inprogress') &&
                           (content.name !== 'todo') &&
                           (content.name !== 'done')
-                         ) ? 
+                         ) ?
                        ( <div style={{
                           fontWeight: 'bold',
                           margin: '4px',
@@ -225,7 +223,8 @@ class ListTicket extends Component {
                           borderRadius: '5px',
                           backgroundColor: '#' + this.labelColor(content.name),
                           color: '#' + this.labelFontColor(content.name)
-                        }}> 
+                        }}
+                        key={index2}>
                             {content.name}
                         </div> ) : ' '
                       ))
@@ -233,38 +232,34 @@ class ListTicket extends Component {
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
                     {
-                       row.labels.map( (content) => (
-                         ((content.name === 'inprogress') ||
-                          (content.name === 'todo') ||
-                          (content.name === 'done')
-                         ) ? 
-                        (<div style={{
+                        <div style={{
                           fontWeight: 'bold',
                           margin: '4px',
                           float: 'left',
                           borderStyle: 'solid',
-                          borderColor: '#' + this.labelColor(content.name),
+                          borderColor: '#' + this.labelColor(row.status),
                           borderRadius: '5px',
-                          backgroundColor: '#' + this.labelColor(content.name),
-                          color: '#' + this.labelFontColor(content.name)
+                          backgroundColor: '#' + this.labelColor(row.status),
+                          color: '#' + this.labelFontColor(row.status)
                         }}>
-                            {content.name}
-                        </div> ) : ' '
-                      ))
-                    }
+                            {row.status}
+                        </div>
+                       }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     {
-                      <DropDownMenu value={row.status} onChange={(event, number, value)=>this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
+                      (this.props.isPatchingTicketData && (this.state.selectedTicketNumberForDropdown === row.number)) ?
+                      (<div className="loader-ticket"><Loader type="line-scale" color="#fff" scale={0.80} active /></div>) :
+                      (<DropDownMenu value={row.status} onChange={(event, number, value) => this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
                         <MenuItem value={"todo"} primaryText="To Do" />
                         <MenuItem value={"inprogress"} primaryText="In Progress" />
                         <MenuItem value={"done"} primaryText="Done" />
-                      </DropDownMenu>
+                      </DropDownMenu>)
                     }
                   </TableRowColumn>
                   <TableRowColumn style={{textAlign: 'center'}}>
                     <RaisedButton
-                      label="DETAIL"
+                      label="DISCUSS"
                       onTouchTap={ () => this.handleDrawerToggle(row.repository.name,row.number) }
                     />
                   </TableRowColumn>
@@ -277,18 +272,37 @@ class ListTicket extends Component {
             </TableFooter>
           </Table>
         </div>
-        <Drawer 
-          open={this.state.drawerOpen} 
-          width={500}
+        <Drawer
+          open={this.state.drawerOpen}
+          width={600}
           docked={false}
           onRequestChange={(drawerOpen) => this.setState({drawerOpen})}
         >
           <div className={"markdown_container"} >
             <div className={"show_comment"}>
-            {this.props.isFetchingComment ?
+              <Card style={{padding: 4}}>
+                <div className={"card_header"}>
+                  <CardHeader
+                    title={<b>{this.props.isFetchingComment ? '' : "#" + this.props.commentData.number + " " + this.props.commentData.title}</b>}
+                    titleColor='#222'
+                  />
+                </div>
+                <CardText>
+                  <div>
+                    <div>
+                    </div>
+                    <div>
+                      Ticket details :
+                      <ReactMarkdown source={this.props.commentData.body} />
+                    </div>
+                  </div>
+                </CardText>
+              </Card>
+             {this.props.isFetchingComment ?
               (<Loader type="line-scale" active />) :
+
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
-                <Card>
+                <Card style={{padding: 4}}>
                   <div className={"card_header"}>
                     <CardHeader
                       title={row.user.login}
@@ -299,32 +313,45 @@ class ListTicket extends Component {
                     />
                   </div>
                   <CardText>
-                    <div dangerouslySetInnerHTML={{__html:marked(row.body)}} />
+                    <div className={ "cardTextContainer" }>
+                      <ReactMarkdown source={row.body} />
+                    </div>
                   </CardText>
-                </Card>)))}
+                </Card>
+                )))}
             </div>
+
             <div className={"markdown_editor"} >
               <div className={"markdown_editor_detail"}>
                 <RichTextEditor
                   value={this.state.valueMarkdown}
                   onChange={this.onMarkdownChange}
+                  placeholder={'Leave a comment'}
                 />
               </div>
               <div className={"markdown_button_submit"} >
+                <FlatButton
+                  label="Refresh"
+                  primary={true}
+                  onClick={
+                    () => this.handleRefreshComment(
+                      this.state.selectedProjectName,
+                      this.state.selectedTicketNumberForDiscuss
+                  )}
+                />
                 <RaisedButton
                   backgroundColor="#f9bb00"
                   labelColor="#000"
                   label="SUBMIT"
                   onClick={
                     () => this.handleSubmitComment(
-                      this.state.selectedProjectName, 
-                      this.state.selectedTicketNumber, 
+                      this.state.selectedProjectName,
+                      this.state.selectedTicketNumberForDiscuss,
                       this.state.valueMarkdown.toString('markdown')
                   )}
                 />
               </div>
             </div>
-
           </div>
         </Drawer>
       </div>
@@ -337,7 +364,7 @@ class ListTicket extends Component {
  *  Define component PropTypes
  */
 ListTicket.propTypes = {
-  data: array.isRequired,
+  data: object.isRequired,
   isFetching: bool.isRequired,
   patchTicketData: func.isRequired,
   onMarkdownChange: func
@@ -351,7 +378,10 @@ const mapStateToProps = createStructuredSelector({
   isFetching: selectors.getIsFetching(),
   filters: selectors.getFilters(),
   isFetchingComment: selectors.getIsFetchingComment(),
-  commentData: selectors.getCommentData()
+  commentData: selectors.getCommentData(),
+  isPatchingTicketData: selectors.getIsPatchingTicketData(),
+  profileData: selectors.getProfileData(),
+  isFetchingProfile: selectors.getIsFetchingProfile()
 });
 
 /**

@@ -56,7 +56,6 @@ export default class Hiring extends Component {
   };
 
   render() {
-    console.log(tableData)
     return (
       <div>
         <Table

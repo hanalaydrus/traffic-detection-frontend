@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
-import {RaisedButton, TextField} from 'material-ui'
-import {green500, blue500, orange500, orange600} from 'material-ui/styles/colors'
-import DatePicker from 'material-ui/DatePicker'
-import TimePicker from 'material-ui/TimePicker'
-import moment from 'moment'
-import {Editor} from './../../components/AceEditor'
-import {Header} from "./../../components/Header";
-import {Drawer} from "./../../components/DrawerBase"
-import {PageTitle} from "./../../components/PageTitle"
-import {InterviewForm} from "./../../components/InterviewForm"
-import {TechScreenings} from "./../../components/TechScreenings"
-import MainMenu from '../MainMenu'
-import './styles.scss'
+import React, { Component } from 'react';
+import {RaisedButton, TextField} from 'material-ui';
+import {green500, blue500, orange500, orange600} from 'material-ui/styles/colors';
+import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
+import moment from 'moment';
+import {Header} from './../../components/Header';
+import {Drawer} from './../../components/DrawerBase';
+import {PageTitle} from './../../components/PageTitle';
+import {InterviewForm} from './../../components/InterviewForm';
+import {TechScreenings} from './../../components/TechScreenings';
+import {Editor} from './../../components/AceEditor';
+
+import './styles.scss';
 import tempScreenings from '../../../../temp-data/tempScreenings.json'
 
 const data = tempScreenings.data[3].content.script1
@@ -57,7 +57,9 @@ class Interview extends Component {
 
   render() {
     return (
-          <MainMenu >
+      <div style={{margin:0}} >
+        <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
+        <Drawer drawerStyle={this.state.drawerStyle} />
             <div style={this.state.contentStyle}>
               <PageTitle title="Interview Time" />
               <div className="date_time float_left" style={{width:300}}>
@@ -79,16 +81,18 @@ class Interview extends Component {
                 </div>
                 <div className="clear"></div>
               </div>
-              <PageTitle title="Interview Result" />
-              <div style={{textAlign:'right'}}>
-                <InterviewForm float="float_left" title="Tech"/>
-                <InterviewForm float="float_right" title="NonTech"/>
-                <RaisedButton label="Save" primary={true} className="save_btn" />
-                <div className="clear"></div>
-              </div>
-              <TechScreenings />
+            <PageTitle title="Interview Result" />
+            <div style={{textAlign:'right'}}>
+              <InterviewForm float="float_left" title="Tech"/>
+              <InterviewForm float="float_right" title="NonTech"/>
+              <RaisedButton label="Save" primary={true} className="save_btn" />
+              <div className="clear"></div>
             </div>
-          </MainMenu>
+            <TechScreenings />
+            <Editor title="Script 1" data={data}/>
+            <Editor title="Script 2" data={data2}/>
+          </div>
+        </div>
     );
   }
 }

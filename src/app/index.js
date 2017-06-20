@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom";
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 //redux related
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -30,9 +30,12 @@ import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
 import getToken from './authGithub/getToken';
 import ListTicket from './containers/ListTicket';
-import StudentDetail from './components/StudentDetail'
 import CampusListTable from './containers/CampusListTable'
 import PartnerList from './containers/PartnerList'
+import StudentDetail from './components/StudentProfile'
+
+import City from './containers/City';
+
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
 export const store = createStoreWithMiddleware(reducers)
 /**
@@ -54,6 +57,39 @@ if(statusHtmlStorage('token')) {
   store.dispatch({ type: UNAUTH_USER })
 }
 
+const IndexPage = () => {
+  return(
+    <div>
+      <Redirect from="/" to="/student/listticket" />
+    </div>
+  )
+}
+
+const StudenPage = () => {
+  return(
+    <div>
+      <Route path='/student/listticket' component={ListTicket} />
+    </div>
+  )
+}
+
+const AdminPage = () => {
+  return(
+  <div>
+    <Route path="/admin/dashboard" component={Dashboard} />
+    <Route path="/admin/curriculum" component={Curriculum} />
+    <Route path="/admin/worktodo" component={WorkTodo} />
+    <Route path="/admin/interview" component={Interview} />
+    <Route path="/admin/hiring" component={Hiring} />
+    <Route path="/admin/studentlist" component={StudentDetail} />
+    <Route path="/admin/city" component={City} />
+    <Route path="/admin/preparation" component={Preparation} />
+    <Route path='/admin/campuslist' component={CampusListTable} />
+    <Route path='/admin/partnerlist' component={PartnerList}/>
+  </div>
+)
+}
+
 class App extends React.Component{
   render(){
     return(
@@ -61,19 +97,12 @@ class App extends React.Component{
       <MuiThemeProvider muiTheme={Theme}>
         <Router history={history}>
           <div>
-              <Route exact path="/" component={Login} />
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/curriculum" component={Curriculum} />
-              <Route path="/worktodo" component={WorkTodo} />
-              <Route path="/interview" component={Interview} />
-              <Route path="/hiring" component={Hiring} />
-              <Route path="/studentlist" component={StudentDetail} />
-              <Route path="/githublogin" component={GithubLogin} />
-              <Route path="/github/callback" component={getToken} />
-              <Route path="/preparation" component={Preparation} />
-              <Route path='/listticket' component={RequireAuth(ListTicket)} />
-              <Route path='/campuslist' component={CampusListTable} />
-              <Route path='/partnerlist' component={PartnerList}/>
+            <Route exact path="/" component={IndexPage} />
+            <Route path="/githublogin" component={GithubLogin} />
+            <Route path="/github/callback" component={getToken} />
+            <Route path="/loginadmin" component={Login} />
+            <Route path="/student" component={RequireAuth(StudenPage)} />
+            <Route path="/admin" component={AdminPage} />
           </div>
         </Router>
       </MuiThemeProvider>

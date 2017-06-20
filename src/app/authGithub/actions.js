@@ -6,10 +6,7 @@ import {
   CLIENT_SECRET,
   TOKEN_PARAMS,
   ENDPOINT,
-  REDIRECT_URI,
-  CLIENT_ID,
-  PAYLOADS
-
+  CLIENT_ID
 } from './constants';
 
 const https = require('https');
@@ -24,6 +21,16 @@ import history from '../history.js'
 export function logIn() {
   return { type: AUTH_USER };
 }
+export function logOut() {
+  return { type: UNAUTH_USER };
+}
+
+export function authIsProcessing(status) {
+  return {
+    type: AUTH_IS_PROCESSING,
+    status
+  }
+}
 
 export function authenticateUser() {
   return dispatch => {
@@ -34,14 +41,25 @@ export function authenticateUser() {
             // Save JWT token to localStorage and set expiration
             setHtmlStorage('token', resp.data.access_token, 3600);
             // Redirect using react router
-            history.push('/listticket');
-            window.location.reload();
+            history.push('/student/listticket');
+            location.href = location.href
       });
     }
 
     const url = buildUrl(ENDPOINT_AUTH, TOKEN_PARAMS);
 
     const childWindow = window.open(url, 'Login with Github', 'width=800,height=300');
+  }
+};
+
+export function unauthenticateUser() {
+  return dispatch => {
+            dispatch(logOut());
+            // Save JWT token to localStorage and set expiration
+            removeHtmlStorage('token');
+            // Redirect using react router
+            history.push('/');
+            location.href = location.href
   }
 };
 
@@ -74,7 +92,6 @@ function requestToken(code) {
   const params_token = {
     code: code
   }
-
   const accessToken = axios.post(ENDPOINT, params_token)
   return accessToken
 }

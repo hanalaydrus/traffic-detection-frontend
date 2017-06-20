@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import {List, ListItem} from 'material-ui/List'
 
 export class DrawerMenu extends React.Component {
@@ -20,15 +21,15 @@ export class DrawerMenu extends React.Component {
               primaryTogglesNestedList={true}
               nestedItems={[
                 <ListItem
-                  key={1}
+                  key={3.1}
                   primaryText="Subject"
                 />,
                 <ListItem
-                  key={2}
+                  key={3.2}
                   primaryText="Team"
                 />,
                 <ListItem
-                  key={3}
+                  key={3.3}
                   primaryText="Schedule"
                 />,
               ]}
@@ -39,19 +40,20 @@ export class DrawerMenu extends React.Component {
               primaryTogglesNestedList={true}
               nestedItems={[
                 <ListItem
-                  key={1}
+                  key={4.1}
                   primaryText="City"
+                  containerElement={<Link to="/city" />}
                 />,
                 <ListItem
-                  key={2}
+                  key={4.2}
                   primaryText="Campuses"
                 />,
                 <ListItem
-                  key={3}
+                  key={4.3}
                   primaryText="Batches"
                 />,
                 <ListItem
-                  key={3}
+                  key={4.4}
                   primaryText="Partners"
                 />,
               ]}

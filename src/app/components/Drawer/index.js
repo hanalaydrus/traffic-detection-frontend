@@ -38,7 +38,6 @@ export class Drawer extends React.Component {
   }
 
   handleChangeCampus = (event, index, value) => {
-    console.log('change campus choice', value)
     this.props.onEnterCampus(value)
     if(value!=="all"){
       this.setState({

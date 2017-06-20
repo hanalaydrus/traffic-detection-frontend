@@ -1,14 +1,19 @@
-import React from 'react';
-import brace from 'brace';
-import AceEditor from 'react-ace';
+//import library
+import React from 'react'
+import AceEditor from 'react-ace' //Editor
+import brace from 'brace' //Editor plugin
+import moment from 'moment' //Date Time Format
+import 'brace/mode/javascript' //import language editor
+import 'brace/theme/monokai' //import theme editor
+
+//import component material-ui
 import {RaisedButton} from 'material-ui';
 import {orange500} from 'material-ui/styles/colors';
-import 'brace/mode/javascript';
-import 'brace/theme/monokai';
-import moment from 'moment';
 
-
+//import style scss
 import './styles.scss';
+
+//handle for error
 window.onerror = (msg, url, linenumber) => {
   console.log('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
 
@@ -17,27 +22,27 @@ window.onerror = (msg, url, linenumber) => {
 
 
 export class Editor extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = {
-      code: props.data.code,
-      duration: props.data.duration,
-      result: ''
+      code: props.data.code, //code  online test in editor
+      duration: props.data.duration, //duration online test
+      result: '' //result of code if we click RUN button
     }
   }
+  //function for convert time (from second to time)
   timeConverter = (secs) => {
     const formatted = moment.utc(secs*1000).format('HH:mm:ss');
     return formatted
   }
-
+  //this function for handle if we click RUN button
   onClick = () => {
-    try{
       this.setState({result:''})
-      const editor = this.ace.editor;
-      const newCode = editor.getValue()
+      const editor = this.ace.editor; //getValue code in editor
+      const newCode = editor.getValue() //getValue code in editor
       this.setState({code:newCode})
       const klass = this;
+      //Override method for console.log
       console.log = (newCode) => {
         this.setState((prevState) => {
           return { result: prevState.result + '#ff%&' + newCode }
@@ -48,23 +53,17 @@ export class Editor extends React.Component {
       s.async = true;
       s.innerHTML = newCode;
       this.instance.appendChild(s);
-    }
-    catch (e) {
-      console.log("hai");
-    }
-
   }
-
     render(){
     return (
       <div >
-        <h4 style={{color:orange500}}>{this.props.title}</h4>
-        <div className="editor_container">
+        <h4 className={ "orange" }>{this.props.title}</h4> {/*Script 1 or Script 2*/}
+        <div className={ "editor_container" }>
+          {/*AceEditor*/}
           <AceEditor
               mode="javascript"
               theme="monokai"
-              onChange={this.onChange}
-              name="UNIQUE_ID_OF_DIV"
+              name="Online_Test"
               editorProps={{$blockScrolling: true}}
               width = '100%'
               height = '250px'
@@ -73,19 +72,20 @@ export class Editor extends React.Component {
               ref={instance => { this.ace = instance; }}
           />
         </div>
-        <div className="run_container">
+        <div className={ "run_container" }>
+          {/*RUN button*/}
           <RaisedButton label="Run" primary={true} onClick={this.onClick} style={{float:'left'}}/>
           <div style={{float:'right', paddingTop:10}}>
-          Duration : {this.timeConverter(this.state.duration)}
+          Duration : {this.timeConverter(this.state.duration)/* Show duration*/}
           </div>
-          <div className="clear"></div>
-          <div className="result">
+          <div className={ "clear" }></div>
+          <div className={ "result" }>
             {this.state.result.match(/#ff%&/gi) ? this.state.result.split('#ff%&').map( (item, idx) => {
               return ( <div key={idx}>{item}</div> )
             }) : null }
           </div>
         </div>
-        <div className="clear" ></div>
+        <div className={ "clear" } ></div>
           <div ref={(el) => (this.instance = el)} />
     </div>
     );
