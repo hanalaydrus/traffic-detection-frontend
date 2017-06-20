@@ -67,7 +67,7 @@ export class CampusTable extends Component {
                 )
               }              
             </TableBody>     
-      </Table>
+        </Table>
     )
   }
 }
