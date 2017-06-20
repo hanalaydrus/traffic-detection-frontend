@@ -28,17 +28,9 @@ const style = {
 }
 
 export class CampusTable extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      id: this.props.id,
-      name: this.props.name,
-      address: this.props.address,
-      city: this.props.city,
-      phone: this.props.phone,
-    }
+  constructor(...argument){
+    super(...argument);
   }  
-
   render () {
     return (
       //code goes here
@@ -49,19 +41,26 @@ export class CampusTable extends Component {
             <TableHeaderColumn style={{width: 30,color: '#303030',fontWeight: 'bold'}}>Name</TableHeaderColumn>
             <TableHeaderColumn style={{width: 80,color: '#303030',fontWeight: 'bold'}}>Address</TableHeaderColumn>
             <TableHeaderColumn style={{width: 50,color: '#303030',fontWeight: 'bold'}}>City</TableHeaderColumn>
-            <TableHeaderColumn style={{width: 50,color: '#303030',fontWeight: 'bold'}}>Phone</TableHeaderColumn>
+            <TableHeaderColumn style={{width: 50,color: '#303030',fontWeight: 'bold'}}>Phone</TableHeaderColumn>            
+						<TableHeaderColumn style={{ width: 50, color: '#303030', fontWeight: 'bold' }}>
+							Action
+						</TableHeaderColumn>
           </TableRow>
         </TableHeader> 
             <TableBody displayRowCheckbox={false}>
               {
-                Data.map( (table, index) => {
+                this.props.data.map( (table, index) => {
                     return (
                       <TableRow key={index}>
-                          <TableRowColumn style={{width: 10}}>{table.id}</TableRowColumn>
+                          <TableRowColumn style={{width: 10}}>{index + 1}</TableRowColumn>
                           <TableRowColumn style={{width: 30}}>{table.name}</TableRowColumn>
                           <TableRowColumn style={{width: 80}}>{table.address}</TableRowColumn>
                           <TableRowColumn style={{width: 50}}>{table.city.name}</TableRowColumn>
                           <TableRowColumn style={{width: 50}}>{table.phone}</TableRowColumn>
+                          <TableRowColumn style={{width: 50}}>
+									          <button onClick={() => this.props.onUpdate(table.id)}>Update</button>
+                            <button onClick={() => this.props.onDelete(table.id)}>Delete</button>
+                          </TableRowColumn>
                       </TableRow>    
                     )}
                 )
