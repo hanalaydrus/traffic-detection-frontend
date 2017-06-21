@@ -9,7 +9,7 @@ import StudentListPage from "./../../components/StudentListPage";
  * imported others Library
  */
 import { Enhance } from '../../HOC/fetchingData'
-import *as constants from './constants'
+import * as constants from './constants'
 const style = {
   orange: {
    borderColor: orange600,

@@ -30,10 +30,11 @@ import Hiring from './components/Hiring';
 import GithubLogin from './authGithub/loginGithub';
 import getToken from './authGithub/getToken';
 import ListTicket from './containers/ListTicket';
+import CampusListTable from './containers/CampusListTable'
+import PartnerList from './containers/PartnerList'
 import StudentDetail from './components/StudentProfile'
 
 import City from './containers/City';
-
 
 export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore)
 export const store = createStoreWithMiddleware(reducers)
@@ -83,6 +84,8 @@ const AdminPage = () => {
     <Route path="/admin/studentlist" component={StudentDetail} />
     <Route path="/admin/city" component={City} />
     <Route path="/admin/preparation" component={Preparation} />
+    <Route path='/admin/campuslist' component={CampusListTable} />
+    <Route path='/admin/partnerlist' component={PartnerList}/>
   </div>
 )
 }

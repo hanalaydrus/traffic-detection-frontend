@@ -93,7 +93,6 @@ class Interview extends Component {
             <Editor title="Script 2" data={data2}/>
           </div>
         </div>
-
     );
   }
 }
