@@ -128,7 +128,8 @@ class PartnerList extends Component {
 		};
 		this.setState({
 			data: this.getUpdate(updateId,update),
-			open: !this.state.open
+			open: !this.state.open,
+			update:false
 		});
   }
   getUpdate =(id,update) => {
