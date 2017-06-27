@@ -32,7 +32,10 @@ import {
 import './styles.scss'
 import * as actions from './actions';
 import * as selectors from './selectors';
-import Header from './../../components/HeaderUser'
+import Header from './../../components/HeaderUser';
+import notifications from '../../../../temp-data/notificationsData.json';
+
+const notificationsData = notifications.data
 
 class ListTicket extends Component {
   constructor() {
@@ -141,7 +144,7 @@ class ListTicket extends Component {
     }
     return (
       <div>
-        <Header />
+        <Header notificationsData={notificationsData}/>
         <div className={ "list_ticket_container" }>
         <div className={ "score_and_filter" }>
           <div className={ "filter_container" }>

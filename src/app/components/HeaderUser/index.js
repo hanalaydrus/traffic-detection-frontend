@@ -4,7 +4,7 @@ import IconButton from 'material-ui/IconButton'
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu'
 import MenuItem from 'material-ui/MenuItem'
 import IconMenu from 'material-ui/IconMenu'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import Notifications from 'material-ui/svg-icons/social/notifications'
 import FlatButton from 'material-ui/FlatButton'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -29,37 +29,50 @@ const style = {
 };
 
 class Header extends React.Component {
-    constructor() {
-    super()
-    this.state = {
-      navStyle: 'nav-full',
-    }
 
-  }
   handleGithubLogoutAttempt= () => {
     this.props.unauthenticateUser()
   }
 
-    render(){
+  render(){
     return (
       <div className="navigation">
-        <div className={this.state.navStyle}>
+        <div className="nav_user">
           <div className="logo">
-            <img src="/images/Refactory.png" style={{height:40, marginTop:4, marginLeft:30}}/>
+            <img src="/images/Refactory.png" style={{height:34}}/>
           </div>
           <div className="menu">
+            <div className="childmenu">
+              <IconMenu
+                  iconButtonElement={<IconButton><Notifications /></IconButton>}
+                  anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              >
+                { 
+                  this.props.notificationsData && this.props.notificationsData.map((row) => (
+                    <MenuItem> 
+                      <div className="notification_menu_item">
+                        <b><i>{row.username}</i></b> comment on <br/>
+                        <b><i>#{row.issue_number} {row.issue_title}</i></b>
+                      </div>
+                    </MenuItem>
+                  ))
+                }
+              </IconMenu>
+            </div>
+            <div className="childmenu">
                 <div className="float_left" style={{padding:'15px 5px'}}>
                   {this.props.profileData.full_name}
                 </div>
-               <IconMenu
-                  iconButtonElement={<IconButton style={{marginTop:-8, marginRight:30}}><img src={this.props.profileData.avatar} height="40"/></IconButton>}
-                  anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                  targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                  style={{marginRight:30}}
+              <IconMenu
+                  iconButtonElement={<IconButton style={{marginTop:-6, marginRight:30}}><img src={this.props.profileData.avatar}/></IconButton>}
+                  anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                  <MenuItem primaryText={this.props.profileData.email} />
-                  <MenuItem primaryText="Log out" onClick={ this.handleGithubLogoutAttempt }/>
+                  <MenuItem primaryText={this.props.profileData.email} style={{fontSize:14}}></MenuItem>
+                  <MenuItem primaryText="Log out" style={{fontSize:14}} onClick={ this.handleGithubLogoutAttempt }/>
                 </IconMenu>
+            </div>
           </div>
           <div className="clear"></div>
         </div>
