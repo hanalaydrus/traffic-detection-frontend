@@ -31,6 +31,7 @@ import GithubLogin from './authGithub/loginGithub';
 import getToken from './authGithub/getToken';
 import ListTicket from './containers/ListTicket';
 import CampusListTable from './containers/CampusListTable'
+import BatchesListTable from './containers/BatchesListTable'
 import PartnerList from './containers/PartnerList'
 import StudentDetail from './components/StudentProfile'
 
@@ -85,6 +86,7 @@ const AdminPage = () => {
     <Route path="/admin/city" component={City} />
     <Route path="/admin/preparation" component={Preparation} />
     <Route path='/admin/campuslist' component={CampusListTable} />
+    <Route path='/admin/batchlist' component={BatchesListTable} />
     <Route path='/admin/partnerlist' component={PartnerList}/>
   </div>
 )
