@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import {RaisedButton, TextField} from "material-ui"
-import {green500, blue500, orange500, orange600} from "material-ui/styles/colors"
+import {green500, blue500, orange500, orange600, red500} from "material-ui/styles/colors"
 import {
   Table,
   TableBody,
@@ -30,7 +30,7 @@ const style = {
 export class CampusTable extends Component {
   constructor(...argument){
     super(...argument);
-  }  
+  }
   render () {
     return (
       //code goes here
@@ -41,12 +41,12 @@ export class CampusTable extends Component {
             <TableHeaderColumn style={{width: 30,color: '#303030',fontWeight: 'bold'}}>Name</TableHeaderColumn>
             <TableHeaderColumn style={{width: 80,color: '#303030',fontWeight: 'bold'}}>Address</TableHeaderColumn>
             <TableHeaderColumn style={{width: 50,color: '#303030',fontWeight: 'bold'}}>City</TableHeaderColumn>
-            <TableHeaderColumn style={{width: 50,color: '#303030',fontWeight: 'bold'}}>Phone</TableHeaderColumn>            
+            <TableHeaderColumn style={{width: 50,color: '#303030',fontWeight: 'bold'}}>Phone</TableHeaderColumn>
 						<TableHeaderColumn style={{ width: 50, color: '#303030', fontWeight: 'bold' }}>
 							Action
 						</TableHeaderColumn>
           </TableRow>
-        </TableHeader> 
+        </TableHeader>
             <TableBody displayRowCheckbox={false}>
               {
                 this.props.data.map( (table, index) => {
@@ -58,14 +58,14 @@ export class CampusTable extends Component {
                           <TableRowColumn style={{width: 50}}>{table.city.name}</TableRowColumn>
                           <TableRowColumn style={{width: 50}}>{table.phone}</TableRowColumn>
                           <TableRowColumn style={{width: 50}}>
-									          <button onClick={() => this.props.onUpdate(table.id)}>Update</button>
-                            <button onClick={() => this.props.onDelete(table.id)}>Delete</button>
+									          <button onClick={() => this.props.onUpdate(table.id, table.name, table.address, table.city.id, table.phone, table.description)}>Update</button>
+                            <button onClick={() => this.props.onDelete(table.id, table.name)}>Delete</button>
                           </TableRowColumn>
-                      </TableRow>    
+                      </TableRow>
                     )}
                 )
-              }              
-            </TableBody>     
+              }
+            </TableBody>
         </Table>
     )
   }
