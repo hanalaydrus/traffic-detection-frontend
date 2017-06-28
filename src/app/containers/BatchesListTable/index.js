@@ -4,6 +4,7 @@ import {
   DropDownMenu, MenuItem, DatePicker
 } from 'material-ui'
 import {orange600, orange500, blue500} from 'material-ui/styles/colors'
+import moment from 'moment'
 
 // import dependencies
 
@@ -13,6 +14,7 @@ import {PageTitle} from "./../../components/PageTitle"
 import {BatchesTable} from "./../../components/BatchesTable"
 import campusData from '../../../../temp-data/campusData.json'
 import response from "./constant"
+
 
 /**
  * overide material-ui default style * 
@@ -105,7 +107,7 @@ class BatchesListTable extends Component {
         value: 1,
         updateId: null,
         update: false,
-      }    
+      } 
   }
 
   // Button Pop-up and and Button Close
@@ -261,8 +263,14 @@ class BatchesListTable extends Component {
     });
   }
 
+  formatDate = (date) => {
+  return (
+    moment(date).format("MMM") + " " + date.getDate() + "," + " " + date.getFullYear()
+    );
+  }
+
   //Render this! 
-  render() {  
+  render() {
     // constant for open dialog button
     const actions = [
       (this.state.update) ?
@@ -351,12 +359,14 @@ class BatchesListTable extends Component {
                         hintText="Start"
                         value={this.state.register_start}
                         onChange={this.handleChangeRegisterStart} 
-                        textFieldStyle={style.datePicker}/>
+                        textFieldStyle={style.datePicker}
+                        formatDate={this.formatDate}/>
                       <DatePicker
                         hintText="End"
                         value={this.state.register_end}
                         onChange={this.handleChangeRegisterEnd} 
-                        textFieldStyle={style.datePicker}/>
+                        textFieldStyle={style.datePicker}
+                        formatDate={this.formatDate}/>
                       <br/>
                       <label style={style.labelStyle}>Preparation Schedule:</label>
                       <br/>
@@ -364,12 +374,14 @@ class BatchesListTable extends Component {
                         hintText="Start"
                         value={this.state.prepare_start}
                         onChange={this.handleChangePrepareStart}
-                        textFieldStyle={style.datePicker} />
+                        textFieldStyle={style.datePicker} 
+                        formatDate={this.formatDate}/>
                       <DatePicker
                         hintText="End"
                         value={this.state.prepare_end}
                         onChange={this.handleChangePrepareEnd}
-                        textFieldStyle={style.datePicker} />
+                        textFieldStyle={style.datePicker} 
+                        formatDate={this.formatDate}/>
                       <br/>
                       <label style={style.labelStyle}>Tryout Schedule:</label>
                       <br/>
@@ -377,7 +389,8 @@ class BatchesListTable extends Component {
                         hintText="Tryout"
                         value={this.state.tryout_date}
                         onChange={this.handleChangeTryout}
-                        textFieldStyle={style.datePicker} />
+                        textFieldStyle={style.datePicker} 
+                        formatDate={this.formatDate}/>
                       <br/>
                       <label style={style.labelStyle}>Tryout Announcement:</label>
                       <br/>
@@ -385,7 +398,8 @@ class BatchesListTable extends Component {
                         hintText="Announcement"
                         value={this.state.tryout_announce_date}
                         onChange={this.handleChangeTryAnnounce}
-                        textFieldStyle={style.datePicker} />
+                        textFieldStyle={style.datePicker} 
+                        formatDate={this.formatDate}/>
                       <br/>
                       <label style={style.labelStyle}>Bootcanmp Schedule:</label>
                       <br/>
@@ -393,12 +407,14 @@ class BatchesListTable extends Component {
                         hintText="Start"
                         value={this.state.bootcamp_start}
                         onChange={this.handleChangeBootcampStart}
-                        textFieldStyle={style.datePicker} />
+                        textFieldStyle={style.datePicker} 
+                        formatDate={this.formatDate}/>
                       <DatePicker
                         hintText="End"
                         value={this.state.bootcamp_end}
                         onChange={this.handleChangeBootcampEnd}
-                        textFieldStyle={style.datePicker} />
+                        textFieldStyle={style.datePicker} 
+                        formatDate={this.formatDate}/>
                   </div>
                 </List>
 
