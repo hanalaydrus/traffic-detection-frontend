@@ -43,7 +43,7 @@ export function fetchTicketData() {
 export function fetchProfileData() {
  return (dispatch) => {
    // Set fetching to true
-   dispatch(updateIsFetching(true))
+   dispatch(updateIsFetchingProfile(true))
    // Make the request for contacts
    refactoryAxios.get(`/api/profile`, {
      headers: {
@@ -57,7 +57,7 @@ export function fetchProfileData() {
        payload: response.data.data
      })
      // Set fetching to false
-     dispatch(updateIsFetching(false))
+     dispatch(updateIsFetchingProfile(false))
    })
  }
 }

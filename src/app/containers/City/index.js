@@ -72,7 +72,7 @@ class City extends Component {
   onEditClick = (id, name) => {
     this.setState({
       modal_delete: false,
-      modalTitle:'Edit City',
+      modalTitle:'Update City',
       cityId: id,
       cityName: name,
       open: true,
@@ -124,7 +124,7 @@ class City extends Component {
                       <TableRowColumn>{row.id}</TableRowColumn>
                       <TableRowColumn>{row.name}</TableRowColumn>
                       <TableRowColumn style={{textAlign:'center'}}>
-                        <RaisedButton className="table_btn" labelStyle={{fontSize:12}} label="Edit" backgroundColor={lightBlueA100} onClick={ () => this.onEditClick(row.id, row.name)} />
+                        <RaisedButton className="table_btn" labelStyle={{fontSize:12}} label="Update" backgroundColor={lightBlueA100} onClick={ () => this.onEditClick(row.id, row.name)} />
                         <RaisedButton className="table_btn" labelStyle={{fontSize:12}} label="Delete" backgroundColor={red500}
                           onClick={() => this.onDeleteClick(row.id, row.name)}/>
                       </TableRowColumn>
@@ -140,7 +140,7 @@ class City extends Component {
             actions={this.state.modal_delete === false ?
               [
                 <RaisedButton
-                  label="Save"
+                  label="Submit"
                   backgroundColor={blue500}
                   onTouchTap={this.handleClose}
                   style={{marginRight:10}}
