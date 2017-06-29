@@ -90,7 +90,7 @@ export default class StudentProfile extends React.Component {
   onChangeValue = (state) => (event,name) => {
       this.setState({
         [state]:name
-      }) 
+      })
   }
   onSubmitStatus  = (value) =>{
     this.setState({
@@ -110,8 +110,8 @@ export default class StudentProfile extends React.Component {
     const { full_name ,batch_id, campus_id, address, birthday, phone, email, status, batch, campus ,allCampus } = this.state
     const batches = this.getBatch(campus)(campus_id)[0]["batch"]
     return (
-      <MainMenu > 
-        <div style={this.state.contentStyle}> 
+      <MainMenu >
+        <div style={this.state.contentStyle}>
         <Tabs>
           <Tab label="Profile" >
             <div style={styles.content} >
@@ -145,12 +145,12 @@ export default class StudentProfile extends React.Component {
                   onChange={this.handleChange('batch_id')}
                   underlineDisabledStyle={{backgroundColor:'white',fontFamily:'ubuntu'}}
                   disabled={this.state.isChange}
-                > 
+                >
                   {
                     batches.map((value,index) =><MenuItem key={value+index} value={value.id} primaryText={value.batch_name} /> )
                   }
                 </SelectField>
-              
+
                 <DatePicker
                   hintText="Birthday"
                   value={moment(birthday).toDate()}
@@ -183,7 +183,7 @@ export default class StudentProfile extends React.Component {
                       {status.substring(0,2)}
                     </Avatar>
                     Status: {status}
-                  </Chip> 
+                  </Chip>
                   :
                   <div>
                     {this.statuses.map((statusItem,index) => (
@@ -199,18 +199,16 @@ export default class StudentProfile extends React.Component {
                         Status: {statusItem.substring(0,1).toUpperCase() + statusItem.substring(1)}
                       </Chip>
                     ))}
-                  </div> 
-                }  
-                  
+                  </div>
+                }
+
               </Col >
             </Row>
             </div>
-          </Tab> 
+          </Tab>
         </Tabs>
         </div>
       </MainMenu >
       )
   }
 }
-
-

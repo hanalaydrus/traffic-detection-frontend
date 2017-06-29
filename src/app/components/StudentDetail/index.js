@@ -92,12 +92,12 @@ export default class CardExampleControlled extends React.Component {
   handleChange = (event, index, value) => this.setState({value});
 render(){
   return (
-<MainMenu > 
-  <div style={this.state.contentStyle}> 
+<MainMenu >
+  <div style={this.state.contentStyle}>
   <Tabs>
     <Tab label="Profile" >
       <div style={styles.content} >
-        <Row around="xs" >      
+        <Row around="xs" >
         <Col xs={6}>
         <ToolbarGroup >
           <TextField
@@ -130,7 +130,7 @@ render(){
             <MenuItem value={2} primaryText="#2-Abdul bacan" />
             <MenuItem value={3} primaryText="#3-Azis idola" />
           </SelectField>
-            <ActionHome />  
+            <ActionHome />
           </ToolbarGroup>
           <ToolbarGroup>
             <DatePicker
@@ -138,7 +138,7 @@ render(){
             value={this.state.controlledDate}
             onChange={this.handleDate}
           /><ActionHome/>
-          </ToolbarGroup>          
+          </ToolbarGroup>
           <ToolbarGroup>
             <TextField
             defaultValue="Sawangan, Depok"
@@ -154,7 +154,7 @@ render(){
             />
             <ActionHome/>
           </ToolbarGroup>
-          
+
           <p>Status</p>
           <ToolbarGroup>
             <Chip
@@ -166,14 +166,14 @@ render(){
               </Avatar>
               Status:Pending
             </Chip>
-            <ActionHome/>    
+            <ActionHome/>
           </ToolbarGroup>
-          
+
         </Col >
       </Row>
       </div>
     </Tab>
-    
+
   </Tabs>
   </div>
 </MainMenu >
@@ -222,17 +222,16 @@ class WorkToDoForm extends Component {
                     "name": "Eduplex",
                 }
             }
-        
+
     }
   }
   render() {
     return (
       <MainMenu >
-          
+
       </MainMenu>
     );
   }
 }
 
 export default WorkToDoForm;*/
-
