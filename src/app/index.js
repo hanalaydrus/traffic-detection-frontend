@@ -33,7 +33,7 @@ import ListTicket from './containers/ListTicket';
 import CampusListTable from './containers/CampusListTable'
 import BatchesListTable from './containers/BatchesListTable'
 import PartnerList from './containers/PartnerList'
-import StudentDetail from './components/StudentProfile'
+import StudentDetail from './containers/StudentProfile'
 
 import City from './containers/City';
 
@@ -82,7 +82,7 @@ const AdminPage = () => {
     <Route path="/admin/worktodo" component={WorkTodo} />
     <Route path="/admin/interview" component={Interview} />
     <Route path="/admin/hiring" component={Hiring} />
-    <Route path="/admin/studentlist" component={StudentDetail} />
+    <Route exact path="/admin/studentlist/:idParticipant/:idStudent" component={StudentDetail} />
     <Route path="/admin/city" component={City} />
     <Route path="/admin/preparation" component={Preparation} />
     <Route path='/admin/campuslist' component={CampusListTable} />
