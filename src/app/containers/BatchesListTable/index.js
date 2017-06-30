@@ -1,13 +1,24 @@
+/**
+ * Import from node modules
+ */
 import React, { Component } from 'react';
 import {
-  RaisedButton, TextField, Checkbox, Dialog, FlatButton, Subheader, List, ListItem,
-  DropDownMenu, MenuItem, DatePicker
+  RaisedButton,
+  TextField,
+  Dialog,
+  FlatButton,
+  Subheader,
+  List,
+  DropDownMenu,
+  MenuItem,
+  DatePicker
 } from 'material-ui';
-import { orange600, orange500, blue500 } from 'material-ui/styles/colors';
+import { orange600, blue500 } from 'material-ui/styles/colors';
 import moment from 'moment';
 
-// import dependencies
-
+/**
+ * Import components
+ */
 import { Header } from './../../components/Header';
 import { Drawer } from './../../components/DrawerBase';
 import { PageTitle } from './../../components/PageTitle';
@@ -79,7 +90,6 @@ const style = {
     display: 'block'
    }
 };
-//const dataCity = cityData.data
 
 class BatchesListTable extends Component {
   constructor() {
@@ -128,56 +138,59 @@ class BatchesListTable extends Component {
     const Const = this.state.contentStyle === style.content_less ? style.content_full : style.content_less;
     this.setState({ contentStyle: Const });
   }
-  //Date Picker
+  // Date Picker
   handleChangeRegisterStart = (event, date) => {
     this.setState({ register_start: date });
   }
+
   handleChangeRegisterEnd = (event, date) => {
     this.setState({ register_end: date });
   }
+
   handleChangePrepareStart = (event, date) => {
     this.setState({ prepare_start: date });
   }
+
   handleChangePrepareEnd = (event, date) => {
     this.setState({ prepare_end: date });
   }
+
   handleChangeTryout = (event, date) => {
     this.setState({ tryout_date: date });
   }
+
   handleChangeTryAnnounce = (event, date) => {
     this.setState({ tryout_announce_date: date });
   }
+
   handleChangeBootcampStart = (event, date) => {
     this.setState({ bootcamp_start: date });
   }
+
   handleChangeBootcampEnd = (event, date) => {
     this.setState({ bootcamp_end: date });
   }
 
-  handleChangeDropDown = (event, index, value) => this.setState({ value });
-
+  handleChangeDropDown = (event, index, value) => {
+    this.setState({ value });
+  }
 
   //CRUD event goes down below
   onChangeData = type => (event, value) => {
-    this.setState(
-      {
-        [type]: value
-      });
+    this.setState({ [type]: value });
   }
 
   onUpdate = id => {
-    this.setState(
-      {
-        open: true,
-        update: true,
-        updateId: id
-      });
+    this.setState({
+      open: true,
+      update: true,
+      updateId: id
+    });
   }
 
   onDelete = id => {
-    const result = this.state.data.filter((res, index) => res.id !== id);
-    this.setState(
-      {
+    const result = this.state.data.filter( (res, index) => res.id !== id);
+    this.setState({
         data: result,
         batch_name: '',
         batch_number: '',
@@ -195,12 +208,23 @@ class BatchesListTable extends Component {
   }
 
   submitUpdate = () => {
-      const {
-      batch_name, batch_number, batch_campus, register_start, register_end, prepare_start,
-      prepare_end, tryout_date,tryout_announce_date,
-      bootcamp_start, bootcamp_end,
-  city, value, updateId
+    const {
+      batch_name,
+      batch_number,
+      batch_campus,
+      register_start,
+      register_end,
+      prepare_start,
+      prepare_end,
+      tryout_date,
+      tryout_announce_date,
+      bootcamp_start,
+      bootcamp_end,
+      city,
+      value,
+      updateId
     } = this.state;
+
     const splittedValue = value.split(' ');
 
     const update = {
@@ -216,28 +240,37 @@ class BatchesListTable extends Component {
       tryout_announce_date: tryout_announce_date,
       bootcamp_start: bootcamp_start,
       bootcamp_end: bootcamp_end,
-      city: {
-        name: splittedValue[1]
-      }
+      city: { name: splittedValue[1] }
     };
-    this.setState(
-      {
-        data: this.getUpdate(updateId, update),
-        open: !this.state.open
-      });
+
+    this.setState({
+      data: this.getUpdate(updateId, update),
+       open: !this.state.open
+    });
   }
 
   getUpdate =(id,update) => {
-     return this.state.data.map((res) => (res.id === id) ? update :res);
+     return this.state.data.map( (res) => (res.id === id) ? update :res);
   }
 
   onSubmitData = () => {
-     const {
-      batch_name, batch_number, batch_campus, register_start, register_end, prepare_start,
-      prepare_end, tryout_date,tryout_announce_date,
-      bootcamp_start, bootcamp_end,
-      city, value,updateId
+    const {
+       batch_name,
+       batch_number,
+       batch_campus,
+       register_start,
+       register_end,
+       prepare_start,
+       prepare_end,
+       tryout_date,
+       tryout_announce_date,
+       bootcamp_start,
+       bootcamp_end,
+       city,
+       value,
+       updateId
     } = this.state;
+
     const splittedValue = value.split(' ');
 
     const post = {
@@ -253,10 +286,9 @@ class BatchesListTable extends Component {
       tryout_announce_date: tryout_announce_date,
       bootcamp_start: bootcamp_start,
       bootcamp_end: bootcamp_end,
-      city: {
-        name: splittedValue[1]
-      }
+      city: { name: splittedValue[1] }
     };
+
     this.setState({
       data: this.state.data.concat(post),
       open: !this.state.open
@@ -264,8 +296,11 @@ class BatchesListTable extends Component {
   }
 
   formatDate = (date) => {
-  return (
-    moment(date).format('MMM') + ' ' + date.getDate() + ',' + ' ' + date.getFullYear()
+    return (
+      moment(date)
+        .format('MMM') + ' ' + date
+        .getDate() + ',' + ' ' + date
+        .getFullYear()
     );
   }
 
@@ -273,26 +308,33 @@ class BatchesListTable extends Component {
   render() {
     // constant for open dialog button
     const actions = [
-      (this.state.update) ?
-      <FlatButton
-        label="Update"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={() => this.submitUpdate()}
-      />
-        :
-
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={() => this.onSubmitData()}
-      />
+      this.state.update
+        ? (
+            <FlatButton
+              label="Update"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={() => this.submitUpdate()}
+            />
+          )
+        : (
+            <FlatButton
+              label="Submit"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={() => this.onSubmitData()}
+            />
+          )
     ];
 
     return (
         <div style={{ margin:0 }}>
-          <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content} />
+          <Header
+            onClick={this.handleChange}
+            navStyle={this.state.navStyle}
+            drawerStyle={this.state.drawerStyle}
+            content={this.state.content}
+          />
           <Drawer drawerStyle={this.state.drawerStyle} />
           <div style={this.state.contentStyle}>
             <PageTitle title="Batches" />
@@ -305,126 +347,163 @@ class BatchesListTable extends Component {
                   labelStyle={{ fontWeight: 'bold' }}
                 />
               </div>
-               <Dialog
-                  title={<Subheader>{"Refactory's Batch"}</Subheader>}
-                  actions={actions}
-                  modal={false}
-                  open={this.state.open}
-                  onRequestClose={this.handleClose}
-                  autoDetectWindowHeight={false}
-                  autoScrollBodyContent={false}
-                  style={style.dialogSize}
-                  titleStyle={style.customTitle}
-                  bodyStyle={style.customContent}
+              <Dialog
+                title={<Subheader>{"Refactory's Batch"}</Subheader>}
+                actions={actions}
+                modal={false}
+                open={this.state.open}
+                onRequestClose={this.handleClose}
+                autoDetectWindowHeight={false}
+                autoScrollBodyContent={false}
+                style={style.dialogSize}
+                titleStyle={style.customTitle}
+                bodyStyle={style.customContent}
               >
                 <List>
+
                   <TextField
-                        hintText={this.state.batch_name}
-                        floatingLabelText="Name"
-                        onChange={this.onChangeData('batch_name')}
-                        style={style.customTextfield} />
-                        <br />
+                    hintText={this.state.batch_name}
+                    floatingLabelText="Name"
+                    onChange={this.onChangeData('batch_name')}
+                    style={style.customTextfield}
+                  />
+                  <br />
+
                   <TextField
-                        hintText={this.state.batch_number}
-                        floatingLabelText="Number"
-                        onChange={this.onChangeData('batch_number')}
-                        type="Number"
-                        style={style.customTextfield} />
-                        <br />
+                    hintText={this.state.batch_number}
+                    floatingLabelText="Number"
+                    onChange={this.onChangeData('batch_number')}
+                    type="Number"
+                    style={style.customTextfield}
+                  />
+                  <br />
+
                   <DropDownMenu
-                      value={this.state.value}
-                      onChange={this.handleChangeDropDown}
-                      style={style.customWidthDropdown}
-                      autoWidth={false}
+                    value={this.state.value}
+                    onChange={this.handleChangeDropDown}
+                    style={style.customWidthDropdown}
+                    autoWidth={false}
                   >
                     {
-                      campusData.data.map((campus, index) => {
+                      campusData.data.map( (campus) => {
                         return (
-                            <MenuItem
-                              key={campus.id}
-                              value={campus.name + ' ' + campus.city.name}
-                              primaryText={campus.name + ' ' + campus.city.name}
-                              onChange={this.onChangeData('value')}
-                           />
+                          <MenuItem
+                            key={campus.id}
+                            value={campus.name + ' ' + campus.city.name}
+                            primaryText={campus.name + ' ' + campus.city.name}
+                            onChange={this.onChangeData('value')}
+                          />
                         );
                       })
                     }
-
                   </DropDownMenu>
+
                   <div style={style.dateContainer}>
-                      <br />
-                      <label style={style.labelStyle}>Registration Schedule:</label>
-                      <br />
-                      <DatePicker
-                        hintText="Start"
-                        value={this.state.register_start}
-                        onChange={this.handleChangeRegisterStart}
-                        textFieldStyle={style.datePicker}
-                        formatDate={this.formatDate} />
-                      <DatePicker
-                        hintText="End"
-                        value={this.state.register_end}
-                        onChange={this.handleChangeRegisterEnd}
-                        textFieldStyle={style.datePicker}
-                        formatDate={this.formatDate} />
-                      <br />
-                      <label style={style.labelStyle}>Preparation Schedule:</label>
-                      <br />
-                      <DatePicker
-                        hintText="Start"
-                        value={this.state.prepare_start}
-                        onChange={this.handleChangePrepareStart}
-                        textFieldStyle={style.datePicker}
-                        formatDate={this.formatDate} />
-                      <DatePicker
-                        hintText="End"
-                        value={this.state.prepare_end}
-                        onChange={this.handleChangePrepareEnd}
-                        textFieldStyle={style.datePicker}
-                        formatDate={this.formatDate} />
-                      <br />
-                      <label style={style.labelStyle}>Tryout Schedule:</label>
-                      <br />
-                      <DatePicker
-                        hintText="Tryout"
-                        value={this.state.tryout_date}
-                        onChange={this.handleChangeTryout}
-                        textFieldStyle={style.datePicker}
-                        formatDate={this.formatDate} />
-                      <br />
-                      <label style={style.labelStyle}>Tryout Announcement:</label>
-                      <br />
-                      <DatePicker
-                        hintText="Announcement"
-                        value={this.state.tryout_announce_date}
-                        onChange={this.handleChangeTryAnnounce}
-                        textFieldStyle={style.datePicker}
-                        formatDate={this.formatDate} />
-                      <br />
-                      <label style={style.labelStyle}>Bootcanmp Schedule:</label>
-                      <br />
-                      <DatePicker
-                        hintText="Start"
-                        value={this.state.bootcamp_start}
-                        onChange={this.handleChangeBootcampStart}
-                        textFieldStyle={style.datePicker}
-                        formatDate={this.formatDate} />
-                      <DatePicker
-                        hintText="End"
-                        value={this.state.bootcamp_end}
-                        onChange={this.handleChangeBootcampEnd}
-                        textFieldStyle={style.datePicker}
-                        formatDate={this.formatDate} />
+                    <br />
+                    <label style={style.labelStyle}>
+                      Registration Schedule:
+                    </label>
+                    <br />
+
+                    <DatePicker
+                      hintText="Start"
+                      value={this.state.register_start}
+                      onChange={this.handleChangeRegisterStart}
+                      textFieldStyle={style.datePicker}
+                      formatDate={this.formatDate}
+                    />
+
+                    <DatePicker
+                      hintText="End"
+                      value={this.state.register_end}
+                      onChange={this.handleChangeRegisterEnd}
+                      textFieldStyle={style.datePicker}
+                      formatDate={this.formatDate}
+                    />
+                    <br />
+
+                    <label style={style.labelStyle}>
+                      Preparation Schedule:
+                    </label>
+                    <br />
+
+                    <DatePicker
+                      hintText="Start"
+                      value={this.state.prepare_start}
+                      onChange={this.handleChangePrepareStart}
+                      textFieldStyle={style.datePicker}
+                      formatDate={this.formatDate}
+                    />
+
+                    <DatePicker
+                      hintText="End"
+                      value={this.state.prepare_end}
+                      onChange={this.handleChangePrepareEnd}
+                      textFieldStyle={style.datePicker}
+                      formatDate={this.formatDate}
+                    />
+                    <br />
+
+                    <label style={style.labelStyle}>
+                      Tryout Schedule:
+                    </label>
+                    <br />
+
+                    <DatePicker
+                      hintText="Tryout"
+                      value={this.state.tryout_date}
+                      onChange={this.handleChangeTryout}
+                      textFieldStyle={style.datePicker}
+                      formatDate={this.formatDate}
+                    />
+                    <br />
+
+                    <label style={style.labelStyle}>
+                      Tryout Announcement:
+                    </label>
+                    <br />
+
+                    <DatePicker
+                      hintText="Announcement"
+                      value={this.state.tryout_announce_date}
+                      onChange={this.handleChangeTryAnnounce}
+                      textFieldStyle={style.datePicker}
+                      formatDate={this.formatDate}
+                    />
+                    <br />
+
+                    <label style={style.labelStyle}>
+                      Bootcanmp Schedule:
+                    </label>
+                    <br />
+
+                    <DatePicker
+                      hintText="Start"
+                      value={this.state.bootcamp_start}
+                      onChange={this.handleChangeBootcampStart}
+                      textFieldStyle={style.datePicker}
+                      formatDate={this.formatDate}
+                    />
+
+                    <DatePicker
+                      hintText="End"
+                      value={this.state.bootcamp_end}
+                      onChange={this.handleChangeBootcampEnd}
+                      textFieldStyle={style.datePicker}
+                      formatDate={this.formatDate}
+                    />
+
                   </div>
                 </List>
-
               </Dialog>
             </div>
+
             <BatchesTable
               data={this.state.data}
               onUpdate={this.onUpdate.bind(this)}
               onDelete={this.onDelete.bind(this)}
-              />
+            />
+
           </div>
         </div>
     );

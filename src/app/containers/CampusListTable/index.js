@@ -58,7 +58,6 @@ const style = {
    marginBottom: 10
  }
 };
-const dataCity = cityData.data;
 
 class CampusListTable extends Component {
   constructor() {
@@ -73,7 +72,7 @@ class CampusListTable extends Component {
         phone: '',
         city: '',
         description: '',
-			  data: response.data,
+        data: response.data,
         open: false,
         value: {},
         update: false,
@@ -119,11 +118,11 @@ class CampusListTable extends Component {
 
   //CRUD event goes below mate!
   onChangeData = type => (event, value) => {
-    this.setState(
-      {
+    this.setState({
         [type]: value
-      });
+    });
   }
+
   onAdd = () => {
     this.setState({
       open: true,
@@ -132,6 +131,7 @@ class CampusListTable extends Component {
       modalTitle: 'Create New Campus'
     });
   }
+
   onUpdate = (id, name, address, value, phone, description) => {
     this.setState({
       id: id,
@@ -163,6 +163,7 @@ class CampusListTable extends Component {
     this.props.updateCampusesData(id, name, address, value, phone, description);
     this.props.fetchCampusesData();
   }
+
   onDeleteData = () => {
     const { id } = this.state;
     this.handleClose();
