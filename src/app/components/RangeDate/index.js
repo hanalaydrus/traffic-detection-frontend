@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { func } from 'prop-types';
 import DatePicker from 'material-ui/DatePicker';
 import './styles.scss';
 import moment from 'moment';
 
-export class RangeDate extends React.Component {
+export class RangeDate extends Component {
   changeMinDate = (event, date) => {
     const resultMinDate = moment(date).format('YYYY-MM-DD');
     this.props.onChange('minDate', resultMinDate);
@@ -22,3 +23,7 @@ export class RangeDate extends React.Component {
     );
   }
 }
+
+RangeDate.propTypes = {
+  onChange: func.isRequired
+};

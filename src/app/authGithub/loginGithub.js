@@ -2,7 +2,7 @@
  * Import node modules
  */
 import React, { Component } from 'react';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import Loader from 'react-loader';
 import { createStructuredSelector } from 'reselect';
@@ -30,7 +30,7 @@ class GithubLogin extends Component {
   }
 
   // Push to login route if not authenticated on update
-  componentWillUpdate(nextProps) {
+  componentWillUpdate() {
     if(this.props.isUserLoggedIn) {
       history.push('/student/listticket');
       location.href = location.href;
@@ -71,7 +71,8 @@ class GithubLogin extends Component {
  *  Define the PropTypes
  */
 GithubLogin.propTypes = {
-  authenticateUser: func.isRequired
+  authenticateUser: func.isRequired,
+  isUserLoggedIn: bool.isRequired
 };
 /**
  *  Map redux state to component props

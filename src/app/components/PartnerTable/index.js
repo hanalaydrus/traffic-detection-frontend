@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { RaisedButton, TextField } from 'material-ui';
-import { green500, blue500, orange500, orange600 } from 'material-ui/styles/colors';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
-import Response from './constant';
+import { array, func } from 'prop-types';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table';
+
 const style = {
 	tableHeader: {
 		backgroundColor: '#FF9800',
@@ -15,6 +21,7 @@ class PartnerTable extends Component {
 		super(...argument);
 	}
 	render() {
+    const { data, onDelete, onUpdate } = this.props;
 		return (
 			<Table>
 				<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -34,15 +41,15 @@ class PartnerTable extends Component {
 					</TableRow>
 				</TableHeader>
 				<TableBody displayRowCheckbox={false}>
-					{this.props.data.map((table, index) => {
+					{data && data.map((table, index) => {
 						return (
 							<TableRow key={index}>
 								<TableRowColumn style={{ width: 10 }}>{index + 1}</TableRowColumn>
 								<TableRowColumn style={{ width: 30 }}>{table.name}</TableRowColumn>
 								<TableRowColumn style={{ width: 80 }}>{table.email}</TableRowColumn>
 								<TableRowColumn style={{ width: 80 }}>
-									<button onClick={() => this.props.onDelete(table.id)}>Delete</button>
-									<button  onClick={() => this.props.onUpdate(table.id)}>Update</button>
+									<button onClick={() => onDelete(table.id)}>Delete</button>
+									<button  onClick={() => onUpdate(table.id)}>Update</button>
 								</TableRowColumn>
 							</TableRow>
 						);
@@ -52,5 +59,11 @@ class PartnerTable extends Component {
 		);
 	}
 }
+
+PartnerTable.propTypes = {
+  data: array,
+  onDelete: func.isRequired,
+  onUpdate: func.isRequired
+};
 
 export default PartnerTable;

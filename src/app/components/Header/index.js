@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, func } from 'prop-types';
 import { orange500 } from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
@@ -48,3 +49,9 @@ export class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  navStyle: string.isRequired,
+  drawerStyle: string.isRequired,
+  onClick: func.isRequired
+};

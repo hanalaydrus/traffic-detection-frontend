@@ -1,14 +1,13 @@
 // import library
-import React from 'react';
+import React, { Component } from 'react';
 import AceEditor from 'react-ace'; // Editor
-import brace from 'brace'; // Editor plugin
 import moment from 'moment'; // Date Time Format
 import 'brace/mode/javascript'; // import language editor
 import 'brace/theme/monokai'; // import theme editor
+import { object, string } from 'prop-types';
 
 // import component material-ui
 import { RaisedButton } from 'material-ui';
-import { orange500 } from 'material-ui/styles/colors';
 
 // import style scss
 import './styles.scss';
@@ -21,7 +20,7 @@ window.onerror = (msg, url, linenumber) => {
 };
 
 
-export class Editor extends React.Component {
+export class Editor extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,8 +40,7 @@ export class Editor extends React.Component {
     const editor = this.ace.editor; // getValue code in editor
     const newCode = editor.getValue(); // getValue code in editor
     this.setState({ code: newCode });
-    const klass = this;
-      // Override method for console.log
+    // Override method for console.log
     console.log = (newCode) => {
       this.setState(prevState => ({ result: `${prevState.result}#ff%&${newCode}` }));
     };
@@ -89,3 +87,7 @@ export class Editor extends React.Component {
     );
   }
 }
+
+Editor.propTypes = {
+  title: string.isRequired
+};

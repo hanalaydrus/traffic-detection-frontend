@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { RaisedButton, TextField } from 'material-ui';
-import { green500, blue500, orange500, orange600 } from 'material-ui/styles/colors';
+import { array, func } from 'prop-types';
 import {
   Table,
   TableBody,
@@ -9,12 +8,9 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
-import moment from 'moment';
 /**
  * imported others Library *
  **/
-import { Enhance } from '../../HOC/fetchingData';
-import { PageTitle } from './../../components/PageTitle';
 
 const style = {
   tableHeader: {
@@ -26,7 +22,7 @@ const style = {
 export class BatchesTable extends Component {
   constructor(...argument) {
     super(...argument);
-  }  
+  }
   render () {
     return (
       //code goes here
@@ -36,12 +32,12 @@ export class BatchesTable extends Component {
             <TableHeaderColumn style={{ width: 10,color: '#303030',fontWeight: 'bold' }}>No</TableHeaderColumn>
             <TableHeaderColumn style={{ width: 30,color: '#303030',fontWeight: 'bold' }}>Name</TableHeaderColumn>
             <TableHeaderColumn style={{ width: 80,color: '#303030',fontWeight: 'bold' }}>Campus</TableHeaderColumn>
-            <TableHeaderColumn style={{ width: 50,color: '#303030',fontWeight: 'bold' }}>City</TableHeaderColumn>          
+            <TableHeaderColumn style={{ width: 50,color: '#303030',fontWeight: 'bold' }}>City</TableHeaderColumn>
 						<TableHeaderColumn style={{ width: 50, color: '#303030', fontWeight: 'bold' }}>
 							Action
 						</TableHeaderColumn>
           </TableRow>
-        </TableHeader> 
+        </TableHeader>
             <TableBody displayRowCheckbox={false}>
               {
                 this.props.data.map( (table, index) => {
@@ -55,12 +51,18 @@ export class BatchesTable extends Component {
 									          <button onClick={() => this.props.onUpdate(table.id)}>Update</button>
                             <button onClick={() => this.props.onDelete(table.id)}>Delete</button>
                           </TableRowColumn>
-                      </TableRow>    
+                      </TableRow>
                     );}
                 )
-              }              
-            </TableBody>     
+              }
+            </TableBody>
         </Table>
     );
   }
 }
+
+BatchesTable.propTypes = {
+  data: array,
+  onUpdate: func.isRequired,
+  onDelete: func.isRequired
+};

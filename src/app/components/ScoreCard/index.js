@@ -1,7 +1,7 @@
-import React from 'react';
-import './styles.scss';
+import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import ScoreCardData from '../../../../temp-data/tempScoreCard.json';
+import './styles.scss';
 
 const styles = {
   button: {
@@ -21,7 +21,7 @@ const styles = {
 
 const SCData = ScoreCardData.data;
 
-export class ScoreCard extends React.Component {
+export class ScoreCard extends Component {
   render() {
     return (
       <div style={{ marginTop: 10 }}>
@@ -35,18 +35,20 @@ export class ScoreCard extends React.Component {
           <input type="file" style={styles.exampleImageInput} />
         </RaisedButton>
         <div className="view_container">
-          {SCData.map((row, index) => (
-            <div key={index.toString()}>
+          {
+            SCData && SCData.map( (row, index) => (
+            <div key={index}>
               <h4>{row.subjects}</h4>
               <ul>
-                {row.details.map((row, index) => (
-                  <li key={index.toString()}>
+                {
+                  row.details.map( (row, index) => (
+                  <li key={index}>
                     {row}
-                  </li>
-          ))}
+                  </li>))
+                }
               </ul>
-            </div>
-      ))}
+            </div>))
+          }
         </div>
       </div>
     );

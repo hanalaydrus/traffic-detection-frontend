@@ -8,23 +8,7 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
-import TextField from 'material-ui/TextField';
-import Toggle from 'material-ui/Toggle';
 import HiringData from '../../../../temp-data/tempHiring.json';
-
-const styles = {
-  propContainer: {
-    overflow: 'hidden',
-    margin: '20px auto 0'
-  },
-  propToggleHeader: {
-    margin: '20px auto 10px'
-  },
-  palette: {
-    textColor: 'white',
-    primaryColor: 'orange'
-  }
-};
 
 const tableData = HiringData.data;
 

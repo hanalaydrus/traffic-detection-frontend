@@ -1,4 +1,5 @@
 import React from 'react';
+import { string } from 'prop-types';
 import './styles.scss';
 import { PageTitle } from './../PageTitle';
 import { TextField } from 'material-ui';
@@ -9,11 +10,13 @@ const style = {
     borderColor: orange600
   }
 };
+
 export class InterviewForm extends React.Component {
   render() {
+    const { title, float } = this.props;
     return (
-      <div className={`${this.props.float} interview_container`}>
-        <PageTitle title={this.props.title} />
+      <div className={`${float} interview_container`}>
+        <PageTitle title={title} />
         <TextField
           multiLine
           rows={4}
@@ -22,9 +25,14 @@ export class InterviewForm extends React.Component {
           className="text_field_todo_form"
           underlineFocusStyle={style.orange}
           style={{ marginTop: 20 }}
-          id={this.props.title}
+          id={title}
         />
       </div>
     );
   }
 }
+
+InterviewForm.propTypes = {
+  float: string.isRequired,
+  title: string.isRequired
+};

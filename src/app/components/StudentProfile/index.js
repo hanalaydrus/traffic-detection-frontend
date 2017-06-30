@@ -1,8 +1,6 @@
 /**
  * import from libary
  */
-
-
 import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
@@ -85,21 +83,41 @@ export default class StudentProfile extends React.Component {
       [state]: name
     });
   }
+
   onSubmitStatus = (value) => {
     this.setState({
       status: value
     });
   }
-  onSubmit = (event) => {
+
+  onSubmit = () => {
     this.setState({
       isChange: !this.state.isChange
     });
   }
-  getBatch = data => campusid => data.filter(data => data.campus_id === campusid)
-  handleChange = state => (event, index, value) => this.setState({ [state]: value });
+
+  getBatch = data => campusid => {
+    return data.filter(data => data.campus_id === campusid);
+  }
+
+  handleChange = state => (event, index, value) => {
+    this.setState({ [state]: value });
+  };
+
   render() {
-    const { full_name, batch_id, campus_id, address, birthday, phone, email, status, batch, campus, allCampus } = this.state;
+    const {
+      full_name,
+      batch_id,
+      campus_id,
+      address,
+      birthday,
+      email,
+      status,
+      campus
+    } = this.state;
+
     const batches = this.getBatch(campus)(campus_id)[0].batch;
+
     return (
       <MainMenu >
         <div style={this.state.contentStyle}>
@@ -177,29 +195,33 @@ export default class StudentProfile extends React.Component {
                       </Chip>
                   :
                       <div>
-                        {this.statuses.map((statusItem, index) => (
-                          <Chip
-                          key={index + statusItem}
-                          backgroundColor={blue500}
-                          style={styles.chip}
-                          onClick={() => this.onSubmitStatus(statusItem)}
-                        >
-                          <Avatar size={32} color={blue500} backgroundColor={indigo900}>
-                            {statusItem.substring(0, 2)}
-                          </Avatar>
-                        Status: {statusItem.substring(0, 1).toUpperCase() + statusItem.substring(1)}
-                        </Chip>
-                    ))}
+                        {
+                          this.statuses.map( (statusItem, index) => (
+                            <Chip
+                              key={index + statusItem}
+                              backgroundColor={blue500}
+                              style={styles.chip}
+                              onClick={() => this.onSubmitStatus(statusItem)}
+                            >
+                            <Avatar
+                              size={32}
+                              color={blue500}
+                              backgroundColor={indigo900}
+                            >
+                              {statusItem.substring(0, 2)}
+                            </Avatar>
+                            Status: {statusItem.substring(0, 1).toUpperCase() + statusItem.substring(1)}
+                          </Chip>))
+                      }
                       </div>
                 }
-
-                  </Col >
+                  </Col>
                 </Row>
               </div>
             </Tab>
           </Tabs>
         </div>
-      </MainMenu >
+      </MainMenu>
     );
   }
 }

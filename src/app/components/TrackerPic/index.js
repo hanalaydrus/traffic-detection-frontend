@@ -1,4 +1,8 @@
-import React from 'react';
+/**
+ * Import from node modules
+ */
+import React, { Component } from 'react';
+import { string } from 'prop-types';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
@@ -23,23 +27,29 @@ const styles = {
 };
 
 /**
- * A simple example of a scrollable `GridList` containing a [Subheader](/#/components/subheader).
+ * A simple example of a scrollable `GridList`
+ * containing a [Subheader]
+ * (/#/components/subheader).
  */
 const tableData = TrackingData.data;
 
 
-export class TrackerPic extends React.Component {
+export class TrackerPic extends Component {
   showData = (data) => {
     const type_data = this.props.title;
     const check = this.props.check;
     const minDate = this.props.minDate;
     const maxDate = this.props.maxDate;
-    return data.filter((el) => {
+
+    return data.filter( (el) => {
       if (check === true) {
-        return (el.type === type_data && moment(el.date).isSameOrAfter(minDate) && moment(el.date).isSameOrBefore(maxDate));
+        return (el.type === type_data
+                  && moment(el.date).isSameOrAfter(minDate)
+                  && moment(el.date).isSameOrBefore(maxDate));
       }
     });
   }
+
   render() {
     return (
       <div className="track_container" style={{ float: this.props.float }}>
@@ -49,20 +59,32 @@ export class TrackerPic extends React.Component {
             cellHeight={180}
             style={styles.gridList}
           >
-            {this.showData(tableData).map((row, index) => (
-              <GridTile
-                key={index}
-                title={row.date}
-                actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-                style={{ backgroundColor: '#33353F' }}
-                className="img_style"
-              >
-                <img src={row.img} />
-              </GridTile>
-             ))}
+            {
+              this.showData(tableData).map( (row, index) => {
+                return (
+                  <GridTile
+                    key={index}
+                    title={row.date}
+                    style={{ backgroundColor: '#33353F' }}
+                    className="img_style"
+                    actionIcon={
+                      <IconButton>
+                        <StarBorder color="white" />
+                      </IconButton>
+                    }
+                  >
+                    <img src={row.img} />
+                  </GridTile>
+                );
+            })}
           </GridList>
         </div>
       </div>
     );
   }
  }
+
+TrackerPic.propTypes = {
+  float: string.isRequired,
+  title: string.isRequired
+};

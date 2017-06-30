@@ -4,11 +4,6 @@ import { RaisedButton } from 'material-ui';
 
 // import dependency components
 
-import Preparation from '../../../../temp-data/preparationPic.json';
-
-const Data = Preparation.data;
-
-
 export class ListReview extends React.Component {
   constructor(props) {
     super(props);

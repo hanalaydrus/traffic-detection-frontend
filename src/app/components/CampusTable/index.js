@@ -1,6 +1,7 @@
+/**
+ * Import from node modules
+ */
 import React, { Component } from 'react';
-import { RaisedButton, TextField } from 'material-ui';
-import { green500, blue500, orange500, orange600, red500 } from 'material-ui/styles/colors';
 import {
   Table,
   TableBody,
@@ -9,16 +10,11 @@ import {
   TableRow,
   TableRowColumn
 } from 'material-ui/Table';
-import moment from 'moment';
+import { func, array } from 'prop-types';
 /**
- * imported others Library *
+ * imported others Library
  **/
-import { Enhance } from '../../HOC/fetchingData';
-import { PageTitle } from './../../components/PageTitle';
-import campustListData from '../../../../temp-data/campusData.json';
 import './style.scss';
-
-const Data = campustListData.data;
 
 const style = {
   tableHeader: {
@@ -58,7 +54,7 @@ export class CampusTable extends Component {
                           <TableRowColumn style={{ width: 50 }}>{table.city.name}</TableRowColumn>
                           <TableRowColumn style={{ width: 50 }}>{table.phone}</TableRowColumn>
                           <TableRowColumn style={{ width: 50 }}>
-									          <button onClick={() => this.props.onUpdate(table.id, table.name, table.address, table.city.id, table.phone, table.description)}>Update</button>
+                            <button onClick={() => this.props.onUpdate(table.id, table.name, table.address, table.city.id, table.phone, table.description)}>Update</button>
                             <button onClick={() => this.props.onDelete(table.id, table.name)}>Delete</button>
                           </TableRowColumn>
                       </TableRow>
@@ -69,4 +65,10 @@ export class CampusTable extends Component {
         </Table>
     );
   }
+}
+
+CampusTable.propTypes = {
+  data: array,
+  onUpdate: func.isRequired,
+  onDelete: func.isRequired
 }

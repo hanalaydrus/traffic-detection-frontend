@@ -1,17 +1,43 @@
+/**
+ * Import from node modules
+ */
 import React, { Component } from 'react';
-import { RaisedButton, TextField, MenuItem, SelectField, DatePicker } from 'material-ui';
-import { orange600, orange500, red500, blue500 } from 'material-ui/styles/colors';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import {
+  RaisedButton,
+  TextField,
+  MenuItem,
+  SelectField,
+  DatePicker
+} from 'material-ui';
+
+import {
+  orange600,
+  orange500,
+  red500,
+  blue500
+} from 'material-ui/styles/colors';
+
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn
+} from 'material-ui/Table';
+
 import Dialog from 'material-ui/Dialog';
 
 const customContentStyle = {
   width: '40%'
 };
+
 const style = {
   orange: {
     borderColor: orange600
   }
 };
+
 const tilesData = [];
 
 class WorkToDoForm extends Component {
@@ -27,6 +53,7 @@ class WorkToDoForm extends Component {
     minute: '',
     data: tilesData
   };
+
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -38,10 +65,9 @@ class WorkToDoForm extends Component {
   isSelected = index => this.state.selected.indexOf(index) !== -1;
 
   handleRowSelection = (selectedRows) => {
-    this.setState({
-      selected: selectedRows
-    });
+    this.setState({ selected: selectedRows });
   };
+
   isHour = (event, data) => {
     if (data > 99) {
       this.setState({ hour: 99 });
@@ -52,6 +78,7 @@ class WorkToDoForm extends Component {
       this.setState({ hour: 0 });
     }
   }
+
   isMinute = (event, data) => {
     if (data > 59) {
       this.setState({ minute: 59 });
@@ -62,9 +89,11 @@ class WorkToDoForm extends Component {
       this.setState({ minute: 0 });
     }
   }
+
   isTask = (event, data) => {
     this.setState({ task: data });
   }
+
   isUrl = (event, data) => {
     this.setState({ url: data });
   }
@@ -87,7 +116,9 @@ class WorkToDoForm extends Component {
   }
   showData = data => data.filter(el => (el))
 
-  handleProjectChange = (event, index, value) => this.setState({ projectValue: value });
+  handleProjectChange = (event, index, value) => {
+    this.setState({ projectValue: value });
+  }
 
   render() {
     const projectAvailable = [
@@ -112,8 +143,10 @@ class WorkToDoForm extends Component {
         onTouchTap={this.handleClose}
       />
     ];
+
     return (
       <div>
+
         <div className="todo_form_card">
           <div className="form_card">
             <SelectField
@@ -133,45 +166,73 @@ class WorkToDoForm extends Component {
               container="inline"
               floatingLabelText="Date"
               fullWidth
-              underlineFocusStyle={style.orange} />
+              underlineFocusStyle={style.orange}
+            />
             <h3 style={{ marginBottom: 10, color: orange500 }}>Todo</h3>
             <div className="task_table" >
               <Table onRowSelection={this.handleRowSelection}>
-                <TableHeader >
+
+                <TableHeader>
                   <TableRow>
-                    <TableHeaderColumn style={{ color: orange500 }}>TASK</TableHeaderColumn>
+                    <TableHeaderColumn style={{ color: orange500 }}>
+                      TASK
+                    </TableHeaderColumn>
                   </TableRow>
                 </TableHeader>
+
                 <TableBody>
-                  {this.state.data.map((tile, index) => (
-                    <TableRow selected={this.isSelected(index)}>
-                      <TableRowColumn>{tile.task}</TableRowColumn>
-                    </TableRow>
-                    ))}
+                  {
+                    this.state.data.map( (tile, index) => {
+                      return (
+                        <TableRow key={index} selected={this.isSelected(index)}>
+                          <TableRowColumn>{tile.task}</TableRowColumn>
+                        </TableRow>
+                      );
+                    })
+                  }
                 </TableBody>
+
               </Table>
             </div>
+
             <div className="task_button">
-              <RaisedButton label="Add Task" backgroundColor={blue500} fullWidth onTouchTap={this.handleOpen} /><br /><br />
-              <RaisedButton label="Delete Task" backgroundColor={red500} fullWidth onTouchTap={this.deleteRow} />
+              <RaisedButton
+                label="Add Task"
+                backgroundColor={blue500}
+                fullWidth
+                onTouchTap={this.handleOpen}
+              />
+              <br />
+              <br />
+              <RaisedButton
+                label="Delete Task"
+                backgroundColor={red500}
+                fullWidth
+                onTouchTap={this.deleteRow}
+              />
             </div>
+
             <div className="clear" />
-            <TextField
-              hintText="What do you need to discuss"
-              floatingLabelText="What do you need to discuss"
-              multiLine
-              rows={1}
-              rowsMax={4}
-              fullWidth
-              className="text_field_todo_form"
-              underlineFocusStyle={style.orange}
-            />
-            <div className="btn_work">
-              <RaisedButton label="Submit" backgroundColor={orange500} className="btn_work_todo" />
-            </div>
+
+              <TextField
+                hintText="What do you need to discuss"
+                floatingLabelText="What do you need to discuss"
+                multiLine
+                rows={1}
+                rowsMax={4}
+                fullWidth
+                className="text_field_todo_form"
+                underlineFocusStyle={style.orange}
+              />
+              <div className="btn_work">
+                <RaisedButton label="Submit" backgroundColor={orange500} className="btn_work_todo" />
+              </div>
+
             <div className="clear" />
+
           </div>
         </div>
+
         <div>
           <Dialog
             title="Create New Task"
@@ -198,24 +259,25 @@ class WorkToDoForm extends Component {
               onChange={this.isUrl}
             />
             <div style={{ float: 'right' }}>
-        Estimation :
-        <TextField
-          hintText="Hour"
-          floatingLabelText="Hour"
-          onChange={this.isHour}
-          value={this.state.hour}
-          style={{ width: 50, marginRight: 10, marginLeft: 25 }}
-        />:
-        <TextField
-          hintText="Minute"
-          floatingLabelText="Minute"
-          onChange={this.isMinute}
-          value={this.state.minute}
-          style={{ width: 50, marginLeft: 10 }}
-        />
+              Estimation :
+                <TextField
+                  hintText="Hour"
+                  floatingLabelText="Hour"
+                  onChange={this.isHour}
+                  value={this.state.hour}
+                  style={{ width: 50, marginRight: 10, marginLeft: 25 }}
+                />:
+                <TextField
+                  hintText="Minute"
+                  floatingLabelText="Minute"
+                  onChange={this.isMinute}
+                  value={this.state.minute}
+                  style={{ width: 50, marginLeft: 10 }}
+                />
             </div>
           </Dialog>
         </div>
+
       </div>
     );
   }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { RaisedButton, TextField } from 'material-ui';
 import { orange600, orange500 } from 'material-ui/styles/colors';
 import './styles.scss';
-import { TOKEN } from '../../constants';
 
 const style = {
   orange: {

@@ -1,16 +1,11 @@
 import {
   AUTH_USER,
   UNAUTH_USER,
-  LOAD_USER,
   ENDPOINT_AUTH,
-  CLIENT_SECRET,
   TOKEN_PARAMS,
   ENDPOINT,
-  CLIENT_ID
+  AUTH_IS_PROCESSING
 } from './constants';
-
-const https = require('https');
-const querystring = require('querystring');
 
 import axios from 'axios';
 import { setHtmlStorage, removeHtmlStorage } from '../../helpers';

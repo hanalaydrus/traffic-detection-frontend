@@ -2,20 +2,15 @@
  * import from library
  */
 import React from 'react';
-import { AppBar } from 'material-ui';
-import { orange600, orange500 } from 'material-ui/styles/colors';
+import { array, func, object } from 'prop-types';
 import SelectField from 'material-ui/SelectField';
-import { RaisedButton,MuiThemeProvider } from 'material-ui';
+import { MuiThemeProvider } from 'material-ui';
 import MenuItem from 'material-ui/MenuItem';
 /**
  * import
  */
-import * as constants from './constants';
 import { DrawerMenu } from './../DrawerMenu';
 import './styles.scss';
-const style = {
-  margin: 5
-};
 
 export class Drawer extends React.Component {
   constructor(props) {
@@ -81,4 +76,11 @@ export class Drawer extends React.Component {
       </div>
     );
   }
+}
+
+Drawer.propTypes = {
+  campus: array,
+  onEnterCampus: func.isRequired,
+  onEnterBatch: func.isRequired,
+  drawerStyle: object
 }
