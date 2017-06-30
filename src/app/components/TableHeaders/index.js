@@ -7,6 +7,5 @@ import {
  * A simple table demonstrating the hierarchy of the `Table` component and its sub-components.
  */
 export const TableHeaders = (props) => {
-    console.log(props)
     // return props.maps(prop =>(<TableHeaderColumn>{prop}</TableHeaderColumn>))
-}
+};

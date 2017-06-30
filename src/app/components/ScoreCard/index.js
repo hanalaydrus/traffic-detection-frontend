@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import './styles.scss';
 import RaisedButton from 'material-ui/RaisedButton';
-import ScoreCardData from '../../../../temp-data/tempScoreCard.json'
+import ScoreCardData from '../../../../temp-data/tempScoreCard.json';
 
 const styles = {
   button: {
-    margin: 12,
+    margin: 12
   },
   exampleImageInput: {
     cursor: 'pointer',
@@ -15,39 +15,39 @@ const styles = {
     right: 0,
     left: 0,
     width: '100%',
-    opacity: 0,
-  },
+    opacity: 0
+  }
 };
 
-const SCData = ScoreCardData.data
+const SCData = ScoreCardData.data;
 
 export class ScoreCard extends React.Component {
-    render(){
+  render() {
     return (
-      <div style={{marginTop:10}}>
+      <div style={{ marginTop: 10 }}>
         <RaisedButton
-        label="Upload Score Card (CSV)"
-        labelPosition="before"
-        style={styles.button}
-        containerElement="label"
-        primary={true}
-      >
-        <input type="file" style={styles.exampleImageInput} />
-      </RaisedButton>
-      <div className="view_container">
-      {SCData.map( (row, index) => (
-        <div key={index.toString()}>
-          <h4>{row.subjects}</h4>
-          <ul>
-          {row.details.map( (row, index) => (
-            <li key={index.toString()}>
-              {row}
-            </li>
+          label="Upload Score Card (CSV)"
+          labelPosition="before"
+          style={styles.button}
+          containerElement="label"
+          primary
+        >
+          <input type="file" style={styles.exampleImageInput} />
+        </RaisedButton>
+        <div className="view_container">
+          {SCData.map((row, index) => (
+            <div key={index.toString()}>
+              <h4>{row.subjects}</h4>
+              <ul>
+                {row.details.map((row, index) => (
+                  <li key={index.toString()}>
+                    {row}
+                  </li>
           ))}
-          </ul>
-        </div>
+              </ul>
+            </div>
       ))}
-      </div>
+        </div>
       </div>
     );
   }

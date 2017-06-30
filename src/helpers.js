@@ -1,19 +1,20 @@
 /**
  *  Import node modules
  */
-import axios from 'axios'
-import moment from 'moment'
-import { TOKEN } from './constants'
-import _ from 'lodash'
-import qs from 'qs'
+import axios from 'axios';
+import moment from 'moment';
+import { TOKEN } from './constants';
+import _ from 'lodash';
+import qs from 'qs';
 /**
  *  Set up axios instance for 'application/vnd.api+json'
  */
-import { API_BASE_URL } from './constants'
+import { API_BASE_URL } from './constants';
+
 export const refactoryAxios = axios.create({
   baseURL: API_BASE_URL,
-  paramsSerializer: (params) => qs.stringify(params)
-})
+  paramsSerializer: params => qs.stringify(params)
+});
 
 
 /**
@@ -22,18 +23,18 @@ export const refactoryAxios = axios.create({
  *
  *  param { endpoint } string
  */
- export const debounceResourceGet = _.debounce( (endpoint, callback) => {
+export const debounceResourceGet = _.debounce((endpoint, callback) => {
    // Make the request to the server
-   refactoryAxios.get(`${endpoint}`, {
-     headers: {
-       'Authorization': `Bearer ${TOKEN()}`
-     }
-   }).then( (response) => {
-     callback(response)
-   }).catch( (response) => {
-     callback(response)
-   })
- }, 250)
+  refactoryAxios.get(`${endpoint}`, {
+    headers: {
+      Authorization: `Bearer ${TOKEN()}`
+    }
+  }).then((response) => {
+    callback(response);
+  }).catch((response) => {
+    callback(response);
+  });
+}, 250);
 
 /**
  *  debounceResourcePost
@@ -42,18 +43,18 @@ export const refactoryAxios = axios.create({
  *  param { endpoint } string
  *  param { data } string
  */
- export const debounceResourcePost = _.debounce( (endpoint, data, callback) => {
+export const debounceResourcePost = _.debounce((endpoint, data, callback) => {
    // Make the request to the server
-   refactoryAxios.post(`/${endpoint}`, data, {
-     headers: {
-       'Authorization': `Bearer ${TOKEN()}`
-     }
-   }).then( (response) => {
-     callback && callback(response)
-   }).catch( (response) => {
-     callback && callback(response)
-   })
- }, 250)
+  refactoryAxios.post(`/${endpoint}`, data, {
+    headers: {
+      Authorization: `Bearer ${TOKEN()}`
+    }
+  }).then((response) => {
+    callback && callback(response);
+  }).catch((response) => {
+    callback && callback(response);
+  });
+}, 250);
 
  /**
  *  debounceResourcePatch
@@ -63,18 +64,18 @@ export const refactoryAxios = axios.create({
  *  param { resourceId } integer
  *  param { data } object
  */
- export const debounceResourcePatch = _.debounce( (resource, resourceId, data, callback) => {
+export const debounceResourcePatch = _.debounce((resource, resourceId, data, callback) => {
    // Make the request to the server
-   refactoryAxios.patch(`/${resource}/${resourceId}`, data, {
-     headers: {
-       'Authorization': `Bearer ${TOKEN()}`
-     }
-   }).then( (response) => {
-     callback(response)
-   }).catch( (response) => {
-     callback(response)
-   })
- }, 250)
+  refactoryAxios.patch(`/${resource}/${resourceId}`, data, {
+    headers: {
+      Authorization: `Bearer ${TOKEN()}`
+    }
+  }).then((response) => {
+    callback(response);
+  }).catch((response) => {
+    callback(response);
+  });
+}, 250);
 
  /**
  *  deleteResourceRequest
@@ -87,13 +88,13 @@ export function deleteResourceRequest(resource, resourceId, callback) {
   // Make the request to the server
   refactoryAxios.delete(`/${resource}/${resourceId}`, {
     headers: {
-      'Authorization': `Bearer ${TOKEN()}`
+      Authorization: `Bearer ${TOKEN()}`
     }
-  }).then( (response) => {
-    callback(response)
-  }).catch( (response) => {
-    callback(response)
-  })
+  }).then((response) => {
+    callback(response);
+  }).catch((response) => {
+    callback(response);
+  });
 }
 
 /**
@@ -101,21 +102,21 @@ export function deleteResourceRequest(resource, resourceId, callback) {
  */
 export function setHtmlStorage(name, value, expires) {
   // Set default expiration to 1 hour if undefined or null
-  if (expires === undefined || expires === 'null') { expires = 3600 }
+  if (expires === undefined || expires === 'null') { expires = 3600; }
   // Schedule when the token should be expired
-  var date = new Date()
-  var schedule = Math.round((date.setSeconds(date.getSeconds()+expires))/1000)
+  const date = new Date();
+  const schedule = Math.round((date.setSeconds(date.getSeconds() + expires)) / 1000);
   // Set the actual value as well as the time
-  localStorage.setItem(name, value)
-  localStorage.setItem(name+'_time', schedule)
+  localStorage.setItem(name, value);
+  localStorage.setItem(`${name}_time`, schedule);
 }
 
 /**
  * Remove local storage item and time stamp
  */
 export function removeHtmlStorage(name) {
-  localStorage.removeItem(name)
-  localStorage.removeItem(name+'_time')
+  localStorage.removeItem(name);
+  localStorage.removeItem(`${name}_time`);
 }
 
 /**
@@ -123,20 +124,19 @@ export function removeHtmlStorage(name) {
  */
 export function statusHtmlStorage(name) {
   // Get current time
-  var date = new Date()
-  var current = Math.round(+date/1000)
+  const date = new Date();
+  const current = Math.round(+date / 1000);
   // Pull the storage item's expiration
-  var stored_time = localStorage.getItem(name+'_time')
-  if (!stored_time === undefined || stored_time === 'null') { stored_time = 0 }
+  let stored_time = localStorage.getItem(`${name}_time`);
+  if (!stored_time === undefined || stored_time === 'null') { stored_time = 0; }
   // Determine if it is expired
   if (stored_time < current) {
     // If expired, remove it and return false
-    removeHtmlStorage(name)
-    return false
-  } else {
-    // If not, return true
-    return 1
+    removeHtmlStorage(name);
+    return false;
   }
+    // If not, return true
+  return 1;
 }
 
 /**
@@ -146,8 +146,8 @@ export function statusHtmlStorage(name) {
  *  param { email } string
  */
 export function validateEmail(email) {
-  var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return regex.test(email)
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(email);
 }
 
 /**
@@ -158,19 +158,17 @@ export function validateEmail(email) {
  */
 export function findPrimary(dataSet) {
   // If no items, return empty object
-  if(dataSet.length === 0) {
-    return null
+  if (dataSet.length === 0) {
+    return null;
   }
   // If only one item in array, assume it's primary
-  if(dataSet.length === 1) {
-    return dataSet[0]
+  if (dataSet.length === 1) {
+    return dataSet[0];
   }
   // Otherwise find is_primary
-  let primary = dataSet.map( (dataObject) => {
-    return dataObject.is_primary
-  })
+  const primary = dataSet.map(dataObject => dataObject.is_primary);
   // If no primary found, return first
-  return dataSet[0]
+  return dataSet[0];
 }
 
 /**
@@ -181,31 +179,29 @@ export function findPrimary(dataSet) {
  */
 export function findLastUsed(dataSet) {
   // If no items, return empty object
-  if(dataSet.length === 0) {
-    return null
+  if (dataSet.length === 0) {
+    return null;
   }
   // If only one item in array, assume it's primary
-  if(dataSet.length === 1) {
-    return dataSet[0]
+  if (dataSet.length === 1) {
+    return dataSet[0];
   }
   // Otherwise find the last used
-  let lastUsed
-  dataSet.map( (dataObject) => {
-    if(!lastUsed) {
-      lastUsed = dataObject
+  let lastUsed;
+  dataSet.map((dataObject) => {
+    if (!lastUsed) {
+      lastUsed = dataObject;
+    } else if (lastUsed && !lastUsed.last_used_date) {
+      lastUsed = dataObject;
+    } else if (moment(dataObject.last_used_date).isAfter(lastUsed.last_used_date)) {
+      lastUsed = dataObject;
     }
-    else if(lastUsed && !lastUsed.last_used_date) {
-      lastUsed = dataObject
-    }
-    else if(moment(dataObject.last_used_date).isAfter(lastUsed.last_used_date) ) {
-      lastUsed = dataObject
-    }
-  })
-  if(lastUsed) {
-    return lastUsed
+  });
+  if (lastUsed) {
+    return lastUsed;
   }
   // If no last used found, return first
-  return dataSet[0]
+  return dataSet[0];
 }
 
 /**
@@ -217,20 +213,20 @@ export function findLastUsed(dataSet) {
  */
 export function findNormalizedPrimary(ids, dataSet) {
   // If no items, return empty object
-  if(ids.length === 0) {
-    return null
+  if (ids.length === 0) {
+    return null;
   }
   // If only one item in array, assume it's primary
-  if(!ids.length === 1) {
-    return ids[0].id
+  if (!ids.length === 1) {
+    return ids[0].id;
   }
   // Otherwise find is_primary
-  return ids.map( (idObject) => {
-    const objectToCheck = dataSet[idObject.id]
-    if(objectToCheck.is_primary) {
-      return objectToCheck.id
+  return ids.map((idObject) => {
+    const objectToCheck = dataSet[idObject.id];
+    if (objectToCheck.is_primary) {
+      return objectToCheck.id;
     }
-  })[0]
+  })[0];
 }
 
 /**
@@ -242,13 +238,13 @@ export function findNormalizedPrimary(ids, dataSet) {
  *  param { valueParam } string
  */
 export function buildOptionsArrayFromNormalized(ids, dataSet, valueParam) {
-  return ids.map( (id) => {
-    const object = dataSet[id]
+  return ids.map((id) => {
+    const object = dataSet[id];
     return {
       value: id,
       label: object[valueParam || 'label']
-    }
-  })
+    };
+  });
 }
 
 /**
@@ -260,18 +256,18 @@ export function buildOptionsArrayFromNormalized(ids, dataSet, valueParam) {
  */
 export function buildObjectArrayFromIds(ids, dataSet) {
   // If undefined or no length, return null
-  if(!ids || !ids.length > 0) {
-    return null
+  if (!ids || !ids.length > 0) {
+    return null;
   }
   // Otherwise build an array
-  return ids.map( (id) => {
-    if(typeof id === 'number' || typeof id === 'string') {
-      return dataSet[id]
+  return ids.map((id) => {
+    if (typeof id === 'number' || typeof id === 'string') {
+      return dataSet[id];
     }
-    if(typeof id === 'object') {
-      return dataSet[id.id]
+    if (typeof id === 'object') {
+      return dataSet[id.id];
     }
-  })
+  });
 }
 
 /**
@@ -281,8 +277,8 @@ export function buildObjectArrayFromIds(ids, dataSet) {
  *  param { str } string
  */
 export function isUrl(str) {
-  let regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/
-  return regex.test(str)
+  const regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+  return regex.test(str);
 }
 
 /**
@@ -292,55 +288,55 @@ export function isUrl(str) {
  *  param { type } string
  *  param { query } array
  */
- export const checkForDuplicates = _.debounce( (type, query, callback) => {
-  if(!type) {
+export const checkForDuplicates = _.debounce((type, query, callback) => {
+  if (!type) {
     // Return false if no type is specified
-    return false
+    return false;
   }
-  let requestUrl
-  switch(type) {
+  let requestUrl;
+  switch (type) {
     // Check for duplicate email address
     case 'email':
-      requestUrl = `/emails?filter[email][like]=${query}`
-      break
+      requestUrl = `/emails?filter[email][like]=${query}`;
+      break;
     // Check for duplicate first and last name combo
     case 'name':
-      requestUrl = `/persons?filter[first_name,last_name][like]=${query}`
-      break
+      requestUrl = `/persons?filter[first_name,last_name][like]=${query}`;
+      break;
     // Check for duplicate phone number
     case 'phone':
-      if(query[0] === '+') {
-        query = query.substr(1)
+      if (query[0] === '+') {
+        query = query.substr(1);
       }
-      requestUrl = `/phones?filter[number][like]=${query}`
-      break
+      requestUrl = `/phones?filter[number][like]=${query}`;
+      break;
   }
   // Make the search request to the server
   refactoryAxios.get(requestUrl, {
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': `bearer ${TOKEN()}`
+      Accept: 'application/json',
+      Authorization: `bearer ${TOKEN()}`
     }
-  }).then( (response) => {
+  }).then((response) => {
     // Pull the results off of the response
-    let results = response.data.data
-    if(results.length > 0) {
+    const results = response.data.data;
+    if (results.length > 0) {
       // If results are present and identical, succeed
-      callback(true, results[0])
+      callback(true, results[0]);
     } else {
       // Otherwise fail
-      callback(false, results[0])
+      callback(false, results[0]);
     }
-  })
- }, 250)
+  });
+}, 250);
 
  /**
  *  convertStringToSlug
  *  Converts a string to slug - lowercase no spaces
  */
 export function convertStringToSlug(string) {
-  return string.replace(/\s+/g, '_').toLowerCase()
+  return string.replace(/\s+/g, '_').toLowerCase();
 }
 
 /**
@@ -351,11 +347,11 @@ export function convertStringToSlug(string) {
  *  param { value } multiple
  */
 export function findLabelFromValue(data, value) {
-  return data.map( (object) => {
-    if(object.value.toString() === value.toString()) {
-      return object.label
+  return data.map((object) => {
+    if (object.value.toString() === value.toString()) {
+      return object.label;
     }
-  })
+  });
 }
 
 /**
@@ -366,14 +362,14 @@ export function findLabelFromValue(data, value) {
  *  param { last_name } string
  */
 export function createInitials(first_name, last_name) {
-  if(first_name && last_name) {
-    return first_name[0] + last_name[0]
+  if (first_name && last_name) {
+    return first_name[0] + last_name[0];
   } else if (first_name && !last_name) {
-    return first_name[0]
+    return first_name[0];
   } else if (!first_name && !last_name) {
-    return null
+    return null;
   }
-  return null
+  return null;
 }
 
 /**
@@ -386,18 +382,18 @@ export function createInitials(first_name, last_name) {
  *  param { truncate } boolean
  */
 export function wrapStringInSpan(string, lookFor, classToAdd, truncate) {
-  let regex = new RegExp('(' + lookFor + ')', 'i')
-  let result = string.replace(regex, `<span class="${classToAdd}">$1</span>`)
-  if(truncate === true) {
-    let indexOfOpening = result.indexOf('<span')
-    if(indexOfOpening > 20) {
-      result = '...' + result.substr(indexOfOpening - 20)
+  const regex = new RegExp(`(${lookFor})`, 'i');
+  let result = string.replace(regex, `<span class="${classToAdd}">$1</span>`);
+  if (truncate === true) {
+    const indexOfOpening = result.indexOf('<span');
+    if (indexOfOpening > 20) {
+      result = `...${result.substr(indexOfOpening - 20)}`;
     }
-    let indexOfClosing = result.indexOf('</span>')
-    let resultLength = result.length
-    if(resultLength > 60) {
-      result = result.substr(0, indexOfClosing + 32) + '...'
+    const indexOfClosing = result.indexOf('</span>');
+    const resultLength = result.length;
+    if (resultLength > 60) {
+      result = `${result.substr(0, indexOfClosing + 32)}...`;
     }
   }
-  return { __html: result }
+  return { __html: result };
 }

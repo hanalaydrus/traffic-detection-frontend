@@ -1,23 +1,21 @@
-import React, { Component } from 'react'
-import { setHtmlStorage, removeHtmlStorage } from '../../helpers'
+import React, { Component } from 'react';
 
 export default class getToken extends Component {
 
   componentDidMount() {
-    this.closeWindow()
+    this.closeWindow();
   }
 
   closeWindow() {
-    if(window.opener.receivedCode) {
-      window.opener.receivedCode(window.location.href)
+    if (window.opener.receivedCode) {
+      window.opener.receivedCode(window.location.href);
     }
-      window.close()
+    window.close();
   }
 
   render() {
-    return(
-      <div>
-      </div>
-    )
+    return (
+      <div />
+    );
   }
 }

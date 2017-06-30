@@ -5,7 +5,7 @@ import {
   fullWhite,
   orange600
 } from 'material-ui/styles/colors';
-import {fade} from 'material-ui/utils/colorManipulator';
+import { fade } from 'material-ui/utils/colorManipulator';
 import spacing from 'material-ui/styles/spacing';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -24,6 +24,6 @@ export const Theme = getMuiTheme({
     borderColor: fade(fullWhite, 0.3),
     disabledColor: fade(fullWhite, 0.3),
     pickerHeaderColor: orange600,
-    clockCircleColor: fade(fullWhite, 0.12),
+    clockCircleColor: fade(fullWhite, 0.12)
   }
 });
