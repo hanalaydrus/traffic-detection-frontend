@@ -51,7 +51,7 @@ class Dashboard extends Component {
     const { toggleDrawerData, toggleDrawerSidebarData } = this.props;
     return (
       <div style={{ margin: 0 }}>
-        <Header onClick={this.handleChange} navStyle={toggleDrawerData} drawerStyle={toggleDrawerSidebarData} content={this.state.content}/>
+        <Header onClick={this.handleChange} navStyle={toggleDrawerData} drawerStyle={toggleDrawerSidebarData} content={this.state.content} />
         <Drawer drawerStyle={toggleDrawerSidebarData} />
         <div style={this.state.contentStyle}>
           <h1>Hello World</h1>

@@ -31,23 +31,23 @@ export default function (ComposedComponent) {
 
     // Push to login route if not authenticated on mount
     componentWillMount() {
-      if (!this.props.authenticated) {
+      if(!this.props.authenticated) {
         history.push('/githublogin');
-        window.location.reload();
+        location.href = location.href;
       }
     }
 
     // Push to login route if not authenticated on update
-    componentWillUpdate() {
-      if (!this.props.authenticated) {
+    componentWillUpdate(nextProps) {
+      if(!this.props.authenticated) {
         history.push('/githublogin');
-        window.location.reload();
+        location.href = location.href;
       }
     }
 
     // Otherwise render everything that's there
     render() {
-      return <ComposedComponent {...this.props}/>;
+      return <ComposedComponent {...this.props} />;
     }
 
   }

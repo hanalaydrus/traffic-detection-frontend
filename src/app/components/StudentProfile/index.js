@@ -109,7 +109,7 @@ export default class StudentProfile extends React.Component {
                 <Row around="xs" >
                   <div >
                     <Chip style={styles.chip2} onTouchTap={this.onSubmit}>
-                      <Avatar icon={<SettingIcon/>} />
+                      <Avatar icon={<SettingIcon />} />
                     Setting information
                   </Chip>
                   </div>

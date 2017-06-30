@@ -15,11 +15,26 @@ import * as actions from './actions';
 import * as selectors from './selectors';
 
 class GithubLogin extends Component {
+
   constructor() {
     super();
-    this.state = {
+    this.state= {
       authIsProcessing: false
     };
+  }
+  componentWillMount() {
+    if(this.props.isUserLoggedIn) {
+      history.push('/student/listticket');
+      location.href = location.href;
+    }
+  }
+
+  // Push to login route if not authenticated on update
+  componentWillUpdate(nextProps) {
+    if(this.props.isUserLoggedIn) {
+      history.push('/student/listticket');
+      location.href = location.href;
+    }
   }
   handleGithubLoginAttempt() {
     this.props.authenticateUser();
@@ -34,7 +49,7 @@ class GithubLogin extends Component {
           <div className="login-card">
             <div className="form-card">
               <img src="/images/GitHub-Mark-Light-120px-plus.png" className="img-logo" />
-              <br/>
+              <br />
               { this.state.authIsProcessing ?
                 <div className="loader-login"><Loader type="line-scale" color="#fff" active /></div> :
                 <RaisedButton

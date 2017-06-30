@@ -26,10 +26,10 @@ export class TechScreenings extends React.Component {
             {row.id === 1 &&
               <div key={index.toString()} style={{ marginTop: 20 }}>
                 Link : <a href={row.content.link}>{row.content.link}</a>
-                <div className="clear"/>
+                <div className="clear" />
                 <div className="float_left" style={{ width: 200 }}><h3>Score : {row.content.score}</h3></div>
                 <div className="float_left" style={{ width: 200 }}><h3>Duration : {this.timeConverter(row.content.duration)}</h3></div>
-                <div className="clear"/>
+                <div className="clear" />
                 <Table selectable={false} >
                   <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                     <TableRow>

@@ -43,7 +43,7 @@ class WorkTodo extends Component {
   render() {
     return (
       <div style={{ margin: 0 }}>
-        <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
+        <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content} />
         <Drawer drawerStyle={this.state.drawerStyle} />
         <div style={this.state.contentStyle}>
           <PageTitle title="Submit Working Estimation" />

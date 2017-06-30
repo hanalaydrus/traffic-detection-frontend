@@ -9,7 +9,6 @@ import StudentListPage from './../../components/StudentListPage';
  */
 import { Enhance } from '../../HOC/fetchingData';
 import * as constants from './constants';
-
 const style = {
   orange: {
     borderColor: orange600
@@ -113,7 +112,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div style={{ margin: 0 }}>
-        <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
+        <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content} />
         <Drawer
           drawerStyle={this.state.drawerStyle}
           campus={this.state.campus}

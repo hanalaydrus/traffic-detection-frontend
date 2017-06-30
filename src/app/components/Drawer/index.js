@@ -2,14 +2,20 @@
  * import from library
  */
 import React from 'react';
+import { AppBar } from 'material-ui';
+import { orange600, orange500 } from 'material-ui/styles/colors';
 import SelectField from 'material-ui/SelectField';
-import { MuiThemeProvider } from 'material-ui';
+import { RaisedButton,MuiThemeProvider } from 'material-ui';
 import MenuItem from 'material-ui/MenuItem';
 /**
  * import
  */
+import * as constants from './constants';
 import { DrawerMenu } from './../DrawerMenu';
 import './styles.scss';
+const style = {
+  margin: 5
+};
 
 export class Drawer extends React.Component {
   constructor(props) {
@@ -22,13 +28,13 @@ export class Drawer extends React.Component {
     };
   }
   getMenu = data => param => data.map((data, index) => (data === 'all') ?
-    <MenuItem key={index.toString()} value={data} primaryText={`${data}`}/>
-    : <MenuItem key={index.toString()} value={data[param]} primaryText={`${data[param]}`}/>)
+    <MenuItem key={index.toString()} value={data} primaryText={`${data}`} />
+    : <MenuItem key={index.toString()} value={data[param]} primaryText={`${data[param]}`} />)
   getMenuBatch = campus => value => campus.filter(data => (data.city === 'all') ? false : data.city === value)
 
   handleChangeCampus = (event, index, value) => {
     this.props.onEnterCampus(value);
-    if (value !== 'all') {
+    if(value!=='all') {
       this.setState({
         value,
         batch: this.getMenuBatch(this.state.campus)(value)[0].batches.concat('all')

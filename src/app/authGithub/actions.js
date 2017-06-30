@@ -41,9 +41,9 @@ export function authenticateUser() {
             // Save JWT token to localStorage and set expiration
           setHtmlStorage('token', resp.data.access_token, 3600);
             // Redirect using react router
-          history.push('/listticket');
-          window.location.reload();
-        });
+            history.push('/student/listticket');
+            location.href = location.href;
+      });
     };
 
     const url = buildUrl(ENDPOINT_AUTH, TOKEN_PARAMS);
@@ -58,8 +58,8 @@ export function unauthenticateUser() {
             // Save JWT token to localStorage and set expiration
     removeHtmlStorage('token');
             // Redirect using react router
-    history.push('/');
-    window.location.reload();
+            history.push('/');
+            location.href = location.href;
   };
 }
 
@@ -89,9 +89,8 @@ function requestToken(code) {
       Accept: 'application/json' }
   };
   const params_token = {
-    code
+    code: code
   };
-
   const accessToken = axios.post(ENDPOINT, params_token);
   return accessToken;
 }

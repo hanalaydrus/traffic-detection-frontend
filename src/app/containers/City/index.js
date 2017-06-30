@@ -71,7 +71,7 @@ class City extends Component {
   onEditClick = (id, name) => {
     this.setState({
       modal_delete: false,
-      modalTitle: 'Edit City',
+      modalTitle:'Update City',
       cityId: id,
       cityName: name,
       open: true
@@ -117,7 +117,7 @@ class City extends Component {
             label="Add City"
             backgroundColor={blue500} onClick={this.onAddClick}
           />
-          <div className="clear"/>
+          <div className="clear" />
           <div className="table_container">
             <Table selectable={false} >
               <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
@@ -136,7 +136,7 @@ class City extends Component {
                       <RaisedButton
                         className="table_btn"
                         labelStyle={{ fontSize: 12 }}
-                        label="Edit"
+                        label="Update"
                         backgroundColor={lightBlueA100}
                         onClick={() => this.onEditClick(row.id, row.name)}
                       />
@@ -153,33 +153,32 @@ class City extends Component {
               </TableBody>
             </Table>
           </div>
-        </div>
-        {/* Add Modal*/}
-        <Dialog
-          title={this.state.modalTitle}
-          actions={this.state.modal_delete === false ?
-          [
-            <RaisedButton
-              label="Save"
-              backgroundColor={blue500}
-              onTouchTap={this.handleClose}
-              style={{ marginRight: 10 }}
-            />
-          ] :
-          [
-            <RaisedButton
-              label="Yes"
-              backgroundColor={blue500}
-              onTouchTap={this.handleClose}
-              style={{ marginRight: 10 }}
-            />,
-            <RaisedButton
-              label="No"
-              backgroundColor={red500}
-              onTouchTap={this.handleClose}
-              style={{ marginRight: 10 }}
-            />
-          ]
+          {/*Add Modal*/}
+          <Dialog
+            title={this.state.modalTitle}
+            actions={this.state.modal_delete === false ?
+              [
+                <RaisedButton
+                  label="Submit"
+                  backgroundColor={blue500}
+                  onTouchTap={this.handleClose}
+                  style={{ marginRight:10 }}
+                />
+              ]:
+              [
+                <RaisedButton
+                  label="Yes"
+                  backgroundColor={blue500}
+                  onTouchTap={this.handleClose}
+                  style={{ marginRight:10 }}
+                />,
+                <RaisedButton
+                  label="No"
+                  backgroundColor={red500}
+                  onTouchTap={this.handleClose}
+                  style={{ marginRight:10 }}
+                />
+              ]
             }
           modal={false}
           contentStyle={customContentStyle}
@@ -198,6 +197,7 @@ class City extends Component {
           }
         </Dialog>
       </div>
+    </div>
     );
   }
 }

@@ -18,10 +18,10 @@ class StudentListPage extends Component {
         <div className="container">
           <div className="table-item">
             <div className="select-item">
-              <SelectFields title={'Select Status'} data={status} onEnterStatus={this.props.onEnterStatus.bind(this)}/>
+              <SelectFields title={'Select Status'} data={status} onEnterStatus={this.props.onEnterStatus.bind(this)} />
             </div>
             <MuiThemeProvider>
-              <TableStudents data={this.props.dataTable}/>
+              <TableStudents data={this.props.dataTable} />
             </MuiThemeProvider>
           </div>
         </div>

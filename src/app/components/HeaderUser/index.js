@@ -12,6 +12,7 @@ import { createStructuredSelector } from 'reselect';
 
 import './styles.scss';
 import { unauthenticateUser } from './../../authGithub/actions';
+import { getProfileData } from './../../containers/ListTicket/selectors';
 
 
 const style = {
@@ -38,30 +39,38 @@ class Header extends React.Component {
     this.props.unauthenticateUser();
   }
 
-  render() {
+    render() {
     return (
       <div className="navigation">
         <div className={this.state.navStyle}>
           <div className="logo">
-            <img src="/images/Refactory.png" style={{ height: 40, marginTop: 4, marginLeft: 30 }}/>
+            <img src="/images/Refactory.png" style={{ height: 40, marginTop: 4, marginLeft: 30 }} />
           </div>
           <div className="menu">
-            <IconMenu
-              iconButtonElement={<IconButton><img src="/images/Refactory-icon.png" style={{ height: 40, marginTop: 0, marginLeft: 30 }}/></IconButton>}
-              anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
-              targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-              style={{ marginRight: 30 }}
-            >
-              <MenuItem primaryText="Username" />
-              <MenuItem primaryText="Log out" onClick={this.handleGithubLogoutAttempt}/>
-            </IconMenu>
+                <div className="float_left" style={{ padding:'15px 5px' }}>
+                  {this.props.profileData.full_name}
+                </div>
+               <IconMenu
+                  iconButtonElement={<IconButton style={{ marginTop:-8, marginRight:30 }}><img src={this.props.profileData.avatar} height="40" /></IconButton>}
+                  anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
+                  targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                  style={{ marginRight:30 }}
+                >
+                  <MenuItem primaryText={this.props.profileData.email} />
+                  <MenuItem primaryText="Log out" onClick={ this.handleGithubLogoutAttempt } />
+                </IconMenu>
           </div>
-          <div className="clear"/>
+          <div className="clear" />
         </div>
       </div>
     );
   }
 }
+
+
+const mapStateToProps = createStructuredSelector({
+  profileData: getProfileData()
+});
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
@@ -69,4 +78,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -14,13 +14,19 @@ export const getTicketData = () => createSelector(
   state => state.get('data').toJS()
 );
 
-/**
- *  Selects the new reminder to create
- *  Returns object
- */
+export const getProfileData = () => createSelector(
+  selectTicketData(),
+  (state) => state.get('profileData').toJS()
+);
+
 export const getIsFetching = () => createSelector(
   selectTicketData(),
   state => state.get('isFetching')
+);
+
+export const getIsFetchingProfile = () => createSelector(
+  selectTicketData(),
+  (state) => state.get('isFetchingProfile')
 );
 
 export const getFilters = () => createSelector(
@@ -31,6 +37,11 @@ export const getFilters = () => createSelector(
 export const getIsFetchingComment = () => createSelector(
   selectTicketData(),
   state => state.get('isFetchingComment')
+);
+
+export const getIsPatchingTicketData = () => createSelector(
+  selectTicketData(),
+  (state) => state.get('isPatchingTicketData')
 );
 
 export const getCommentData = () => createSelector(

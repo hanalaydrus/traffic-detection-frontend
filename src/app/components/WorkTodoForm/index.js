@@ -81,8 +81,9 @@ class WorkToDoForm extends Component {
     });
   }
   deleteRow = () => {
-    tilesData.splice(this.state.selected, 1);
+    tilesData.splice(this.state.selected,1);
     this.setState({ data: tilesData });
+
   }
   showData = data => data.filter(el => (el))
 
@@ -125,14 +126,14 @@ class WorkToDoForm extends Component {
             >
               {projectAvailable}
             </SelectField>
-            <br/>
+            <br />
             <DatePicker
               className="text_field_todo_form"
               hintText="Date"
               container="inline"
               floatingLabelText="Date"
               fullWidth
-              underlineFocusStyle={style.orange}/>
+              underlineFocusStyle={style.orange} />
             <h3 style={{ marginBottom: 10, color: orange500 }}>Todo</h3>
             <div className="task_table" >
               <Table onRowSelection={this.handleRowSelection}>
@@ -151,10 +152,10 @@ class WorkToDoForm extends Component {
               </Table>
             </div>
             <div className="task_button">
-              <RaisedButton label="Add Task" backgroundColor={blue500} fullWidth onTouchTap={this.handleOpen}/><br/><br/>
-              <RaisedButton label="Delete Task" backgroundColor={red500} fullWidth onTouchTap={this.deleteRow}/>
+              <RaisedButton label="Add Task" backgroundColor={blue500} fullWidth onTouchTap={this.handleOpen} /><br /><br />
+              <RaisedButton label="Delete Task" backgroundColor={red500} fullWidth onTouchTap={this.deleteRow} />
             </div>
-            <div className="clear"/>
+            <div className="clear" />
             <TextField
               hintText="What do you need to discuss"
               floatingLabelText="What do you need to discuss"
@@ -168,7 +169,7 @@ class WorkToDoForm extends Component {
             <div className="btn_work">
               <RaisedButton label="Submit" backgroundColor={orange500} className="btn_work_todo" />
             </div>
-            <div className="clear"/>
+            <div className="clear" />
           </div>
         </div>
         <div>

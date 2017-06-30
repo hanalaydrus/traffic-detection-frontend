@@ -62,13 +62,13 @@ export class ListReview extends React.Component {
             className="buttonStyleLeft"
             label="Verify"
             disabled={this.state.isClick}
-            onClick={() => this.onChangeStatus('Verified')}/>
+            onClick={() => this.onChangeStatus('Verified')} />
           <RaisedButton
             className="buttonStyle"
             backgroundColor="#FF9800"
             label="Reject"
             disabled={this.state.isClick}
-            onClick={() => this.onChangeStatus('Rejected')}/>
+            onClick={() => this.onChangeStatus('Rejected')} />
         </div>
       </div>
     );

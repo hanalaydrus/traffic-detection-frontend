@@ -39,10 +39,10 @@ export class Header extends React.Component {
             <div className="nav-title">Admin Panel</div>
           </div>
           <div className="menu">
-            <FlatButton label="Change Password" hoverColor={orange500} style={{ height: 50, borderRadius: 0, color: '#444' }}/>
-            <FlatButton label="Logout" hoverColor={orange500} style={{ height: 50, borderRadius: 0, color: '#444' }}/>
+            <FlatButton label="Change Password" hoverColor={orange500} style={{ height: 50, borderRadius: 0, color: '#444' }} />
+            <FlatButton label="Logout" hoverColor={orange500} style={{ height: 50, borderRadius: 0, color: '#444' }} />
           </div>
-          <div className="clear"/>
+          <div className="clear" />
         </div>
       </div>
     );

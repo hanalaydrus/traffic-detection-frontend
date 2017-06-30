@@ -8,6 +8,8 @@ import { combineReducers } from 'redux-immutable';
  */
 import AuthReducer from './authGithub/reducer';
 import TicketDataReducer from './containers/ListTicket/reducer';
+import CityDataReducer from './containers/City/reducer';
+import CampusesDataReducer from './containers/CampusListTable/reducer';
 import ToogleDrawerReducer from './containers/Template/reducer';
 /**
  *  Combine the reducers
@@ -15,7 +17,9 @@ import ToogleDrawerReducer from './containers/Template/reducer';
 const rootReducer = combineReducers({
   authGithub: AuthReducer,
   ticketData: TicketDataReducer,
-  toggleDrawer: ToogleDrawerReducer
+  toggleDrawer: ToogleDrawerReducer,
+  cityData: CityDataReducer,
+  campusesData: CampusesDataReducer
 });
 
 /**

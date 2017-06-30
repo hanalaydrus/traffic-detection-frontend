@@ -6,7 +6,7 @@ export class DrawerMenu extends React.Component {
 
   state = {
     open: false
-  };
+  }
 
   render() {
     return (
