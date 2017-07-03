@@ -4,7 +4,7 @@
   padding-bottom: 15px;
 }
 .nav_user{
-  background-color: rgba(255,255,255,0.1); 
+  background-color:#484856; 
   width: 100%;
   position: fixed;
   z-index: 10;
@@ -48,6 +48,17 @@
     }
   }
 }
+.icon_notification {
+  display: flex;
+  .red_notification {
+    float: right;
+    background-color: red;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+}
+
 .notification_menu_item {
   font-size: 14px !important;
   line-height: 1.5;

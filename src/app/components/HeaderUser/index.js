@@ -38,11 +38,26 @@ class Header extends React.Component {
           <div className="menu">
             <div className="childmenu">
               <IconMenu
-                  iconButtonElement={<IconButton><Notifications /></IconButton>}
+                  iconButtonElement={<IconButton className="icon_notification"><Notifications />{this.props.isNewNotificationData ? <div className="red_notification"/> : <div /> }</IconButton>}
                   anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                  onTouchTap= {() => this.props.onNotifOpen(false)}
               >
-                { 
+              { Object.keys(this.props.notificationsData).length === 0 ? 
+                (<MenuItem> 
+                  <div className="notification_menu_item">
+                    No Notification
+                  </div>
+                </MenuItem>)
+                :
+                (<MenuItem onTouchTap={() => this.props.onNotifTicketClick('refactory-web','89')}> 
+                  <div className="notification_menu_item">
+                    <b><i>{this.props.notificationsData.from}</i></b> comment on <br/>
+                    <b><i>#{this.props.notificationsData.ticket_number} {this.props.notificationsData.ticket_name}</i></b>
+                  </div>
+                </MenuItem>)
+              }
+                {/*{ 
                   this.props.notificationsData && this.props.notificationsData.map((row) => (
                     <MenuItem> 
                       <div className="notification_menu_item">
@@ -51,7 +66,7 @@ class Header extends React.Component {
                       </div>
                     </MenuItem>
                   ))
-                }
+                }*/}
               </IconMenu>
             </div>
             <div className="childmenu">

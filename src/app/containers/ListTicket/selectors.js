@@ -46,5 +46,15 @@ export const getIsPatchingTicketData = () => createSelector(
 
 export const getCommentData = () => createSelector(
   selectTicketData(),
-  state => state.get('commentData').toJS()
-);
+  (state) => state.get('commentData').toJS()
+)
+
+export const notificationService = () => createSelector(
+  selectTicketData(),
+  (state) => state.get('notificationData').toJS()
+)
+
+export const getIsNewNotificationData = () => createSelector(
+  selectTicketData(),
+  (state) => state.get('isNewNotificationData')
+)

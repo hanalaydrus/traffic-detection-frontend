@@ -136,14 +136,21 @@ class ListTicket extends Component {
     if (this.props.isFetching || this.props.isFetchingProfile) {
       return <Loader type="line-scale" color="#fff" active />;
     }
+    console.log('data pusher di index', this.props.notificationData)
+    console.log('is new data', this.props.isNewNotificationData)
     return (
       <div>
-        <Header />
-        <div className={ 'list_ticket_container' }>
-        <div className={ 'score_and_filter' }>
-          <div className={ 'filter_container' }>
-            <div className={'filter_title'}><b>Filter by</b> </div>
-            <div className={ 'block' }>
+        <Header 
+          notificationsData={this.props.notificationData} 
+          isNewNotificationData={this.props.isNewNotificationData}
+          onNotifOpen={this.props.updateIsNewNotificationData}
+          onNotifTicketClick={this.handleDrawerToggle}
+        />
+        <div className={ "list_ticket_container" }>
+        <div className={ "score_and_filter" }>
+          <div className={ "filter_container" }>
+            <div className={"filter_title"}><b>Filter by</b> </div>
+            <div className={ "block" }>
               <Checkbox
                 label="To Do"
                 checked={ this.props.filters.indexOf('todo') >= 0 || this.props.filters.indexOf('inprogress') >= 0}
@@ -380,7 +387,9 @@ const mapStateToProps = createStructuredSelector({
   commentData: selectors.getCommentData(),
   isPatchingTicketData: selectors.getIsPatchingTicketData(),
   profileData: selectors.getProfileData(),
-  isFetchingProfile: selectors.getIsFetchingProfile()
+  isFetchingProfile: selectors.getIsFetchingProfile(),
+  notificationData:selectors.notificationService(),
+  isNewNotificationData: selectors.getIsNewNotificationData()
 });
 
 /**
