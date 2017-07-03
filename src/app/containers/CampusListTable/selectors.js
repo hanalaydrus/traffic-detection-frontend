@@ -23,9 +23,9 @@ export const getIsFetchingCampuses = () => createSelector(
 )
 export const getDeleteCampuses = () => createSelector(
   selectCampusesData(),
-  (state) => state.get('deleteCampuses')
+  (state) => state.get('deleteCampuses').toJS()
 )
 export const getUpdateCampuses = () => createSelector(
   selectCampusesData(),
-  (state) => state.get('updateCampuses')
+  (state) => state.get('updateCampuses').toJS()
 )
