@@ -1,51 +1,50 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
-  RaisedButton, TextField, Checkbox, Dialog, Subheader, List, ListItem,
+  RaisedButton, TextField, Dialog, Subheader, List,
   DropDownMenu, MenuItem
-} from 'material-ui'
-import {orange600, orange500, blue500, red500} from 'material-ui/styles/colors'
-import { bool, array, object } from 'prop-types'
-import { createStructuredSelector } from 'reselect'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import Loader from 'react-loader'
+} from 'material-ui';
+import { orange600, blue500 } from 'material-ui/styles/colors';
+import { bool, array, object } from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Loader from 'react-loader';
 
 // import dependencies
 
-import {Header} from "./../../components/Header"
-import {Drawer} from "./../../components/DrawerBase"
-import {PageTitle} from "./../../components/PageTitle"
-import {CampusTable} from "./../../components/CampusTable"
-import cityData from '../../../../temp-data/cityData.json'
-import response from "./constant"
-import * as actions from './actions'
-import * as selectors from './selectors'
-import { fetchCityData } from './../City/actions'
-import { getCityData, getIsFetchingCity } from './../City/selectors'
+import { Header } from './../../components/Header';
+import { Drawer } from './../../components/DrawerBase';
+import { PageTitle } from './../../components/PageTitle';
+import { CampusTable } from './../../components/CampusTable';
+import response from './constant';
+import * as actions from './actions';
+import * as selectors from './selectors';
+import { fetchCityData } from './../City/actions';
+import { getCityData, getIsFetchingCity } from './../City/selectors';
 
 /**
  * overide material-ui default style *
  */
 const style = {
   orange: {
-   borderColor: orange600,
+   borderColor: orange600
  },
   content_full: {
    marginLeft:0,
    padding:40,
    paddingTop:20,
-   transition:'1s all ease',
+   transition:'1s all ease'
  },
   content_less: {
    marginLeft:250,
    padding:40,
    paddingTop:20,
-   transition:'1s all ease',
+   transition:'1s all ease'
  },
   customWidthDropdown: {
    width: 300,
    marginLeft: -24,
-   marginTop: 20,
+   marginTop: 20
  },
  dialogSize: {
    height: 550,
@@ -55,14 +54,13 @@ const style = {
  },
  buttonAdd: {
    marginTop: 10,
-   marginBottom: 10,
+   marginBottom: 10
  }
-}
-const dataCity = cityData.data
+};
 
 class CampusListTable extends Component {
   constructor() {
-    super()
+    super();
       this.state = {
         navStyle: 'nav',
         drawerStyle: 'menu-drawer',
@@ -73,13 +71,13 @@ class CampusListTable extends Component {
         phone: '',
         city: '',
         description: '',
-			  data: response.data,
+        data: response.data,
         open: false,
         value: {},
         update: false,
         delete: false,
-        modalTitle: '',
-      }
+        modalTitle: ''
+      };
   }
 
   // Button Pop-up and and Button Close
@@ -87,7 +85,7 @@ class CampusListTable extends Component {
     this.setState({
       open: true,
       update: false,
-      delete: false,
+      delete: false
     });
   }
 
@@ -103,35 +101,36 @@ class CampusListTable extends Component {
         value: {},
         update: false,
         delete: false,
-        open: false,
+        open: false
       });
   }
 
   handleChange = (Nav, Draw) => {
-    this.setState({ navStyle: Nav })
-    this.setState({ drawerStyle: Draw })
+    this.setState({ navStyle: Nav });
+    this.setState({ drawerStyle: Draw });
     const Const = this.state.contentStyle === style.content_less ? style.content_full : style.content_less;
-    this.setState({ contentStyle: Const})
+    this.setState({ contentStyle: Const });
   }
 
-  handleChangeDropDown = (event, index, value) => this.setState({value});
+  handleChangeDropDown = (event, index, value) => this.setState({ value });
 
 
   //CRUD event goes below mate!
   onChangeData = type => (event, value) => {
-    this.setState(
-      {
+    this.setState({
         [type]: value
-      });
+    });
   }
+
   onAdd = () => {
     this.setState({
       open: true,
       update: false,
       delete: false,
-      modalTitle: 'Create New Campus',
-    })
+      modalTitle: 'Create New Campus'
+    });
   }
+
   onUpdate = (id, name, address, value, phone, description) => {
     this.setState({
       id: id,
@@ -143,8 +142,8 @@ class CampusListTable extends Component {
       value: value,
       phone: phone,
       description: description,
-      modalTitle: 'Update Campus',
-    })
+      modalTitle: 'Update Campus'
+    });
   }
 
   onDelete = (id, name) => {
@@ -153,32 +152,33 @@ class CampusListTable extends Component {
       open: true,
       update: false,
       delete: true,
-      modalTitle: 'Delete '+ name +' Campus ?',
-    })
+      modalTitle: 'Delete '+ name +' Campus ?'
+    });
   }
 
   onUpdateData = () => {
     const { id, name, address, value, phone, description } = this.state;
-    this.handleClose()
-    this.props.updateCampusesData(id, name, address, value, phone, description)
-    this.props.fetchCampusesData()
+    this.handleClose();
+    this.props.updateCampusesData(id, name, address, value, phone, description);
+    this.props.fetchCampusesData();
   }
+
   onDeleteData = () => {
     const { id } = this.state;
-    this.handleClose()
-    this.props.deleteCampusesData(id)
-    this.props.fetchCampusesData()
+    this.handleClose();
+    this.props.deleteCampusesData(id);
+    this.props.fetchCampusesData();
   }
 
   onSubmitData = () => {
     const { name, address, value, phone, description } = this.state;
-    this.handleClose()
-    this.props.submitCampusesData(name, address, value, phone, description)
-    this.props.fetchCampusesData()
+    this.handleClose();
+    this.props.submitCampusesData(name, address, value, phone, description);
+    this.props.fetchCampusesData();
   }
   componentWillMount() {
-    this.props.fetchCampusesData()
-    this.props.fetchCityData()
+    this.props.fetchCampusesData();
+    this.props.fetchCityData();
   }
   //Render this!
   render() {
@@ -205,11 +205,11 @@ class CampusListTable extends Component {
         primary={true}
         keyboardFocused={true}
         onTouchTap={() => this.onSubmitData()}
-      />,
+      />
     ];
     return (
-        <div style={{margin:0}}>
-          <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content}/>
+        <div style={{ margin:0 }}>
+          <Header onClick={this.handleChange} navStyle={this.state.navStyle} drawerStyle={this.state.drawerStyle} content={this.state.content} />
           <Drawer drawerStyle={this.state.drawerStyle} />
           <div style={this.state.contentStyle}>
             <PageTitle title="Campuses" />
@@ -219,7 +219,7 @@ class CampusListTable extends Component {
                   label="add"
                   onTouchTap={this.onAdd}
                   backgroundColor= {blue500}
-                  labelStyle={{fontWeight: 'bold'}}
+                  labelStyle={{ fontWeight: 'bold' }}
                 />
               </div>
               <Dialog
@@ -239,13 +239,13 @@ class CampusListTable extends Component {
                         floatingLabelText="Name"
                         value={this.state.name}
                         onChange={this.onChangeData('name')} />
-                        <br/>
+                        <br />
                   <TextField
                         hintText="Address"
                         value={this.state.address}
                         floatingLabelText="Address"
-                        onChange={this.onChangeData('address')}/>
-                        <br/>
+                        onChange={this.onChangeData('address')} />
+                        <br />
                   <DropDownMenu
                       floatingLabelText="City"
                       value={this.state.value}
@@ -263,18 +263,18 @@ class CampusListTable extends Component {
                               primaryText={kota.name}
                               onChange={this.onChangeData('value')}
                            />
-                        )
+                        );
                       })
                     }
 
                   </DropDownMenu>
-                        <br/>
+                        <br />
                   <TextField
                         hintText="Phone"
                         value={this.state.phone}
                         floatingLabelText="Phone"
-                        onChange={this.onChangeData('phone')}/>
-                        <br/>
+                        onChange={this.onChangeData('phone')} />
+                        <br />
                   <TextField
                         hintText="Description"
                         value={this.state.description}
@@ -293,7 +293,7 @@ class CampusListTable extends Component {
             (<CampusTable
               data={this.props.campusesData}
               onUpdate={this.onUpdate.bind(this)}
-              onDelete={this.onDelete.bind(this)}/>)
+              onDelete={this.onDelete.bind(this)} />)
           }
           </div>
         </div>
@@ -310,7 +310,7 @@ CampusListTable.propTypes = {
   isFetchingCampuses: bool.isRequired,
   cityData: array.isRequired,
   isFetchingCity: bool.isRequired
-}
+};
 
 /**
  *  Map redux state to component props
@@ -327,7 +327,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
       ...actions,
       fetchCityData
-    }, dispatch)
+    }, dispatch);
 }
 
 /**

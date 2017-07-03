@@ -1,6 +1,6 @@
 import {
   refactoryAxios
-} from '../../../helpers'
+} from '../../../helpers';
 
 import {
   UPDATE_IS_FETCHING_CAMPUSES,
@@ -9,24 +9,24 @@ import {
   IS_UPDATE_DATA_CAMPUSES,
   DELETE_DATA_CAMPUSES,
   UPDATE_DATA_CAMPUSES
-} from './constants'
+} from './constants';
 
-import { TOKEN } from '../../../constants'
+import { TOKEN } from '../../../constants';
 
 export function updateIsFetchingCampuses(status) {
   return {
     type: UPDATE_IS_FETCHING_CAMPUSES,
     status
-  }
+  };
 }
 export function fetchCampusesData() {
  return (dispatch) => {
    // Set fetching to true
-   dispatch(updateIsFetchingCampuses(true))
+   dispatch(updateIsFetchingCampuses(true));
    // Make the request for contacts
-   refactoryAxios.get(`/api/campuses`, {
+   refactoryAxios.get('/api/campuses', {
      headers: {
-       Accept: "aplication/json",
+       Accept: 'aplication/json',
        Authorization: `Bearer ${TOKEN()}`
     }
    }).then( (response) => {
@@ -34,15 +34,15 @@ export function fetchCampusesData() {
      dispatch({
        type: FETCH_CAMPUSES_DATA,
        payload: response.data.data
-     })
+     });
      // Set fetching to false
-     dispatch(updateIsFetchingCampuses(false))
-   })
- }
+     dispatch(updateIsFetchingCampuses(false));
+   });
+ };
 }
 export function submitCampusesData (name, address, city_id, phone, description) {
   return (dispatch, getState) => {
-    refactoryAxios.post(`/api/campuses`, ({
+    refactoryAxios.post('/api/campuses', ({
         name, address, city_id, phone, description
     }), {
       headers: {
@@ -53,9 +53,9 @@ export function submitCampusesData (name, address, city_id, phone, description) 
       dispatch({
         type: SUBMIT_DATA_CAMPUSES,
         payload: response.data.data
-      })
+      });
     }).catch(err => err);
-  }
+  };
 }
 export function updateCampusesData (id, name, address, city_id, phone, description) {
   return (dispatch, getState) => {
@@ -70,9 +70,9 @@ export function updateCampusesData (id, name, address, city_id, phone, descripti
       dispatch({
         type: UPDATE_DATA_CAMPUSES,
         payload: response.data.data
-      })
+      });
     }).catch(err => err);
-  }
+  };
 }
 export function deleteCampusesData (id) {
   return (dispatch, getState) => {
@@ -85,7 +85,7 @@ export function deleteCampusesData (id) {
       dispatch({
         type: DELETE_DATA_CAMPUSES,
         payload: response.data.data
-      })
+      });
     }).catch(err => err);
-  }
+  };
 }

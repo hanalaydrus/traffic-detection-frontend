@@ -1,37 +1,37 @@
 import {
   refactoryAxios
-} from '../../../helpers'
+} from '../../../helpers';
 
 import {
   UPDATE_IS_FETCHING_STUDENT,
   FETCH_STUDENT_DATA,
   UPDATE_DATA_STUDENT,
   FETCH_BATCH_DATA,
-  UPDATE_IS_FETCHING_BATCH,
-} from './constants'
+  UPDATE_IS_FETCHING_BATCH
+} from './constants';
 
-import { TOKEN } from '../../../constants'
+import { TOKEN } from '../../../constants';
 
 export function updateIsFetchingStudent(status) {
   return {
     type: UPDATE_IS_FETCHING_STUDENT,
     status
-  }
+  };
 }
 export function updateIsFetchingBacth(status) {
   return {
     type: UPDATE_IS_FETCHING_BATCH,
     status
-  }
+  };
 }
 export function fetchStudentData(idParticipant, idStudent) {
  return (dispatch) => {
    // Set fetching to true
-   dispatch(updateIsFetchingStudent(true))
+   dispatch(updateIsFetchingStudent(true));
    // Make the request for contacts
    refactoryAxios.get(`/api/liststudent/${idParticipant}/${idStudent}`, {
      headers: {
-       Accept: "aplication/json",
+       Accept: 'aplication/json',
        Authorization: `Bearer ${TOKEN()}`
     }
    }).then( (response) => {
@@ -39,20 +39,20 @@ export function fetchStudentData(idParticipant, idStudent) {
      dispatch({
        type: FETCH_STUDENT_DATA,
        payload: response.data.data
-     })
+     });
      // Set fetching to false
-     dispatch(updateIsFetchingStudent(false))
-   })
- }
+     dispatch(updateIsFetchingStudent(false));
+   });
+ };
 }
 export function fetchBatchData(idCampus) {
  return (dispatch) => {
    // Set fetching to true
-   dispatch(updateIsFetchingBacth(true))
+   dispatch(updateIsFetchingBacth(true));
    // Make the request for contacts
    refactoryAxios.get(`/api/batch/${idCampus}`, {
      headers: {
-       Accept: "aplication/json",
+       Accept: 'aplication/json',
        Authorization: `Bearer ${TOKEN()}`
     }
    }).then( (response) => {
@@ -60,11 +60,11 @@ export function fetchBatchData(idCampus) {
      dispatch({
        type: FETCH_BATCH_DATA,
        payload: response.data.data
-     })
+     });
      // Set fetching to false
-     dispatch(updateIsFetchingBacth(false))
-   })
- }
+     dispatch(updateIsFetchingBacth(false));
+   });
+ };
 }
 
 export function updateStudentData (idParticipant, idStudent, full_name, batch_id, birthday, address, email, status) {
@@ -80,7 +80,7 @@ export function updateStudentData (idParticipant, idStudent, full_name, batch_id
       dispatch({
         type: UPDATE_DATA_STUDENT,
         payload: response.data.data
-      })
+      });
     }).catch(err => err);
-  }
+  };
 }

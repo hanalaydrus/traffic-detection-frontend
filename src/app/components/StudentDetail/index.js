@@ -1,96 +1,91 @@
 /**
  * import from libary
  */
-
-
-import React from 'react';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import Slider from 'material-ui/Slider';
-import FlatButton from 'material-ui/FlatButton';
-import Toggle from 'material-ui/Toggle';
+import React, { Component } from 'react';
+import { Tabs, Tab } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
-import {green500, blue500,indigo900, orange500, orange600} from 'material-ui/styles/colors';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import { blue500,indigo900, orange600 } from 'material-ui/styles/colors';
+import { Row, Col } from 'react-flexbox-grid';
+import { ToolbarGroup } from 'material-ui/Toolbar';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import Chip from 'material-ui/Chip';
 import MainMenu from '../../containers/MainMenu';
-import moment from 'moment'
+import moment from 'moment';
 import ActionHome from 'material-ui/svg-icons/editor/mode-edit';
 import Avatar from 'material-ui/Avatar';
+
 const styles = {
   headline: {
     fontSize: 24,
     paddingTop: 16,
     marginBottom: 12,
-    fontWeight: 400,
+    fontWeight: 400
   },
   orange: {
-   borderColor: orange600,
+   borderColor: orange600
  },
  content:{
-  marginTop:40,
+  marginTop:40
  },
   content_full: {
    marginLeft:0,
    padding:40,
    paddingTop:20,
-   transition:'1s all ease',
+   transition:'1s all ease'
  },
   content_less: {
    marginLeft:250,
    padding:40,
    paddingTop:20,
-   transition:'1s all ease',
+   transition:'1s all ease'
  },
  chip: {
-    margin: 4,
+    margin: 4
   }
 };
 
-import './styles.scss'
-function handleActive(tab) {
-  alert(`A tab with this route property ${tab.props['data-route']} was activated.`);
-}
+import './styles.scss';
 
-export default class CardExampleControlled extends React.Component {
+export default class CardExampleControlled extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       expanded: false,
       contentStyle: styles.content_less,
-      controlledDate: moment('2014-11-07T21:20:15').toDate(),
+      controlledDate: moment('2014-11-07T21:20:15').toDate()
     };
   }
 
   handleDate = (event, date) => {
-    console.log('this is date',date)
     this.setState({
-      controlledDate: date,
+      controlledDate: date
     });
   };
 
   handleExpandChange = (expanded) => {
-    this.setState({expanded: expanded});
+    this.setState({ expanded: expanded });
   };
 
   handleToggle = (event, toggle) => {
-    this.setState({expanded: toggle});
+    this.setState({ expanded: toggle });
   };
 
   handleExpand = () => {
-    this.setState({expanded: true});
+    this.setState({ expanded: true });
   };
 
   handleReduce = () => {
-    this.setState({expanded: false});
+    this.setState({ expanded: false });
   };
-  handleChange = (event, index, value) => this.setState({value});
-render(){
+
+  handleChange = (event, index, value) => {
+    this.setState({ value });
+  };
+
+render() {
   return (
 <MainMenu >
   <div style={this.state.contentStyle}>
@@ -104,7 +99,7 @@ render(){
             defaultValue="Aji Lantang Mardika"
             floatingLabelText="Name "
           />
-          <ActionHome/>
+          <ActionHome />
         </ToolbarGroup>
          <ToolbarGroup>
             <SelectField
@@ -118,7 +113,7 @@ render(){
               <MenuItem value={4} primaryText="Tuminem, jogja" />
               <MenuItem value={5} primaryText="Seragen, solo" />
           </SelectField>
-          <ActionHome/>
+          <ActionHome />
          </ToolbarGroup>
           <ToolbarGroup>
             <SelectField
@@ -137,14 +132,14 @@ render(){
             hintText="Birthday"
             value={this.state.controlledDate}
             onChange={this.handleDate}
-          /><ActionHome/>
+          /><ActionHome />
           </ToolbarGroup>
           <ToolbarGroup>
             <TextField
             defaultValue="Sawangan, Depok"
             floatingLabelText="Address "
             />
-            <ActionHome/>
+            <ActionHome />
           </ToolbarGroup>
           <ToolbarGroup>
             <TextField
@@ -152,7 +147,7 @@ render(){
             floatingLabelText="Email "
             disabled={false}
             />
-            <ActionHome/>
+            <ActionHome />
           </ToolbarGroup>
 
           <p>Status</p>
@@ -166,72 +161,18 @@ render(){
               </Avatar>
               Status:Pending
             </Chip>
-            <ActionHome/>
+            <ActionHome />
           </ToolbarGroup>
 
-        </Col >
+        </Col>
       </Row>
       </div>
     </Tab>
 
   </Tabs>
   </div>
-</MainMenu >
-  )
+</MainMenu>
+  );
 }
 }
 
-/*import React, { Component } from 'react';
-import classNames from 'classnames'
-import {RaisedButton, TextField, MenuItem, SelectField, DatePicker} from 'material-ui';
-import {orange600, orange500, red500, blue500} from 'material-ui/styles/colors';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,} from 'material-ui/Table';
-import Dialog from 'material-ui/Dialog';
-import styles from "./styles.scss";
-import MainMenu from '../../containers/MainMenu'
-const customContentStyle = {
-  width: '40%',
-};
-const style = {
-  orange: {
-   borderColor: orange600,
-  }
-};
-const tilesData = [];
-
-class WorkToDoForm extends Component {
-  constructor(){
-    super(...arguments);
-    this.state = {
-      dataProfile: {
-                "id": 1,
-                "full_name": "Andi Herman",
-                "address": "Dago, Bandung",
-                "birthday": "May 20, 1994",
-                "phone": "08123456788",
-                "email": "andy@gmail.com",
-                "status": "pending",
-                "batch_id": 2,
-                "batch": {
-                    "id": 2,
-                    "code_name": "Basilischi",
-                    "campus_id": 1
-                },
-                "campus": {
-                    "id": 1,
-                    "name": "Eduplex",
-                }
-            }
-
-    }
-  }
-  render() {
-    return (
-      <MainMenu >
-
-      </MainMenu>
-    );
-  }
-}
-
-export default WorkToDoForm;*/

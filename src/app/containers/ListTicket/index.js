@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { bool, array, object, func } from 'prop-types'
-import { createStructuredSelector } from 'reselect'
-import { connect } from 'react-redux'
-import Loader from 'react-loader'
-import RichTextEditor from 'react-rte'
-import moment from 'moment'
-import ReactMarkdown from 'react-markdown'
+import { bool, array, object, func } from 'prop-types';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+import Loader from 'react-loader';
+import RichTextEditor from 'react-rte';
+import moment from 'moment';
+import ReactMarkdown from 'react-markdown';
 
 import {
   Checkbox,
@@ -29,17 +29,17 @@ import {
   CardTitle
 } from 'material-ui';
 
-import './styles.scss'
+import './styles.scss';
 import * as actions from './actions';
 import * as selectors from './selectors';
-import Header from './../../components/HeaderUser'
-import {TOKEN} from '../../../constants'
+import Header from './../../components/HeaderUser';
+import { TOKEN } from '../../../constants';
 
 class ListTicket extends Component {
   constructor() {
       super();
       this.state = {
-        statusChecked: ["todo"],
+        statusChecked: [ 'todo' ],
         value: 1,
         checkSelect: false,
         fixedHeader: true,
@@ -57,19 +57,19 @@ class ListTicket extends Component {
         valueMarkdown: RichTextEditor.createEmptyValue(),
         selectedProjectName: '',
         selectedTicketNumberForDiscuss: -1,
-        selectedTicketNumberForDropdown: -1,
+        selectedTicketNumberForDropdown: -1
       };
     }
 
   handleChangeDropDown = (index, value, ticketNumber) => {
     const newData = this.props.data;
-    const data = newData.tickets.find((tckData) => {return tckData.number === ticketNumber})
-    const tempStatus = data.status
+    const data = newData.tickets.find((tckData) => {return tckData.number === ticketNumber;});
+    const tempStatus = data.status;
     data.status = value;
-    this.props.patchTicketData(data.repository.name, ticketNumber, tempStatus, value, newData)
+    this.props.patchTicketData(data.repository.name, ticketNumber, tempStatus, value, newData);
     this.setState({
       selectedTicketNumberForDropdown: ticketNumber
-    })
+    });
   }
 
   handleFilter = (status) => {
@@ -78,16 +78,16 @@ class ListTicket extends Component {
 
   handleToggle = (event, toggled) => {
     this.setState({
-      [event.target.name]: toggled,
+      [event.target.name]: toggled
     });
   };
 
   handleChange = (event) => {
-    this.setState({height: event.target.value});
+    this.setState({ height: event.target.value });
   };
 
   onMarkdownChange = (valueMarkdown) => {
-    this.setState({valueMarkdown});
+    this.setState({ valueMarkdown });
     if (this.props.onMarkdownChange) {
       this.props.onMarkdownChange(
         valueMarkdown.toString('html')
@@ -95,83 +95,79 @@ class ListTicket extends Component {
     }
   };
 
-  handleDrawerToggle = (projectName,ticketNumber) => {
-    this.props.fetchCommentData(projectName,ticketNumber)
+  handleDrawerToggle = (projectName, ticketNumber) => {
+    this.props.fetchCommentData(projectName, ticketNumber);
     this.setState({
       drawerOpen: !this.state.drawerOpen,
       selectedProjectName: projectName,
       selectedTicketNumberForDiscuss: ticketNumber
-    })
+    });
   }
 
   handleSubmitComment = (projectName, ticketNumber, body) => {
-    this.props.submitCommentData(projectName, ticketNumber, body)
-    this.props.fetchCommentData(projectName,ticketNumber)
+    this.props.submitCommentData(projectName, ticketNumber, body);
+    this.props.fetchCommentData(projectName, ticketNumber);
     this.setState({
       valueMarkdown: RichTextEditor.createEmptyValue()
-    })
+    });
   }
 
   handleRefreshComment = (projectName, ticketNumber) => {
-    this.props.fetchCommentData(projectName,ticketNumber)
+    this.props.fetchCommentData(projectName, ticketNumber);
   }
 
-  labelColor = (labelName) => {
-      return labelName === 'feature' ? 'ffe100' :
+  labelColor = labelName => labelName === 'feature' ? 'ffe100' :
       labelName === 'tweak' ? '0083ff' :
       labelName === 'bug' ? 'e00000' :
       labelName === 'refactor' ? '07c436' :
       labelName === 'enhancement' ? '6b018c' : 'd5f990'
-  }
-  labelFontColor = (labelName) => {
-      return labelName === 'feature' ? '000000' :
+  labelFontColor = labelName => labelName === 'feature' ? '000000' :
       labelName === 'tweak' ? 'ffffff' :
       labelName === 'bug' ? 'ffffff' :
       labelName === 'refactor' ? 'ffffff' :
       labelName === 'enhancement' ? 'ffffff' : '000000'
-  }
 
   componentWillMount() {
-    this.props.fetchTicketData()
-    this.props.fetchProfileData()
+    this.props.fetchTicketData();
+    this.props.fetchProfileData();
   }
 
   render() {
     if (this.props.isFetching || this.props.isFetchingProfile) {
-      return <Loader type="line-scale" color="#fff" active />
+      return <Loader type="line-scale" color="#fff" active />;
     }
     return (
       <div>
         <Header />
-        <div className={ "list_ticket_container" }>
-        <div className={ "score_and_filter" }>
-          <div className={ "filter_container" }>
-            <div className={"filter_title"}><b>Filter by</b> </div>
-            <div className={ "block" }>
+        <div className={ 'list_ticket_container' }>
+        <div className={ 'score_and_filter' }>
+          <div className={ 'filter_container' }>
+            <div className={'filter_title'}><b>Filter by</b> </div>
+            <div className={ 'block' }>
               <Checkbox
                 label="To Do"
-                checked={ this.props.filters.indexOf("todo") >= 0 || this.props.filters.indexOf("inprogress") >= 0}
-                style={{marginRight:30}}
-                onCheck={() => this.handleFilter("todo")}
+                checked={ this.props.filters.indexOf('todo') >= 0 || this.props.filters.indexOf('inprogress') >= 0}
+                style={{ marginRight:30 }}
+                onCheck={() => this.handleFilter('todo')}
               />
               <Checkbox
                 label="Done"
-                checked={ this.props.filters.indexOf("done") >= 0 }
+                checked={ this.props.filters.indexOf('done') >= 0 }
                 style={{}}
-                onCheck={() => this.handleFilter("done")}
+                onCheck={() => this.handleFilter('done')}
               />
             </div>
           </div>
-          <div className={ "score_container "}>
-            <div className={"score_title"}><b>Your Score</b> </div>
+          <div className={ 'score_container '}>
+            <div className={'score_title'}><b>Your Score</b> </div>
             {
               this.props.isPatchingTicketData ?
               <div className="loader-score"><Loader type="line-scale" color="#fff" scale={0.70} active /></div> :
-              <div className={"score"}><b>{this.props.data.total_score + " pts"}</b> </div>
+              <div className={'score'}><b>{this.props.data.total_score + ' pts'}</b> </div>
             }
           </div>
         </div>
-        <div className={ "table_container" }>
+        <div className={ 'table_container' }>
           <Table
             height={this.state.height}
             fixedHeader={this.state.fixedHeader}
@@ -184,13 +180,13 @@ class ListTicket extends Component {
               adjustForCheckbox={this.state.showCheckboxes}
               enableSelectAll={this.state.enableSelectAll}
             >
-              <TableRow style={{backgroundColor:'#f9bb00'}}>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Repository</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Ticket</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Type</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px'}}>Status</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Change Status</TableHeaderColumn>
-                <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Action</TableHeaderColumn>
+              <TableRow style={{ backgroundColor:'#f9bb00' }}>
+                <TableHeaderColumn style={{ textAlign: 'center', color:'#212121', fontWeight: 'Bold' }}>Repository</TableHeaderColumn>
+                <TableHeaderColumn style={{ textAlign: 'center', color:'#212121', fontWeight: 'Bold' }}>Ticket</TableHeaderColumn>
+                <TableHeaderColumn style={{ textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px' }}>Type</TableHeaderColumn>
+                <TableHeaderColumn style={{ textAlign: 'center', color:'#212121', fontWeight: 'Bold', width: '120px' }}>Status</TableHeaderColumn>
+                <TableHeaderColumn style={{ textAlign: 'center', color:'#212121', fontWeight: 'Bold' }}>Change Status</TableHeaderColumn>
+                <TableHeaderColumn style={{ textAlign: 'center', color:'#212121', fontWeight: 'Bold' }}>Action</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody
@@ -205,33 +201,35 @@ class ListTicket extends Component {
                 const containsStatus = this.props.filters.indexOf(value.status) >= 0;
                 return !hasFilters || containsStatus;
               }).map( (row, index) => (
-                <TableRow key={index} style={{borderBottom: '1px solid #424040'}}>
-                  <TableRowColumn style={{textAlign: 'center'}}><a href={row.repository.url} style={{color: 'white'}}>{row.repository.name}</a></TableRowColumn>
-                  <TableRowColumn style={{textAlign: 'center'}}><a href={row.url} style={{color: 'white'}}>#{row.number} {row.title}</a></TableRowColumn>
-                  <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
+                <TableRow key={index} style={{ borderBottom: '1px solid #424040' }}>
+                  <TableRowColumn style={{ textAlign: 'center' }}><a href={row.repository.url} style={{ color: 'white' }}>{row.repository.name}</a></TableRowColumn>
+                  <TableRowColumn style={{ textAlign: 'center' }}><a href={row.url} style={{ color: 'white' }}>#{row.number} {row.title}</a></TableRowColumn>
+                  <TableRowColumn style={{ textAlign: 'center', width: '120px' }}>
                     {
                        row.labels.map( (content, index2) => (
                          ((content.name !== 'inprogress') &&
                           (content.name !== 'todo') &&
                           (content.name !== 'done')
                          ) ?
-                       ( <div style={{
-                          fontWeight: 'bold',
-                          margin: '4px',
-                          float: 'left',
-                          borderStyle: 'solid',
-                          borderColor: '#' + this.labelColor(content.name),
-                          borderRadius: '5px',
-                          backgroundColor: '#' + this.labelColor(content.name),
-                          color: '#' + this.labelFontColor(content.name)
-                        }}
-                        key={index2}>
-                            {content.name}
-                        </div> ) : ' '
+                       (<div
+                         style={{
+                           fontWeight: 'bold',
+                           margin: '4px',
+                           float: 'left',
+                           borderStyle: 'solid',
+                           borderColor: `#${this.labelColor(content.name)}`,
+                           borderRadius: '5px',
+                           backgroundColor: `#${this.labelColor(content.name)}`,
+                           color: `#${this.labelFontColor(content.name)}`
+                         }}
+                         key={index2}
+                       >
+                         {content.name}
+                       </div>) : ' '
                       ))
                     }
                   </TableRowColumn>
-                  <TableRowColumn style={{textAlign: 'center', width: '120px'}}>
+                  <TableRowColumn style={{ textAlign: 'center', width: '120px' }}>
                     {
                         <div style={{
                           fontWeight: 'bold',
@@ -247,24 +245,24 @@ class ListTicket extends Component {
                         </div>
                        }
                   </TableRowColumn>
-                  <TableRowColumn style={{textAlign: 'center'}}>
+                  <TableRowColumn style={{ textAlign: 'center' }}>
                     {
                       (this.props.isPatchingTicketData && (this.state.selectedTicketNumberForDropdown === row.number)) ?
                       (<div className="loader-ticket"><Loader type="line-scale" color="#fff" scale={0.80} active /></div>) :
-                      (<DropDownMenu value={row.status} onChange={(event, number, value) => this.handleChangeDropDown(index,value,row.number)} style={{width: '175px'}}>
-                        <MenuItem value={"todo"} primaryText="To Do" />
-                        <MenuItem value={"inprogress"} primaryText="In Progress" />
-                        <MenuItem value={"done"} primaryText="Done" />
+                      (<DropDownMenu value={row.status} onChange={(event, number, value) => this.handleChangeDropDown(index,value,row.number)} style={{ width: '175px' }}>
+                        <MenuItem value={'todo'} primaryText="To Do" />
+                        <MenuItem value={'inprogress'} primaryText="In Progress" />
+                        <MenuItem value={'done'} primaryText="Done" />
                       </DropDownMenu>)
                     }
-                  </TableRowColumn>
-                  <TableRowColumn style={{textAlign: 'center'}}>
-                    <RaisedButton
-                      label="DISCUSS"
-                      onTouchTap={ () => this.handleDrawerToggle(row.repository.name,row.number) }
-                    />
-                  </TableRowColumn>
-                </TableRow>
+                    </TableRowColumn>
+                    <TableRowColumn style={{ textAlign: 'center' }}>
+                      <RaisedButton
+                        label="DISCUSS"
+                        onTouchTap={() => this.handleDrawerToggle(row.repository.name, row.number)}
+                      />
+                    </TableRowColumn>
+                  </TableRow>
                 ))}
             </TableBody>
             <TableFooter
@@ -277,15 +275,15 @@ class ListTicket extends Component {
           open={this.state.drawerOpen}
           width={600}
           docked={false}
-          onRequestChange={(drawerOpen) => this.setState({drawerOpen})}
+          onRequestChange={(drawerOpen) => this.setState({ drawerOpen })}
         >
-          <div className={"markdown_container"} >
-            <div className={"show_comment"}>
-              <Card style={{padding: 4}}>
-                <div className={"card_header"}>
+          <div className={'markdown_container'} >
+            <div className={'show_comment'}>
+              <Card style={{ padding: 4 }}>
+                <div className={'card_header'}>
                   <CardHeader
-                    title={<b>{this.props.isFetchingComment ? '' : "#" + this.props.commentData.number + " " + this.props.commentData.title}</b>}
-                    titleColor='#222'
+                    title={<b>{this.props.isFetchingComment ? '' : '#' + this.props.commentData.number + ' ' + this.props.commentData.title}</b>}
+                    titleColor="#222"
                   />
                 </div>
                 <CardText>
@@ -303,18 +301,18 @@ class ListTicket extends Component {
               (<Loader type="line-scale" active />) :
 
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
-                <Card style={{padding: 4}}>
-                  <div className={"card_header"}>
+                <Card style={{ padding: 4 }}>
+                  <div className={'card_header'}>
                     <CardHeader
                       title={row.user.login}
-                      subtitle={moment(row.created_at, ["YYYY", moment.ISO_8601]).format("MMMM Do YYYY hh:mm")}
+                      subtitle={moment(row.created_at, [ 'YYYY', moment.ISO_8601 ]).format('MMMM Do YYYY hh:mm')}
                       avatar={row.user.avatar_url}
-                      titleColor='#000'
+                      titleColor="#000"
                       subtitleColor="#000"
                     />
                   </div>
                   <CardText>
-                    <div className={ "cardTextContainer" }>
+                    <div className={ 'cardTextContainer' }>
                       <ReactMarkdown source={row.body} />
                     </div>
                   </CardText>
@@ -322,15 +320,15 @@ class ListTicket extends Component {
                 )))}
             </div>
 
-            <div className={"markdown_editor"} >
-              <div className={"markdown_editor_detail"}>
+            <div className={'markdown_editor'} >
+              <div className={'markdown_editor_detail'}>
                 <RichTextEditor
                   value={this.state.valueMarkdown}
                   onChange={this.onMarkdownChange}
                   placeholder={'Leave a comment'}
                 />
               </div>
-              <div className={"markdown_button_submit"} >
+              <div className={'markdown_button_submit'} >
                 <FlatButton
                   label="Refresh"
                   primary={true}
@@ -339,23 +337,23 @@ class ListTicket extends Component {
                       this.state.selectedProjectName,
                       this.state.selectedTicketNumberForDiscuss
                   )}
-                />
-                <RaisedButton
-                  backgroundColor="#f9bb00"
-                  labelColor="#000"
-                  label="SUBMIT"
-                  onClick={
+                  />
+                  <RaisedButton
+                    backgroundColor="#f9bb00"
+                    labelColor="#000"
+                    label="SUBMIT"
+                    onClick={
                     () => this.handleSubmitComment(
                       this.state.selectedProjectName,
                       this.state.selectedTicketNumberForDiscuss,
                       this.state.valueMarkdown.toString('markdown')
                   )}
-                />
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </Drawer>
-      </div>
+          </Drawer>
+        </div>
       </div>
     );
   }
@@ -369,7 +367,7 @@ ListTicket.propTypes = {
   isFetching: bool.isRequired,
   patchTicketData: func.isRequired,
   onMarkdownChange: func
-}
+};
 
 /**
  *  Map redux state to component props

@@ -1,12 +1,12 @@
 /**
  *  Import node modules
  */
-import { createSelector } from 'reselect'
+import { createSelector } from 'reselect';
 
 /**
  *  Select the person portion of the root reducer
  */
-export const selectAuthReducer = () => (state) => state.get('authGithub')
+export const selectAuthReducer = () => state => state.get('authGithub');
 
 /**
  *  Selects the logged in status of the user
@@ -14,8 +14,8 @@ export const selectAuthReducer = () => (state) => state.get('authGithub')
  */
 export const getIsUserLoggedIn = () => createSelector(
   selectAuthReducer(),
-  (state) => state.get('isUserLoggedIn')
-)
+  state => state.get('isUserLoggedIn')
+);
 
 /**
  *  Selects the details of the currently logged in user
@@ -23,5 +23,5 @@ export const getIsUserLoggedIn = () => createSelector(
  */
 export const getUser = () => createSelector(
   selectAuthReducer(),
-  (state) => state.get('user').toJS()
-)
+  state => state.get('user').toJS()
+);

@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import normalize from 'jsonapi-normalizer'
+import normalize from 'jsonapi-normalizer';
 import {
   UPDATE_IS_FETCHING_CAMPUSES,
   FETCH_CAMPUSES_DATA,
@@ -7,31 +7,31 @@ import {
   IS_UPDATE_DATA_CAMPUSES,
   DELETE_DATA_CAMPUSES,
   UPDATE_DATA_CAMPUSES
-} from './constants'
+} from './constants';
 
 const initialState = fromJS({
   isFetchingCampuses: false,
   campusesData: [],
   submitCampuses: {},
   deleteCampuses: {},
-  updateCampuses: {},
-})
+  updateCampuses: {}
+});
 
 function campusesDataReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_CAMPUSES_DATA:
-      return state.set('campusesData', fromJS(action.payload))
+      return state.set('campusesData', fromJS(action.payload));
     case SUBMIT_DATA_CAMPUSES:
-      return state.set('submitCampuses', fromJS(action.payload))
+      return state.set('submitCampuses', fromJS(action.payload));
     case UPDATE_IS_FETCHING_CAMPUSES:
-      return state.set('isFetchingCampuses', action.status)
+      return state.set('isFetchingCampuses', action.status);
     case DELETE_DATA_CAMPUSES:
-      return state.set('deleteCampuses', fromJS(action.payload))
+      return state.set('deleteCampuses', fromJS(action.payload));
     case UPDATE_DATA_CAMPUSES:
-      return state.set('updateCampuses', fromJS(action.payload))
+      return state.set('updateCampuses', fromJS(action.payload));
     default:
-      return state
+      return state;
   }
 }
 
-export default campusesDataReducer
+export default campusesDataReducer;

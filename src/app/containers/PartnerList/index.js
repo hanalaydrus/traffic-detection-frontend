@@ -64,7 +64,7 @@ class PartnerList extends Component {
 			navStyle: 'nav',
 			drawerStyle: 'menu-drawer',
 			contentStyle: style.content_less,
-      id:"",
+      id:'',
 			open: false,
 			name: '',
 			email: '',
@@ -113,8 +113,8 @@ class PartnerList extends Component {
     this.setState({
       open:true,
       update:true,
-      updateId:id,
-    })
+      updateId:id
+    });
 	};
 
   submitUpdate = () => {
@@ -133,8 +133,8 @@ class PartnerList extends Component {
 		});
   }
   getUpdate =(id,update) => {
-      console.log("matamuu")
-     return this.state.data.map((res) => (res.id === id) ? update :res)
+      console.log('matamuu');
+     return this.state.data.map((res) => (res.id === id) ? update :res);
   }
 	onSubmitData = () => {
 		const { name, email, website, description } = this.state;
@@ -218,7 +218,7 @@ class PartnerList extends Component {
 							</List>
 						</Dialog>
 					</div>
-					<PartnerTable data={this.state.data} onDelete={this.onDelete.bind(this)} onUpdate={this.OnUpdate.bind(this)}/>
+					<PartnerTable data={this.state.data} onDelete={this.onDelete.bind(this)} onUpdate={this.OnUpdate.bind(this)} />
 				</div>
 			</div>
 		);

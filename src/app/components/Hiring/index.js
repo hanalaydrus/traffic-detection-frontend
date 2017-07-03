@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Table,
   TableBody,
@@ -6,27 +6,11 @@ import {
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn,
+  TableRowColumn
 } from 'material-ui/Table';
-import TextField from 'material-ui/TextField';
-import Toggle from 'material-ui/Toggle';
-import HiringData from '../../../../temp-data/tempHiring.json'
+import HiringData from '../../../../temp-data/tempHiring.json';
 
-const styles = {
-  propContainer: {
-    overflow: 'hidden',
-    margin: '20px auto 0',
-  },
-  propToggleHeader: {
-    margin: '20px auto 10px',
-  },
-  palette: {
-    textColor: 'white',
-    primaryColor: 'orange'
-  }
-};
-
-const tableData = HiringData.data
+const tableData = HiringData.data;
 
 /**
  * A more complex example, allowing the table height to be set, and key boolean properties to be toggled.
@@ -42,17 +26,17 @@ export default class Hiring extends Component {
     enableSelectAll: false,
     deselectOnClickaway: true,
     showCheckboxes: false,
-    height: '500px',
+    height: '500px'
   };
 
   handleToggle = (event, toggled) => {
     this.setState({
-      [event.target.name]: toggled,
+      [event.target.name]: toggled
     });
   };
 
   handleChange = (event) => {
-    this.setState({height: event.target.value});
+    this.setState({ height: event.target.value });
   };
 
   render() {
@@ -70,12 +54,12 @@ export default class Hiring extends Component {
             adjustForCheckbox={this.state.showCheckboxes}
             enableSelectAll={this.state.enableSelectAll}
           >
-            <TableRow style={{backgroundColor:'#f9bb00'}}>
-              <TableHeaderColumn style={{width: '50', color:'#212121', fontWeight: 'Bold'}}>ID</TableHeaderColumn>
-              <TableHeaderColumn style={{color:'#212121', fontWeight: 'Bold'}}>Name</TableHeaderColumn>
-              <TableHeaderColumn style={{width: '450', color:'#212121', fontWeight: 'Bold'}}>Link</TableHeaderColumn>
-              <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Viewed</TableHeaderColumn>
-              <TableHeaderColumn style={{textAlign: 'center', color:'#212121', fontWeight: 'Bold'}}>Requested</TableHeaderColumn>
+            <TableRow style={{ backgroundColor: '#f9bb00' }}>
+              <TableHeaderColumn style={{ width: '50', color: '#212121', fontWeight: 'Bold' }}>ID</TableHeaderColumn>
+              <TableHeaderColumn style={{ color: '#212121', fontWeight: 'Bold' }}>Name</TableHeaderColumn>
+              <TableHeaderColumn style={{ width: '450', color: '#212121', fontWeight: 'Bold' }}>Link</TableHeaderColumn>
+              <TableHeaderColumn style={{ textAlign: 'center', color: '#212121', fontWeight: 'Bold' }}>Viewed</TableHeaderColumn>
+              <TableHeaderColumn style={{ textAlign: 'center', color: '#212121', fontWeight: 'Bold' }}>Requested</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -84,20 +68,19 @@ export default class Hiring extends Component {
             showRowHover={this.state.showRowHover}
             stripedRows={this.state.stripedRows}
           >
-            {tableData.map( (row, index) => (
+            {tableData.map((row, index) => (
               <TableRow key={index}>
-                <TableRowColumn style={{width: '50'}}>{row.id}</TableRowColumn>
+                <TableRowColumn style={{ width: '50' }}>{row.id}</TableRowColumn>
                 <TableRowColumn>{row.name}</TableRowColumn>
-                <TableRowColumn style={{width: '450'}}>{row.link}</TableRowColumn>
-                <TableRowColumn style={{textAlign: 'center'}}>{row.views}</TableRowColumn>
-                <TableRowColumn style={{textAlign: 'center'}}>{row.requested}</TableRowColumn>
+                <TableRowColumn style={{ width: '450' }}>{row.link}</TableRowColumn>
+                <TableRowColumn style={{ textAlign: 'center' }}>{row.views}</TableRowColumn>
+                <TableRowColumn style={{ textAlign: 'center' }}>{row.requested}</TableRowColumn>
               </TableRow>
               ))}
           </TableBody>
           <TableFooter
             adjustForCheckbox={this.state.showCheckboxes}
-          >
-          </TableFooter>
+          />
         </Table>
       </div>
     );

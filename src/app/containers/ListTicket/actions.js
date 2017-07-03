@@ -1,13 +1,12 @@
 import {
   refactoryAxios
-} from '../../../helpers'
+} from '../../../helpers';
 
 import {
   FETCH_TICKET_DATA,
   UPDATE_IS_FETCHING,
   UPDATE_NEW_TICKET,
   SET_FILTER,
-  FILTER_TICKET,
   FETCH_COMMENT_DATA,
   UPDATE_IS_FETCHING_COMMENT,
   UPDATE_IS_PATCHING_TICKET_DATA,
@@ -15,39 +14,39 @@ import {
   UPDATE_COMMENT_DATA,
   FETCH_PROFILE_DATA,
   UPDATE_NEW_SCORE
-} from './constants'
+} from './constants';
 
-import { TOKEN } from '../../../constants'
+import { TOKEN } from '../../../constants';
 
 export function fetchTicketData() {
- return (dispatch) => {
+  return (dispatch) => {
    // Set fetching to true
-   dispatch(updateIsFetching(true))
+    dispatch(updateIsFetching(true));
    // Make the request for contacts
-   refactoryAxios.get(`/api/tickets`, {
-     headers: {
-       Authorization: `Bearer ${TOKEN()}`
-    }
-   }).then( (response) => {
+    refactoryAxios.get('/api/tickets', {
+      headers: {
+        Authorization: `Bearer ${TOKEN()}`
+      }
+    }).then((response) => {
      // Load the timeline data data into the reducer
-     dispatch({
-       type: FETCH_TICKET_DATA,
-       payload: response.data.data
-     })
+      dispatch({
+        type: FETCH_TICKET_DATA,
+        payload: response.data.data
+      });
      // Set fetching to false
-     dispatch(updateIsFetching(false))
-   })
- }
+      dispatch(updateIsFetching(false));
+    });
+  };
 }
 
 export function fetchProfileData() {
  return (dispatch) => {
    // Set fetching to true
-   dispatch(updateIsFetchingProfile(true))
+   dispatch(updateIsFetchingProfile(true));
    // Make the request for contacts
-   refactoryAxios.get(`/api/profile`, {
+   refactoryAxios.get('/api/profile', {
      headers: {
-       Accept: "aplication/json",
+       Accept: 'aplication/json',
        Authorization: `Bearer ${TOKEN()}`
     }
    }).then( (response) => {
@@ -55,28 +54,28 @@ export function fetchProfileData() {
      dispatch({
        type: FETCH_PROFILE_DATA,
        payload: response.data.data
-     })
+     });
      // Set fetching to false
-     dispatch(updateIsFetchingProfile(false))
-   })
- }
+     dispatch(updateIsFetchingProfile(false));
+   });
+ };
 }
 
 export function setFilter(filter) {
   return (dispatch, getState) => {
-    const oldFilters = getState().getIn(['ticketData', 'filters']).toJS();
+    const oldFilters = getState().getIn([ 'ticketData', 'filters' ]).toJS();
     const hasStored = oldFilters.findIndex((status) => filter === status) >= 0;
     const filters = !hasStored ? (
         (filter === 'todo') ? (oldFilters.concat(filter, 'inprogress')) : oldFilters.concat(filter)
       ) :
       (
-        (filter === 'todo') ? (oldFilters.filter((value) => (value !== filter) && (value !== 'inprogress'))) : oldFilters.filter((value) => value !== filter)
+        (filter === 'todo') ? (oldFilters.filter(value => (value !== filter) && (value !== 'inprogress'))) : oldFilters.filter(value => value !== filter)
       );
     dispatch({
       type: SET_FILTER,
       filters
-    })
-  }
+    });
+  };
 }
 
 
@@ -84,19 +83,19 @@ export function updateIsFetching(status) {
   return {
     type: UPDATE_IS_FETCHING,
     status
-  }
+  };
 }
 
 export function updateIsFetchingProfile(status) {
   return {
     type: UPDATE_IS_FETCHING_PROFILE,
     status
-  }
+  };
 }
 
 export function patchTicketData (project_name, ticket_number, old_status, new_status, newData) {
   return (dispatch, getState) => {
-    dispatch(updateIsPatchingTicketData(true))
+    dispatch(updateIsPatchingTicketData(true));
     refactoryAxios.patch('/api/tickets/status', {
       project_name,
       ticket_number,
@@ -104,27 +103,27 @@ export function patchTicketData (project_name, ticket_number, old_status, new_st
       new_status
     }, {
       headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${TOKEN()}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${TOKEN()}`
       }
     }).then((response) => {
       if (new_status === 'done' || old_status === 'done') {
-        dispatch(fetchScoreData(newData))
+        dispatch(fetchScoreData(newData));
       } else {
-        dispatch(updateIsPatchingTicketData(false))
+        dispatch(updateIsPatchingTicketData(false));
       }
       dispatch({
           type: UPDATE_NEW_TICKET,
           payload: newData
-        })
+        });
     }).catch(err => err);
-  }
+  };
 }
 
 export function fetchScoreData(newData) {
  return (dispatch) => {
    // Make the request for scores
-   refactoryAxios.get(`/api/tickets/score`, {
+   refactoryAxios.get('/api/tickets/score', {
      headers: {
         'Accept': 'application/json',
         'Authorization': `Bearer ${TOKEN()}`
@@ -135,64 +134,63 @@ export function fetchScoreData(newData) {
      dispatch({
        type: UPDATE_NEW_SCORE,
        payload: newData
-     })
+     });
     //  Set fetching to false
-     dispatch(updateIsPatchingTicketData(false))
-   })
- }
+     dispatch(updateIsPatchingTicketData(false));
+   });
+ };
 }
 
 export function updateIsPatchingTicketData(status) {
   return {
     type: UPDATE_IS_PATCHING_TICKET_DATA,
     status
-  }
+  };
 }
 
 export function updateIsFetchingComment(status) {
   return {
     type: UPDATE_IS_FETCHING_COMMENT,
     status
-  }
+  };
 }
 
-export function fetchCommentData(projectName,ticketNumber) {
- return (dispatch) => {
+export function fetchCommentData(projectName, ticketNumber) {
+  return (dispatch) => {
    // Set fetching to true
-   dispatch(updateIsFetchingComment(true))
+    dispatch(updateIsFetchingComment(true));
    // Make the request for contacts
-   refactoryAxios.get(`/api/tickets/${projectName}/${ticketNumber}`, {
-     headers: {
-       Authorization: `Bearer ${TOKEN()}`,
-       Accept : 'application/json'
-    }
-   }).then( (response) => {
+    refactoryAxios.get(`/api/tickets/${projectName}/${ticketNumber}`, {
+      headers: {
+        Authorization: `Bearer ${TOKEN()}`,
+        Accept: 'application/json'
+      }
+    }).then((response) => {
      // Load the timeline data data into the reducer
-     dispatch({
-       type: FETCH_COMMENT_DATA,
-       payload: response.data.data
-     })
+      dispatch({
+        type: FETCH_COMMENT_DATA,
+        payload: response.data.data
+      });
      // Set fetching to false
-     dispatch(updateIsFetchingComment(false))
-   })
- }
+      dispatch(updateIsFetchingComment(false));
+    });
+  };
 }
 
-export function submitCommentData (projectName, ticketNumber, body) {
-  return (dispatch, getState) => {
-
+export function submitCommentData(projectName, ticketNumber, body) {
+  return (dispatch) => {
     refactoryAxios.post(`/api/tickets/${projectName}/${ticketNumber}/comment`, {
       body
     }, {
       headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${TOKEN()}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${TOKEN()}`
       }
     }).then((response) => {
       dispatch({
         type: UPDATE_COMMENT_DATA,
         payload: response.data.data
-      })
+      });
     }).catch(err => err);
-  }
+  };
 }

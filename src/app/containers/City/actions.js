@@ -1,22 +1,22 @@
 import {
   refactoryAxios
-} from '../../../helpers'
+} from '../../../helpers';
 
 import {
   UPDATE_IS_FETCHING_CITY,
-  FETCH_CITY_DATA,
-} from './constants'
+  FETCH_CITY_DATA
+} from './constants';
 
-import { TOKEN } from '../../../constants'
+import { TOKEN } from '../../../constants';
 
 export function fetchCityData() {
  return (dispatch) => {
    // Set fetching to true
-   dispatch(updateIsFetchingCity(true))
+   dispatch(updateIsFetchingCity(true));
    // Make the request for contacts
-   refactoryAxios.get(`/api/city`, {
+   refactoryAxios.get('/api/city', {
      headers: {
-       Accept: "aplication/json",
+       Accept: 'aplication/json',
        Authorization: `Bearer ${TOKEN()}`
     }
    }).then( (response) => {
@@ -24,15 +24,15 @@ export function fetchCityData() {
      dispatch({
        type: FETCH_CITY_DATA,
        payload: response.data.data
-     })
+     });
      // Set fetching to false
-     dispatch(updateIsFetchingCity(false))
-   })
- }
+     dispatch(updateIsFetchingCity(false));
+   });
+ };
 }
 export function updateIsFetchingCity(status) {
   return {
     type: UPDATE_IS_FETCHING_CITY,
     status
-  }
+  };
 }
