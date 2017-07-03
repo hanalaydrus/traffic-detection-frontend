@@ -87,90 +87,91 @@ export default class CardExampleControlled extends Component {
 
 render() {
   return (
-    <MainMenu >
-      <div style={this.state.contentStyle}>
-      <Tabs>
-        <Tab label="Profile" >
-          <div style={styles.content} >
-            <Row around="xs" >
-            <Col xs={6}>
-            <ToolbarGroup >
-              <TextField
-                defaultValue="Aji Lantang Mardika"
-                floatingLabelText="Name "
-              />
-              <ActionHome />
-            </ToolbarGroup>
-            <ToolbarGroup>
-                <SelectField
-                  floatingLabelText="Campus"
-                  value={1}
-                  onChange={this.handleChange}
-                >
-                  <MenuItem value={1} primaryText="Eduplex, bandung" />
-                  <MenuItem value={2} primaryText="Akademos, jakarta" />
-                  <MenuItem value={3} primaryText="Cak har, surabaya" />
-                  <MenuItem value={4} primaryText="Tuminem, jogja" />
-                  <MenuItem value={5} primaryText="Seragen, solo" />
-              </SelectField>
-              <ActionHome />
-            </ToolbarGroup>
-              <ToolbarGroup>
-                <SelectField
-                floatingLabelText="Batch"
-                value={1}
-                onChange={this.handleChange}
+<MainMenu >
+  <div style={this.state.contentStyle}>
+  <Tabs>
+    <Tab label="Profile" >
+      <div style={styles.content} >
+        <Row around="xs" >
+        <Col xs={6}>
+        <ToolbarGroup >
+          <TextField
+            defaultValue="Aji Lantang Mardika"
+            floatingLabelText="Name "
+          />
+          <ActionHome />
+        </ToolbarGroup>
+         <ToolbarGroup>
+            <SelectField
+              floatingLabelText="Campus"
+              value={1}
+              onChange={this.handleChange}
+            >
+              <MenuItem value={1} primaryText="Eduplex, bandung" />
+              <MenuItem value={2} primaryText="Akademos, jakarta" />
+              <MenuItem value={3} primaryText="Cak har, surabaya" />
+              <MenuItem value={4} primaryText="Tuminem, jogja" />
+              <MenuItem value={5} primaryText="Seragen, solo" />
+          </SelectField>
+          <ActionHome />
+         </ToolbarGroup>
+          <ToolbarGroup>
+            <SelectField
+            floatingLabelText="Batch"
+            value={1}
+            onChange={this.handleChange}
+          >
+            <MenuItem value={1} primaryText="#1-Alpacino" />
+            <MenuItem value={2} primaryText="#2-Abdul bacan" />
+            <MenuItem value={3} primaryText="#3-Azis idola" />
+          </SelectField>
+            <ActionHome />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <DatePicker
+            hintText="Birthday"
+            value={this.state.controlledDate}
+            onChange={this.handleDate}
+          /><ActionHome />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <TextField
+            defaultValue="Sawangan, Depok"
+            floatingLabelText="Address "
+            />
+            <ActionHome />
+          </ToolbarGroup>
+          <ToolbarGroup>
+            <TextField
+            defaultValue="ajilantang@gmail.com"
+            floatingLabelText="Email "
+            disabled={false}
+            />
+            <ActionHome />
+          </ToolbarGroup>
+
+          <p>Status</p>
+          <ToolbarGroup>
+            <Chip
+              backgroundColor={blue500}
+              style={styles.chip}
               >
-                <MenuItem value={1} primaryText="#1-Alpacino" />
-                <MenuItem value={2} primaryText="#2-Abdul bacan" />
-                <MenuItem value={3} primaryText="#3-Azis idola" />
-              </SelectField>
-                <ActionHome />
-              </ToolbarGroup>
-              <ToolbarGroup>
-                <DatePicker
-                hintText="Birthday"
-                value={this.state.controlledDate}
-                onChange={this.handleDate}
-              /><ActionHome />
-              </ToolbarGroup>
-              <ToolbarGroup>
-                <TextField
-                defaultValue="Sawangan, Depok"
-                floatingLabelText="Address "
-                />
-                <ActionHome />
-              </ToolbarGroup>
-              <ToolbarGroup>
-                <TextField
-                defaultValue="ajilantang@gmail.com"
-                floatingLabelText="Email "
-                disabled={false}
-                />
-                <ActionHome />
-              </ToolbarGroup>
+              <Avatar size={32} color={blue500} backgroundColor={indigo900}>
+                Pe
+              </Avatar>
+              Status:Pending
+            </Chip>
+            <ActionHome />
+          </ToolbarGroup>
 
-              <p>Status</p>
-              <ToolbarGroup>
-                <Chip
-                  backgroundColor={blue500}
-                  style={styles.chip}
-                  >
-                  <Avatar size={32} color={blue500} backgroundColor={indigo900}>
-                    Pe
-                  </Avatar>
-                  Status:Pending
-                </Chip>
-                <ActionHome />
-              </ToolbarGroup>
-            </Col >
-          </Row>
-          </div>
-        </Tab>
-
-      </Tabs>
+        </Col>
+      </Row>
       </div>
-    </MainMenu >
+    </Tab>
+
+  </Tabs>
+  </div>
+</MainMenu>
   );
 }
 }

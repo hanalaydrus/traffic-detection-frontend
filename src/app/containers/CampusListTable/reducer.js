@@ -21,14 +21,14 @@ function campusesDataReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_CAMPUSES_DATA:
       return state.set('campusesData', fromJS(action.payload));
-    case FETCH_CAMPUSES_DATA:
+    case SUBMIT_DATA_CAMPUSES:
       return state.set('submitCampuses', fromJS(action.payload));
     case UPDATE_IS_FETCHING_CAMPUSES:
       return state.set('isFetchingCampuses', action.status);
     case DELETE_DATA_CAMPUSES:
-      return state.set('deleteCampuses', action.status);
+      return state.set('deleteCampuses', fromJS(action.payload));
     case UPDATE_DATA_CAMPUSES:
-      return state.set('updateCampuses', action.status);
+      return state.set('updateCampuses', fromJS(action.payload));
     default:
       return state;
   }

@@ -10,6 +10,7 @@ import AuthReducer from './authGithub/reducer';
 import TicketDataReducer from './containers/ListTicket/reducer';
 import CityDataReducer from './containers/City/reducer';
 import CampusesDataReducer from './containers/CampusListTable/reducer';
+import StudentDataReducer from './containers/StudentProfile/reducer';
 import ToogleDrawerReducer from './containers/Template/reducer';
 /**
  *  Combine the reducers
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   ticketData: TicketDataReducer,
   toggleDrawer: ToogleDrawerReducer,
   cityData: CityDataReducer,
-  campusesData: CampusesDataReducer
+  campusesData: CampusesDataReducer,
+  studentData: StudentDataReducer
 });
 
 /**

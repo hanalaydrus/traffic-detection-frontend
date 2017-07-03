@@ -71,4 +71,4 @@ CampusTable.propTypes = {
   data: array,
   onUpdate: func.isRequired,
   onDelete: func.isRequired
-}
+};

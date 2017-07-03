@@ -83,4 +83,4 @@ Drawer.propTypes = {
   onEnterCampus: func.isRequired,
   onEnterBatch: func.isRequired,
   drawerStyle: object
-}
+};

@@ -78,10 +78,17 @@ export default class StudentProfile extends React.Component {
     });
   };
 
+<<<<<<< HEAD
   onChangeValue = state => (event, name) => {
     this.setState({
       [state]: name
     });
+=======
+  onChangeValue = (state) => (event,name) => {
+      this.setState({
+        [state]:name
+      })
+>>>>>>> master
   }
 
   onSubmitStatus = (value) => {
@@ -121,6 +128,7 @@ export default class StudentProfile extends React.Component {
     return (
       <MainMenu >
         <div style={this.state.contentStyle}>
+<<<<<<< HEAD
           <Tabs>
             <Tab label="Profile" >
               <div style={styles.content} >
@@ -145,6 +153,73 @@ export default class StudentProfile extends React.Component {
                       onChange={this.handleChange('campus_id')}
                       underlineDisabledStyle={{ backgroundColor: 'white', fontFamily: 'ubuntu' }}
                       disabled={this.state.isChange}
+=======
+        <Tabs>
+          <Tab label="Profile" >
+            <div style={styles.content} >
+              <Row around="xs" >
+                <div >
+                  <Chip style={styles.chip2} onTouchTap={this.onSubmit}>
+                    <Avatar icon={<SettingIcon/>} />
+                    Setting information
+                  </Chip>
+                </div>
+              <Col xs={5}>
+                <TextField
+                  defaultValue={full_name}
+                  floatingLabelText="Name "
+                  onChange={this.onChangeValue('full_name')}
+                  underlineDisabledStyle={{backgroundColor:'white',fontFamily:'ubuntu'}}
+                  disabled={this.state.isChange}
+                />
+                  <SelectField
+                    floatingLabelText="Campus"
+                    value={campus_id}
+                    onChange={this.handleChange('campus_id')}
+                    underlineDisabledStyle={{backgroundColor:'white',fontFamily:'ubuntu'}}
+                    disabled={this.state.isChange}
+                  >
+                  {campus.map((data,index)=><MenuItem key={index+data} value={data.campus_id} primaryText={`${data.campus_name}`} />)}
+                </SelectField>
+                  <SelectField
+                  floatingLabelText="Batch"
+                  value={batch_id}
+                  onChange={this.handleChange('batch_id')}
+                  underlineDisabledStyle={{backgroundColor:'white',fontFamily:'ubuntu'}}
+                  disabled={this.state.isChange}
+                >
+                  {
+                    batches.map((value,index) =><MenuItem key={value+index} value={value.id} primaryText={value.batch_name} /> )
+                  }
+                </SelectField>
+
+                <DatePicker
+                  hintText="Birthday"
+                  value={moment(birthday).toDate()}
+                  onChange={this.onChangeValue('birthday')}
+                  underlineDisabledStyle={{backgroundColor:'white',fontFamily:'ubuntu'}}
+                  disabled={this.state.isChange}
+                />
+                <TextField
+                  defaultValue={address}
+                  floatingLabelText="Address "
+                  underlineDisabledStyle={{backgroundColor:'white',fontFamily:'ubuntu'}}
+                  onChange={this.onChangeValue('address')}
+                  disabled={this.state.isChange}
+                  />
+                <TextField
+                  defaultValue={email}
+                  floatingLabelText="Email "
+                  underlineDisabledStyle={{backgroundColor:'white',fontFamily:'ubuntu'}}
+                  onChange={this.onChangeValue('email')}
+                  disabled={this.state.isChange}
+                  />
+                  <p>Status</p>
+                {(this.state.isChange) ?
+                  <Chip
+                    backgroundColor={blue500}
+                    style={styles.chip}
+>>>>>>> master
                     >
                       {campus.map((data, index) => <MenuItem key={index + data} value={data.campus_id} primaryText={`${data.campus_name}`} />)}
                     </SelectField>
@@ -160,6 +235,7 @@ export default class StudentProfile extends React.Component {
                   }
                     </SelectField>
 
+<<<<<<< HEAD
                     <DatePicker
                       hintText="Birthday"
                       value={moment(birthday).toDate()}
@@ -183,6 +259,16 @@ export default class StudentProfile extends React.Component {
                     />
                     <p>Status</p>
                     {(this.state.isChange) ?
+=======
+                    <Avatar size={32} color={blue500} backgroundColor={indigo900}>
+                      {status.substring(0,2)}
+                    </Avatar>
+                    Status: {status}
+                  </Chip>
+                  :
+                  <div>
+                    {this.statuses.map((statusItem,index) => (
+>>>>>>> master
                       <Chip
                         backgroundColor={blue500}
                         style={styles.chip}
@@ -193,6 +279,7 @@ export default class StudentProfile extends React.Component {
                         </Avatar>
                     Status: {status}
                       </Chip>
+<<<<<<< HEAD
                   :
                       <div>
                         {
@@ -220,9 +307,23 @@ export default class StudentProfile extends React.Component {
               </div>
             </Tab>
           </Tabs>
+=======
+                    ))}
+                  </div>
+                }
+
+              </Col >
+            </Row>
+            </div>
+          </Tab>
+        </Tabs>
+>>>>>>> master
         </div>
       </MainMenu>
     );
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master

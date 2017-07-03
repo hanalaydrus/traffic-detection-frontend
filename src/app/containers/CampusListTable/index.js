@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-  RaisedButton, TextField, Checkbox, Dialog, Subheader, List, ListItem,
+  RaisedButton, TextField, Dialog, Subheader, List,
   DropDownMenu, MenuItem
 } from 'material-ui';
-import { orange600, orange500, blue500, red500 } from 'material-ui/styles/colors';
+import { orange600, blue500 } from 'material-ui/styles/colors';
 import { bool, array, object } from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -16,7 +16,6 @@ import { Header } from './../../components/Header';
 import { Drawer } from './../../components/DrawerBase';
 import { PageTitle } from './../../components/PageTitle';
 import { CampusTable } from './../../components/CampusTable';
-import cityData from '../../../../temp-data/cityData.json';
 import response from './constant';
 import * as actions from './actions';
 import * as selectors from './selectors';
