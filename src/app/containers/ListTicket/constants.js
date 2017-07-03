@@ -1,3 +1,10 @@
+
+/**
+ *  Import configuration
+ */
+const config = require('config')
+const { PUSHER_KEY } = config.default
+
 /**
 *  Define Constants
 */
@@ -13,3 +20,6 @@ export const FETCH_COMMENT_DATA = 'src/app/containers/ListTicket/FETCH_COMMENT_D
 export const UPDATE_IS_FETCHING_COMMENT = 'src/app/containers/ListTicket/UPDATE_IS_FETCHING_COMMENT'
 export const UPDATE_COMMENT_DATA = 'src/app/containers/ListTicket/UPDATE_COMMENT_DATA'
 export const UPDATE_IS_PATCHING_TICKET_DATA = 'src/app/containers/ListTicket/UPDATE_IS_PATCHING_TICKET_DATA'
+export const WEBHOOK_PUSHER_KEY = 'src/app/containers/ListTicket/WEBHOOK_PUSHER_KEY'
+export const NOTIFICATION_SERVICE = 'src/app/containers/ListTicket/NOTIFICATION_SERVICE'
+export const IS_NEW_NOTIFICATION_DATA = 'src/app/containers/ListTicket/IS_NEW_NOTIFICATION_DATA'

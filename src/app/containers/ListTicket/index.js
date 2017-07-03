@@ -136,15 +136,23 @@ class ListTicket extends Component {
   componentWillMount() {
     this.props.fetchTicketData()
     this.props.fetchProfileData()
+    this.props.notificationService()
   }
 
   render() {
     if (this.props.isFetching) {
       return <Loader type="line-scale" color="#fff" active />
     }
+    console.log('data pusher di index', this.props.notificationData)
+    console.log('is new data', this.props.isNewNotificationData)
     return (
       <div>
-        <Header notificationsData={notificationsData}/>
+        <Header 
+          notificationsData={this.props.notificationData} 
+          isNewNotificationData={this.props.isNewNotificationData}
+          onNotifOpen={this.props.updateIsNewNotificationData}
+          onNotifTicketClick={this.handleDrawerToggle}
+        />
         <div className={ "list_ticket_container" }>
         <div className={ "score_and_filter" }>
           <div className={ "filter_container" }>
@@ -384,7 +392,9 @@ const mapStateToProps = createStructuredSelector({
   commentData: selectors.getCommentData(),
   isPatchingTicketData: selectors.getIsPatchingTicketData(),
   profileData: selectors.getProfileData(),
-  isFetchingProfile: selectors.getIsFetchingProfile()
+  isFetchingProfile: selectors.getIsFetchingProfile(),
+  notificationData:selectors.notificationService(),
+  isNewNotificationData: selectors.getIsNewNotificationData()
 });
 
 /**

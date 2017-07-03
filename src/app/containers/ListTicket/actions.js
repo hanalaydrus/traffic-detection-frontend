@@ -1,7 +1,7 @@
 import {
   refactoryAxios
 } from '../../../helpers'
-
+import Pusher from 'pusher-js';
 import {
   FETCH_TICKET_DATA,
   UPDATE_IS_FETCHING,
@@ -14,7 +14,10 @@ import {
   UPDATE_IS_FETCHING_PROFILE,
   UPDATE_COMMENT_DATA,
   FETCH_PROFILE_DATA,
-  UPDATE_NEW_SCORE
+  UPDATE_NEW_SCORE,
+  WEBHOOK_PUSHER_KEY,
+  NOTIFICATION_SERVICE,
+  IS_NEW_NOTIFICATION_DATA
 } from './constants'
 
 import { TOKEN } from '../../../constants'
@@ -194,5 +197,34 @@ export function submitCommentData (projectName, ticketNumber, body) {
         payload: response.data.data
       })
     }).catch(err => err);
+  }
+}
+
+export function notificationService () {
+  return (dispatch, getState) => {
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('6d815db702345e85212e', {
+      cluster: 'mt1',
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('test-channel');
+
+    channel.bind('NewIssueComment', function(data) {
+        console.log('data pusher',data)
+        dispatch(updateIsNewNotificationData(true))
+        dispatch({
+          type: NOTIFICATION_SERVICE,
+          payload: data.data
+        })
+    });
+  }
+}
+
+export function updateIsNewNotificationData(status) {
+  return {
+    type: IS_NEW_NOTIFICATION_DATA,
+    status
   }
 }

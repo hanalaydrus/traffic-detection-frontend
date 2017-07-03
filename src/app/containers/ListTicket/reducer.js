@@ -11,7 +11,9 @@ import {
   UPDATE_COMMENT_DATA,
   UPDATE_IS_PATCHING_TICKET_DATA,
   UPDATE_IS_FETCHING_PROFILE,
-  UPDATE_NEW_SCORE
+  UPDATE_NEW_SCORE,
+  NOTIFICATION_SERVICE,
+  IS_NEW_NOTIFICATION_DATA
 } from './constants'
 
 const initialState = fromJS({
@@ -22,7 +24,9 @@ const initialState = fromJS({
   isPatchingTicketData: false,
   commentData: {},
   isFetchingProfile: false,
-  profileData: {}
+  profileData: {},
+  notificationData: {},
+  isNewNotificationData: false
 })
 
 function ticketDataReducer(state = initialState, action) {
@@ -49,6 +53,10 @@ function ticketDataReducer(state = initialState, action) {
       return state.set('commentData', fromJS(action.payload))
     case UPDATE_COMMENT_DATA:
       return state.setIn(['commentData', 'comments'], fromJS(action.payload))
+    case NOTIFICATION_SERVICE:
+      return state.set('notificationData', fromJS(action.payload))
+    case IS_NEW_NOTIFICATION_DATA:
+      return state.set('isNewNotificationData', action.status)
     default:
       return state
   }
