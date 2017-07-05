@@ -43,30 +43,22 @@ class Header extends React.Component {
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   onTouchTap= {() => this.props.onNotifOpen(false)}
               >
-              { Object.keys(this.props.notificationsData).length === 0 ? 
+              { this.props.notificationsData.length === 0 ? 
                 (<MenuItem> 
                   <div className="notification_menu_item">
                     No Notification
                   </div>
                 </MenuItem>)
                 :
-                (<MenuItem onTouchTap={() => this.props.onNotifTicketClick('refactory-web','89')}> 
-                  <div className="notification_menu_item">
-                    <b><i>{this.props.notificationsData.from}</i></b> comment on <br/>
-                    <b><i>#{this.props.notificationsData.ticket_number} {this.props.notificationsData.ticket_name}</i></b>
-                  </div>
-                </MenuItem>)
+                this.props.notificationsData.map( (val, i) => 
+                  (<MenuItem key={i} onTouchTap={() => this.props.onNotifTicketClick('refactory-web','89')}> 
+                    <div className="notification_menu_item">
+                      <b><i>{val.from}</i></b> comment on <br/>
+                      <b><i>#{val.ticket_number} {val.ticket_name}</i></b>
+                    </div>
+                  </MenuItem>) 
+                )
               }
-                {/*{ 
-                  this.props.notificationsData && this.props.notificationsData.map((row) => (
-                    <MenuItem> 
-                      <div className="notification_menu_item">
-                        <b><i>{row.username}</i></b> comment on <br/>
-                        <b><i>#{row.issue_number} {row.issue_title}</i></b>
-                      </div>
-                    </MenuItem>
-                  ))
-                }*/}
               </IconMenu>
             </div>
             <div className="childmenu">

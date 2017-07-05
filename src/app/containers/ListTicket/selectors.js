@@ -58,3 +58,8 @@ export const getIsNewNotificationData = () => createSelector(
   selectTicketData(),
   (state) => state.get('isNewNotificationData')
 )
+
+export const getIsSubscribeNotification = () => createSelector(
+  selectTicketData(),
+  (state) => state.get('isSubscribeNotification')
+)

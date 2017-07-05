@@ -128,16 +128,21 @@ class ListTicket extends Component {
       labelName === 'enhancement' ? 'ffffff' : '000000'
 
   componentWillMount() {
-    this.props.fetchTicketData();
-    this.props.fetchProfileData();
+    this.props.fetchTicketData()
+    this.props.fetchProfileData()
+  }
+
+  componentDidUpdate(prevProps){
+    if(Object.keys(this.props.profileData).length > 0 && !this.props.isSubscribeNotification){
+      this.props.notificationService(this.props.profileData)
+    }
   }
 
   render() {
     if (this.props.isFetching || this.props.isFetchingProfile) {
       return <Loader type="line-scale" color="#fff" active />;
     }
-    console.log('data pusher di index', this.props.notificationData)
-    console.log('is new data', this.props.isNewNotificationData)
+
     return (
       <div>
         <Header 
@@ -299,7 +304,7 @@ class ListTicket extends Component {
                     </div>
                     <div>
                       Ticket details :
-                      <ReactMarkdown source={this.props.commentData.body} />
+                      <ReactMarkdown source={this.props.commentData.body ? this.props.commentData.body : ''} />
                     </div>
                   </div>
                 </CardText>
@@ -308,8 +313,8 @@ class ListTicket extends Component {
               (<Loader type="line-scale" active />) :
 
               (this.props.commentData.comments && this.props.commentData.comments.map( (row, index) => (
-                <Card style={{ padding: 4 }}>
-                  <div className={'card_header'}>
+                <Card key={index} style={{padding: 4}}>
+                  <div className={"card_header"}>
                     <CardHeader
                       title={row.user.login}
                       subtitle={moment(row.created_at, [ 'YYYY', moment.ISO_8601 ]).format('MMMM Do YYYY hh:mm')}
@@ -389,7 +394,8 @@ const mapStateToProps = createStructuredSelector({
   profileData: selectors.getProfileData(),
   isFetchingProfile: selectors.getIsFetchingProfile(),
   notificationData:selectors.notificationService(),
-  isNewNotificationData: selectors.getIsNewNotificationData()
+  isNewNotificationData: selectors.getIsNewNotificationData(),
+  isSubscribeNotification: selectors.getIsSubscribeNotification()
 });
 
 /**
