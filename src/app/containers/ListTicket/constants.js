@@ -23,3 +23,4 @@ export const UPDATE_IS_PATCHING_TICKET_DATA = 'src/app/containers/ListTicket/UPD
 export const WEBHOOK_PUSHER_KEY = 'src/app/containers/ListTicket/WEBHOOK_PUSHER_KEY'
 export const NOTIFICATION_SERVICE = 'src/app/containers/ListTicket/NOTIFICATION_SERVICE'
 export const IS_NEW_NOTIFICATION_DATA = 'src/app/containers/ListTicket/IS_NEW_NOTIFICATION_DATA'
+export const IS_SUBSCRIBE_NOTIFICATION = 'src/app/containers/ListTicket/IS_SUBSCRIBE_NOTIFICATION'

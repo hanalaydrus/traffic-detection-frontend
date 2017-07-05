@@ -39,7 +39,7 @@ export function authenticateUser() {
         .then((resp) => {
             dispatch(logIn());
             // Save JWT token to localStorage and set expiration
-            setHtmlStorage('token', resp.data.access_token, 3600);
+            setHtmlStorage('token', resp.data.access_token, resp.data.expires_in);
             // Redirect using react router
             history.push('/student/listticket');
             location.href = location.href

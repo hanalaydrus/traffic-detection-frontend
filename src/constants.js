@@ -8,6 +8,7 @@ import { normalize, schema } from 'normalizr'
  */
 const config = require('config').default
 export const API_BASE_URL = config.API_BASE_URL
+export const PUSHER_KEY = config.PUSHER_KEY
 
 /**
  *  Pull token out of local storate for requests

@@ -17,10 +17,11 @@ import {
   UPDATE_NEW_SCORE,
   WEBHOOK_PUSHER_KEY,
   NOTIFICATION_SERVICE,
-  IS_NEW_NOTIFICATION_DATA
+  IS_NEW_NOTIFICATION_DATA,
+  IS_SUBSCRIBE_NOTIFICATION
 } from './constants'
 
-import { TOKEN } from '../../../constants'
+import { TOKEN, API_BASE_URL, PUSHER_KEY } from '../../../constants'
 
 export function fetchTicketData() {
  return (dispatch) => {
@@ -200,26 +201,32 @@ export function submitCommentData (projectName, ticketNumber, body) {
   }
 }
 
-export function notificationService () {
+export function notificationService (profile) {
   return (dispatch, getState) => {
-    Pusher.logToConsole = true;
+    //for debug only. must disabled on production
+    // Pusher.logToConsole = true;
 
-    var pusher = new Pusher('6d815db702345e85212e', {
-      cluster: 'mt1',
+    var pusher = new Pusher(PUSHER_KEY, {
+      authEndpoint: API_BASE_URL +'api/pusher/auth',
       encrypted: true
     });
 
-    var channel = pusher.subscribe('test-channel');
+    var channel = pusher.subscribe('private-user.'+ profile.id);
 
-    channel.bind('NewIssueComment', function(data) {
-        console.log('data pusher',data)
-        dispatch(updateIsNewNotificationData(true))
-        dispatch({
-          type: NOTIFICATION_SERVICE,
-          payload: data.data
-        })
+    channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data) {
+      dispatch(setNotificationService(data))
+      dispatch(updateIsNewNotificationData(true))
     });
+    dispatch(setSubscribeNotification(true))
   }
+}
+
+export function setNotificationService(payload){
+  return {type: NOTIFICATION_SERVICE, payload}
+}
+
+export function setSubscribeNotification(status) {
+  return { type: IS_SUBSCRIBE_NOTIFICATION, status }
 }
 
 export function updateIsNewNotificationData(status) {
