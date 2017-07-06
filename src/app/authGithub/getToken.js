@@ -10,7 +10,6 @@ export default class getToken extends Component {
     if (window.opener.receivedCode) {
       window.opener.receivedCode(window.location.href);
     }
-    window.close();
   }
 
   render() {
