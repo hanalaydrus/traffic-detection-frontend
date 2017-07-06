@@ -29,9 +29,15 @@ export function authIsProcessing(status) {
 
 export function authenticateUser() {
   return (dispatch) => {
+    // build github url to request code
+    const url = buildUrl(ENDPOINT_AUTH, TOKEN_PARAMS);
+    // open new window to open the url
+    const childWindow = window.open(url, 'Login with Github', 'width=800,height=300');
+    // github will send the code, included in the url as a parameter
     window.receivedCode = (url) => {
       requestToken(getParameterByName('code', url))
         .then((resp) => {
+          childWindow.close();
           dispatch(logIn());
             // Save JWT token to localStorage and set expiration
           setHtmlStorage('token', resp.data.access_token, 3600);
@@ -39,11 +45,7 @@ export function authenticateUser() {
             history.push('/student/listticket');
             location.href = location.href;
       });
-    };
-
-    const url = buildUrl(ENDPOINT_AUTH, TOKEN_PARAMS);
-
-    const childWindow = window.open(url, 'Login with Github', 'width=800,height=300');
+    }
   };
 }
 
