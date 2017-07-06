@@ -6,6 +6,10 @@ import IconMenu from 'material-ui/IconMenu';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import {orange600, orange500} from 'material-ui/styles/colors';
+import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
+import Notifications from 'material-ui/svg-icons/social/notifications';
+import FlatButton from 'material-ui/FlatButton';
 
 import './styles.scss';
 import { unauthenticateUser } from './../../authGithub/actions';
@@ -22,28 +26,54 @@ class Header extends React.Component {
     this.props.unauthenticateUser();
   }
 
-    render() {
-      const { profileData } = this.props;
-      const { full_name, avatar, email } = profileData;
+  render() {
+    const { profileData } = this.props;
+    const { full_name, avatar, email } = profileData;
     return (
       <div className="navigation">
-        <div className={this.state.navStyle}>
+        <div className="nav_user">
           <div className="logo">
-            <img src="/images/Refactory.png" style={{ height: 40, marginTop: 4, marginLeft: 30 }} />
+            <img src="/images/Refactory.png" style={{height:34}}/>
           </div>
           <div className="menu">
-                <div className="float_left" style={{ padding:'15px 5px' }}>
-                  {full_name}
+            <div className="childmenu">
+              <IconMenu
+                  iconButtonElement={<IconButton className="icon_notification"><Notifications />{this.props.isNewNotificationData ? <div className="red_notification"/> : <div /> }</IconButton>}
+                  anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                  onTouchTap= {() => this.props.onNotifOpen(false)}
+              >
+              { this.props.notificationsData.length === 0 ? 
+                (<MenuItem> 
+                  <div className="notification_menu_item">
+                    No Notification
+                  </div>
+                </MenuItem>)
+                :
+                this.props.notificationsData.map( (val, i) => 
+                  (<MenuItem key={i} onTouchTap={() => this.props.onNotifTicketClick(val.project_name,val.ticket_number)}> 
+                    <div className="notification_menu_item">
+                      <b><i>{val.from}</i></b> comment on <br/>
+                      <b><i>#{val.ticket_number} {val.ticket_name}</i></b>
+                    </div>
+                  </MenuItem>) 
+                )
+              }
+              </IconMenu>
+            </div>
+            <div className="childmenu">
+                <div className="float_left" style={{padding:'15px 5px'}}>
+                  {this.props.profileData.full_name}
                 </div>
-               <IconMenu
-                  iconButtonElement={<IconButton style={{ marginTop:-8, marginRight:30 }}><img src={avatar} height="40" /></IconButton>}
-                  anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
-                  targetOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                  style={{ marginRight:30 }}
+              <IconMenu
+                  iconButtonElement={<IconButton style={{marginTop:-6, marginRight:30}}><img src={this.props.profileData.avatar}/></IconButton>}
+                  anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                  <MenuItem primaryText={email} />
-                  <MenuItem primaryText="Log out" onClick={ this.handleGithubLogoutAttempt } />
+                  <MenuItem primaryText={this.props.profileData.email} style={{fontSize:14}}></MenuItem>
+                  <MenuItem primaryText="Log out" style={{fontSize:14}} onClick={ this.handleGithubLogoutAttempt }/>
                 </IconMenu>
+            </div>
           </div>
           <div className="clear" />
         </div>

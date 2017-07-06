@@ -1,7 +1,7 @@
 import {
   refactoryAxios
 } from '../../../helpers';
-
+import Pusher from 'pusher-js';
 import {
   FETCH_TICKET_DATA,
   UPDATE_IS_FETCHING,
@@ -13,10 +13,14 @@ import {
   UPDATE_IS_FETCHING_PROFILE,
   UPDATE_COMMENT_DATA,
   FETCH_PROFILE_DATA,
-  UPDATE_NEW_SCORE
-} from './constants';
+  UPDATE_NEW_SCORE,
+  WEBHOOK_PUSHER_KEY,
+  NOTIFICATION_SERVICE,
+  IS_NEW_NOTIFICATION_DATA,
+  IS_SUBSCRIBE_NOTIFICATION
+} from './constants'
 
-import { TOKEN } from '../../../constants';
+import { TOKEN, API_BASE_URL, PUSHER_KEY } from '../../../constants'
 
 export function fetchTicketData() {
   return (dispatch) => {
@@ -193,4 +197,39 @@ export function submitCommentData(projectName, ticketNumber, body) {
       });
     }).catch(err => err);
   };
+}
+
+export function notificationService (profile) {
+  return (dispatch, getState) => {
+    //for debug only. must disabled on production
+    // Pusher.logToConsole = true;
+
+    var pusher = new Pusher(PUSHER_KEY, {
+      authEndpoint: API_BASE_URL +'api/pusher/auth',
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('private-user.'+ profile.id);
+
+    channel.bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data) {
+      dispatch(setNotificationService(data))
+      dispatch(updateIsNewNotificationData(true))
+    });
+    dispatch(setSubscribeNotification(true))
+  }
+}
+
+export function setSubscribeNotification(status) {
+  return { type: IS_SUBSCRIBE_NOTIFICATION, status }
+}
+
+export function updateIsNewNotificationData(status) {
+  return {
+    type: IS_NEW_NOTIFICATION_DATA,
+    status
+  }
+}
+
+export function setNotificationService(payload){
+  return {type: NOTIFICATION_SERVICE, payload}
 }

@@ -1,0 +1,28 @@
+{
+	"success": true,
+	"message": "",
+	"data": [
+		{
+            "project_name": "firstRNApp",
+            "ticket_name": "Ticket Name",
+            "ticket_number": 1,
+            "from": "bhill77",
+            "assignees": [
+                "bhill77"
+            ],
+            "id": "5330f233-ce2e-4037-92ea-af8a5f4fa6c0",
+            "type": "App\\Notifications\\NewTicketComment"
+        },
+        {
+            "project_name": "firstRNApp",
+            "ticket_name": "Ticket Name",
+            "ticket_number": 5,
+            "from": "bhill77",
+            "assignees": [
+                "bhill77"
+            ],
+            "id": "5330f233-ce2e-4037-92ea-af8a5f4fa6c0",
+            "type": "App\\Notifications\\NewTicketComment"
+        }
+	]
+}
