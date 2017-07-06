@@ -51,7 +51,7 @@ class Header extends React.Component {
                 </MenuItem>)
                 :
                 this.props.notificationsData.map( (val, i) => 
-                  (<MenuItem key={i} onTouchTap={() => this.props.onNotifTicketClick('refactory-web','89')}> 
+                  (<MenuItem key={i} onTouchTap={() => this.props.onNotifTicketClick(val.project_name,val.ticket_number)}> 
                     <div className="notification_menu_item">
                       <b><i>{val.from}</i></b> comment on <br/>
                       <b><i>#{val.ticket_number} {val.ticket_name}</i></b>
