@@ -1,7 +1,6 @@
 import {
   refactoryAxios
 } from '../../../helpers';
-
 import Pusher from 'pusher-js';
 import {
   FETCH_TICKET_DATA,
@@ -220,10 +219,6 @@ export function notificationService (profile) {
   }
 }
 
-export function setNotificationService(payload){
-  return {type: NOTIFICATION_SERVICE, payload}
-}
-
 export function setSubscribeNotification(status) {
   return { type: IS_SUBSCRIBE_NOTIFICATION, status }
 }
@@ -233,4 +228,8 @@ export function updateIsNewNotificationData(status) {
     type: IS_NEW_NOTIFICATION_DATA,
     status
   }
+}
+
+export function setNotificationService(payload){
+  return {type: NOTIFICATION_SERVICE, payload}
 }
