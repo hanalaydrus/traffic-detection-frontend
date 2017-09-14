@@ -27,7 +27,7 @@ export const store = createStoreWithMiddleware(reducers);
  *  Require authentication dependencies
  */
 
-import { statusHtmlStorage } from '../helpers';
+// import { statusHtmlStorage } from '../helpers';
 
 class App extends React.Component {
   render() {
