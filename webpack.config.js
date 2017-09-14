@@ -45,7 +45,7 @@ var config = {
   resolve: {
     extensions: [ '.js', '.jsx' ],
     alias: {
-      config: path.join(__dirname, 'config', process.env.NODE_ENV || 'local')
+      config: path.join(__dirname, 'config', process.env.NODE_ENV || 'production')
     }
   },
   devServer: {
