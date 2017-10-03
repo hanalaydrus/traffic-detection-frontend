@@ -2,6 +2,7 @@ import React from 'react';
 import Pusher from 'pusher-js';
 import axios from 'axios';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+
 // import { API_BASE_URL, PUSHER_KEY } from '../../../constants'
 import CardComponent from '../CardComponent';
 
@@ -9,7 +10,8 @@ export default class Videos extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      car: '0'
+      car: '0',
+      start: false
     }
   }
   connectToPusher = () => {
@@ -22,7 +24,7 @@ export default class Videos extends React.Component {
 
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', (data) => {
-      this.setState({car: data.message})
+      this.setState({car: data.message, start: true})
     });
   }
 
@@ -31,7 +33,7 @@ export default class Videos extends React.Component {
     axios.post('http://127.0.0.1:8000/vehicle_counting', {
       url : 'http://127.0.0.1:5000/video_feed?type=.mjpg'
     }).then(function (response) {
-      console.log(response);
+      console.log('finish send url', response);
     })
   }
 
@@ -42,7 +44,7 @@ export default class Videos extends React.Component {
           <tr>
             <td>
             <CardComponent
-              image="http://127.0.0.1:5000/video_feed"
+              image={this.state.start ? "http://127.0.0.1:5000/video_feed" : ""}
               title="Jalan Dago"
               kepadatan="Lancar"
               volume={this.state.car + " Kendaraan"}
@@ -52,7 +54,7 @@ export default class Videos extends React.Component {
             </td>
             <td>
               <CardComponent
-                image=""
+                image=" "
                 title="Jalan Dago"
                 kepadatan="Lancar"
                 volume="10 Kendaraan"
@@ -62,7 +64,7 @@ export default class Videos extends React.Component {
             </td>
             <td>
               <CardComponent
-                image=""
+                image=" "
                 title="Jalan Dago"
                 kepadatan="Lancar"
                 volume="10 Kendaraan"
@@ -75,7 +77,7 @@ export default class Videos extends React.Component {
           <tr>
           <td>
             <CardComponent
-              image=""
+              image=" "
               title="Jalan Dago"
               kepadatan="Lancar"
               volume="10 Kendaraan"
@@ -85,7 +87,7 @@ export default class Videos extends React.Component {
             </td>
             <td>
               <CardComponent
-                image=""
+                image=" "
                 title="Jalan Dago"
                 kepadatan="Lancar"
                 volume="10 Kendaraan"
@@ -95,7 +97,7 @@ export default class Videos extends React.Component {
             </td>
             <td>
               <CardComponent
-                image=""
+                image=" "
                 title="Jalan Dago"
                 kepadatan="Lancar"
                 volume="10 Kendaraan"

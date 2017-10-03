@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import { CircularProgress } from 'material-ui/Progress';
 
 const styles = {
   card: {
@@ -11,6 +12,9 @@ const styles = {
   },
   media: {
     height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex'
   },
 };
 
@@ -30,7 +34,9 @@ function CardComponent(props) {
           className={classes.media}
           image={image}
           title={title}
-        />
+        >
+        {image === "" ? <CircularProgress size={30} /> : null}
+        </CardMedia>
         <CardContent>
           <Typography type="headline" component="h2">
             {title}
