@@ -15,13 +15,14 @@ import history from './history.js';
 import Main from './containers/Main';
 
 // Import Material UI Related
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+const theme = createMuiTheme();
 
 injectTapEventPlugin();
 
-export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore);
-export const store = createStoreWithMiddleware(reducers);
+// export const createStoreWithMiddleware = applyMiddleware(ReduxThunk,promise)(createStore);
+// export const store = createStoreWithMiddleware(reducers);
 
 /**
  *  Require authentication dependencies
@@ -32,15 +33,15 @@ export const store = createStoreWithMiddleware(reducers);
 class App extends React.Component {
   render() {
     return(
-    <Provider store={store}>
-      <MuiThemeProvider>
+    // <Provider store={store}>
+      <MuiThemeProvider theme={theme}>
         <Router history={history}>
-          <div>
+          <div style={{backgroundColor:'#f1f1f1'}}>
             <Route exact path="/" component={Main}/>
           </div>
         </Router>
       </MuiThemeProvider>
-    </Provider>
+    // </Provider>
     );
   }
 }
