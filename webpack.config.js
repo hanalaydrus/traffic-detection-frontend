@@ -23,6 +23,12 @@ var config = {
           }
         },
         {
+          test: /\.ts$/,
+          include: /src|_proto/,
+          exclude: /node_modules/,
+          loader: "ts-loader"
+        },
+        {
           test: /\.scss$/,
           include: SRC_DIR,
           loaders: ["style-loader", "css-loader", "sass-loader"]
@@ -40,10 +46,13 @@ var config = {
        $: 'jquery',
        jQuery: 'jquery',
        'window.jQuery': 'jquery'
-     })
+    }),
+    new webpack.DefinePlugin({
+      'USE_TLS': process.env.USE_TLS !== undefined
+    })
   ],
   resolve: {
-    extensions: [ '.js', '.jsx' ],
+    extensions: [ '.ts', '.js', '.jsx' ],
     alias: {
       config: path.join(__dirname, 'config', process.env.NODE_ENV || 'production')
     }
