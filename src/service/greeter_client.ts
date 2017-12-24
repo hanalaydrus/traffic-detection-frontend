@@ -19,41 +19,24 @@ import {grpc, Code, Metadata} from "grpc-web-client";
 import {Greeter} from "./generated/helloworld_pb_service";
 import {HelloRequest, HelloReply} from "./generated/helloworld_pb";
 
-declare const USE_TLS: boolean;
-const host = USE_TLS ? "https://localhost:9091" : "http://localhost:9090";
+const host = "http://localhost:8080";
 
 export function helloGRPC() {
   const  helloRequest = new HelloRequest();
   helloRequest.setName('Hana');
-  grpc.unary(Greeter.SayHello,{
+
+  grpc.invoke(Greeter.SayHello, {
+    // debug: false,// optional - enable to output events to console.log
     request: helloRequest,
     host: host,
-    onEnd: res => {
-      const { status, statusMessage, headers, message, trailers } = res;
-      console.log("sayHello.onEnd.status", status, statusMessage);
-      console.log("SayHello.onEnd.headers", headers);
-      if (status === Code.OK && message) {
-        console.log("sayHello.onEnd.message", message.toObject());
-      }
-      console.log("sayHello.onEnd.trailers", trailers);
+    onHeaders: (headers: Metadata) => {
+      console.log("got headers: ", headers);
+    },
+    onMessage: (message: HelloReply) => {
+      console.log("got book: ", message.toObject());
+    },
+    onEnd: (code: Code, msg: string | undefined, trailers: Metadata) => {
+      console.log("queryBooks.onEnd", code, msg, trailers);
     }
   });
-  // grpc.invoke(Greeter.SayHello, {
-  //   debug: false,// optional - enable to output events to console.log
-  //   request: helloRequest,
-  //   host: "http://localhost:9090",
-  //   onHeaders: (headers: Metadata) => {
-  //     console.log("got headers: ", headers);
-  //   },
-  //   onMessage: (message: HelloReply) => {
-  //     console.log("got book: ", message.toObject());
-  //   },
-  //   onEnd: (code: Code, msg: string | undefined, trailers: Metadata) => {
-  //     if (code == Code.OK) {
-  //       console.log("all ok");
-  //     } else {
-  //       console.log("hit an error", code, msg, trailers);
-  //     }
-  //   }
-  // });
 }
