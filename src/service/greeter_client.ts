@@ -20,6 +20,7 @@ import {Greeter} from "./generated/helloworld_pb_service";
 import {HelloRequest, HelloReply} from "./generated/helloworld_pb";
 
 const host = "http://localhost:8080";
+var car = "-1";
 
 export function helloGRPC() {
   const  helloRequest = new HelloRequest();
@@ -33,10 +34,14 @@ export function helloGRPC() {
       console.log("got headers: ", headers);
     },
     onMessage: (message: HelloReply) => {
-      console.log("got book: ", message.toObject());
+      var reply = message.toObject();
+      if (car !== reply.message) {
+        console.log("car: ", reply.message);
+        car = reply.message;
+      }
     },
     onEnd: (code: Code, msg: string | undefined, trailers: Metadata) => {
-      console.log("queryBooks.onEnd", code, msg, trailers);
+      console.log("onEnd", code, msg, trailers);
     }
   });
 }
