@@ -1,5 +1,5 @@
-// package: helloworld
-// file: helloworld.proto
+// package: helloworld2
+// file: helloworld2.proto
 
 import * as jspb from "google-protobuf";
 
@@ -24,8 +24,14 @@ export namespace HelloRequest {
 }
 
 export class HelloReply extends jspb.Message {
-  getMessage(): string;
-  setMessage(value: string): void;
+  getVolume(): string;
+  setVolume(value: string): void;
+
+  getDensity(): string;
+  setDensity(value: string): void;
+
+  getSemantic(): string;
+  setSemantic(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): HelloReply.AsObject;
@@ -39,7 +45,9 @@ export class HelloReply extends jspb.Message {
 
 export namespace HelloReply {
   export type AsObject = {
-    message: string,
+    volume: string,
+    density: string,
+    semantic: string,
   }
 }
 

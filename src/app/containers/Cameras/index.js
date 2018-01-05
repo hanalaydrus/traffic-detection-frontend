@@ -1,14 +1,9 @@
 import React from 'react';
-import Pusher from 'pusher-js';
-import axios from 'axios';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
-
-// import { API_BASE_URL, PUSHER_KEY } from '../../../constants'
 import CardComponent from '../CardComponent';
 
 import { helloGRPC } from '../../../service/greeter_client.ts';
 
-export default class Videos extends React.Component {
+export default class Cameras extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -16,28 +11,9 @@ export default class Videos extends React.Component {
       start: true
     }
   }
-  // connectToPusher = () => {
-  //   Pusher.logToConsole = true;
-
-  //   var pusher = new Pusher('0a6557ec824a2adba923', {
-  //     cluster: 'ap1',
-  //     encrypted: true
-  //   });
-
-  //   var channel = pusher.subscribe('my-channel');
-  //   channel.bind('my-event', (data) => {
-  //     this.setState({car: data.message, start: true})
-  //   });
-  // }
 
   componentWillMount() {
     helloGRPC()
-    // this.connectToPusher()
-    // axios.post('http://127.0.0.1:8000/vehicle_counting', {
-    //   url : 'http://127.0.0.1:5000/video_feed?type=.mjpg'
-    // }).then(function (response) {
-    //   console.log('finish send url', response);
-    // })
   }
 
   render() {

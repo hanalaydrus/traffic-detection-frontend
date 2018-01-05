@@ -8,7 +8,7 @@ import { CircularProgress } from 'material-ui/Progress';
 
 const styles = {
   card: {
-    maxWidth: 345,
+    margin: '0px 10px 0px 10px'
   },
   media: {
     height: 200,

@@ -16,11 +16,12 @@
  *
  */
 import {grpc, Code, Metadata} from "grpc-web-client";
-import {Greeter} from "./generated/helloworld_pb_service";
-import {HelloRequest, HelloReply} from "./generated/helloworld_pb";
+import {Greeter} from "./generated/helloworld2_pb_service";
+import {HelloRequest, HelloReply} from "./generated/helloworld2_pb";
 
 const host = "http://localhost:8080";
 var car = "-1";
+var density = "";
 
 export function helloGRPC() {
   const  helloRequest = new HelloRequest();
@@ -35,9 +36,13 @@ export function helloGRPC() {
     },
     onMessage: (message: HelloReply) => {
       var reply = message.toObject();
-      if (car !== reply.message) {
-        console.log("car: ", reply.message);
-        car = reply.message;
+      if (car !== reply.volume) {
+        console.log("car: ", reply.volume);
+        console.log("density: ", reply.density);
+        car = reply.volume;
+      } else if (density !== reply.density) {
+        console.log("density: ", reply.density);
+        car = reply.density;
       }
     },
     onEnd: (code: Code, msg: string | undefined, trailers: Metadata) => {

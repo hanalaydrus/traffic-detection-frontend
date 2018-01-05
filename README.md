@@ -5,4 +5,4 @@ protoc \
 --js_out=import_style=commonjs,binary:./src/service/generated \
 --ts_out=service=true:./src/service/generated \
 -I ./src/service \
-helloworld.proto
+helloworld2.proto

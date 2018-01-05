@@ -1,14 +1,11 @@
 import React from 'react';
-import Pusher from 'pusher-js';
-import axios from 'axios';
 import PropTypes from 'prop-types';
-// import { API_BASE_URL, PUSHER_KEY } from '../../../constants'
 import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
-import Videos from '../Videos';
+import Dashboard from '../Dashboard';
+import Cameras from '../Cameras';
+import Maps from '../Maps';
 
 function TabContainer(props) {
   return <div style={{ padding: 20 }}>{props.children}</div>;
@@ -42,14 +39,14 @@ export default class Main extends React.Component {
             <div style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
               <Tabs value={this.state.value} onChange={this.handleChange} centered>
                 <Tab label="Dashboard" />
-                <Tab label="Videos" />
+                <Tab label="Cameras" />
                 <Tab label="Maps" />
               </Tabs>
             </div>
         </AppBar>
-        {this.state.value === 0 && <TabContainer><Videos/></TabContainer>}
-        {this.state.value === 1 && <TabContainer><Videos/></TabContainer>}
-        {this.state.value === 2 && <TabContainer><Videos/></TabContainer>}
+        {this.state.value === 0 && <TabContainer><Dashboard/></TabContainer>}
+        {this.state.value === 1 && <TabContainer><Cameras/></TabContainer>}
+        {this.state.value === 2 && <TabContainer><Maps/></TabContainer>}
       </div>
     );
   }
