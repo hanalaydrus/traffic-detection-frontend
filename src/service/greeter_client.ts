@@ -16,17 +16,17 @@
  *
  */
 import {grpc, Code, Metadata} from "grpc-web-client";
-import {Greeter} from "./generated/helloworld2_pb_service";
-import {HelloRequest, HelloReply} from "./generated/helloworld2_pb";
+import {Greeter} from "./generated/gatewayContract_pb_service";
+import {HelloRequest, HelloReply} from "./generated/gatewayContract_pb";
 
 const host = "http://localhost:8080";
-var car = "-1";
-var density = "";
 
-export function helloGRPC() {
+var prev_response = "";
+
+export function helloGRPC(input_type: string, input_camera_id: number, output_response: Function) {
   const  helloRequest = new HelloRequest();
-  helloRequest.setName('Hana');
-
+  helloRequest.setType(input_type);
+  helloRequest.setId(input_camera_id);
   grpc.invoke(Greeter.SayHello, {
     // debug: false,// optional - enable to output events to console.log
     request: helloRequest,
@@ -36,13 +36,10 @@ export function helloGRPC() {
     },
     onMessage: (message: HelloReply) => {
       var reply = message.toObject();
-      if (car !== reply.volume) {
-        console.log("car: ", reply.volume);
-        console.log("density: ", reply.density);
-        car = reply.volume;
-      } else if (density !== reply.density) {
-        console.log("density: ", reply.density);
-        car = reply.density;
+      if (prev_response !== reply.response){
+        console.log("response: ", reply.response);
+        output_response(reply.response);
+        prev_response = reply.response;
       }
     },
     onEnd: (code: Code, msg: string | undefined, trailers: Metadata) => {

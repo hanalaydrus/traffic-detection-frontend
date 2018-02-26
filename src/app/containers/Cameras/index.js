@@ -7,13 +7,29 @@ export default class Cameras extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      car: '0',
-      start: true
+      start: true,
+      volume: '-',
+      density: '-',
+      semantic: '-'
     }
   }
 
+  setVolume = (value) => {
+    this.setState({volume: value})
+  }
+
+  setDensity = (value) => {
+    this.setState({density: value})
+  }
+
+  setSemantic = (value) => {
+    this.setState({semantic: value})
+  }
+
   componentWillMount() {
-    helloGRPC()
+    helloGRPC("volume", 1, this.setVolume)
+    helloGRPC("density", 1, this.setDensity)
+    helloGRPC("semantic", 1, this.setSemantic)
   }
 
   render() {
@@ -24,31 +40,25 @@ export default class Cameras extends React.Component {
             <td>
             <CardComponent
               image={this.state.start ? "http://127.0.0.1:5000/video_feed" : ""}
-              title="Jalan Dago"
-              kepadatan="Lancar"
-              volume={this.state.car + " Kendaraan"}
-              hujan="Tidak Hujan"
-              banjir="Tidak Banjir"
+              title={this.state.semantic}
+              kepadatan={this.state.density}
+              volume={this.state.volume + " Kendaraan"}
             />
             </td>
             <td>
               <CardComponent
                 image=" "
-                title="Jalan Dago"
-                kepadatan="Lancar"
-                volume="10 Kendaraan"
-                hujan="Tidak Hujan"
-                banjir="Tidak Banjir"
+                title=" "
+                kepadatan=" "
+                volume=" "
               />
             </td>
             <td>
               <CardComponent
                 image=" "
-                title="Jalan Dago"
-                kepadatan="Lancar"
-                volume="10 Kendaraan"
-                hujan="Tidak Hujan"
-                banjir="Tidak Banjir"
+                title=" "
+                kepadatan=" "
+                volume=" "
               />
             </td>
           </tr>
@@ -57,41 +67,29 @@ export default class Cameras extends React.Component {
           <td>
             <CardComponent
               image=" "
-              title="Jalan Dago"
-              kepadatan="Lancar"
-              volume="10 Kendaraan"
-              hujan="Tidak Hujan"
-              banjir="Tidak Banjir"
+              title=" "
+              kepadatan=" "
+              volume=" "
             />
             </td>
             <td>
               <CardComponent
                 image=" "
-                title="Jalan Dago"
-                kepadatan="Lancar"
-                volume="10 Kendaraan"
-                hujan="Tidak Hujan"
-                banjir="Tidak Banjir"
+                title=" "
+                kepadatan=" "
+                volume=" "
               />
             </td>
             <td>
               <CardComponent
                 image=" "
-                title="Jalan Dago"
-                kepadatan="Lancar"
-                volume="10 Kendaraan"
-                hujan="Tidak Hujan"
-                banjir="Tidak Banjir"
+                title=" "
+                kepadatan=" "
+                volume=" "
               />
             </td>
           </tr>
         </table>
-
-
-        {/* <img src='http://127.0.0.1:5000/video_feed' height="100"/> */}
-        {/* <div style={{fontWeight:'bold', margin: 30, textAlign:'center'}}>
-          Sejumlah {this.state.car} kendaraan memenuhi Jalan Soekarno Hatta dari pagi hingga saat ini.
-        </div> */}
       </div>
     );
   }

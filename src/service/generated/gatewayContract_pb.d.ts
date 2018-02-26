@@ -1,11 +1,14 @@
-// package: helloworld2
-// file: helloworld2.proto
+// package: gatewayContract
+// file: gatewayContract.proto
 
 import * as jspb from "google-protobuf";
 
 export class HelloRequest extends jspb.Message {
-  getName(): string;
-  setName(value: string): void;
+  getType(): string;
+  setType(value: string): void;
+
+  getId(): number;
+  setId(value: number): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): HelloRequest.AsObject;
@@ -19,19 +22,14 @@ export class HelloRequest extends jspb.Message {
 
 export namespace HelloRequest {
   export type AsObject = {
-    name: string,
+    type: string,
+    id: number,
   }
 }
 
 export class HelloReply extends jspb.Message {
-  getVolume(): string;
-  setVolume(value: string): void;
-
-  getDensity(): string;
-  setDensity(value: string): void;
-
-  getSemantic(): string;
-  setSemantic(value: string): void;
+  getResponse(): string;
+  setResponse(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): HelloReply.AsObject;
@@ -45,9 +43,7 @@ export class HelloReply extends jspb.Message {
 
 export namespace HelloReply {
   export type AsObject = {
-    volume: string,
-    density: string,
-    semantic: string,
+    response: string,
   }
 }
 

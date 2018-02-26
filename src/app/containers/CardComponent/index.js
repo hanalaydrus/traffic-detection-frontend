@@ -8,7 +8,9 @@ import { CircularProgress } from 'material-ui/Progress';
 
 const styles = {
   card: {
-    margin: '0px 10px 0px 10px'
+    margin: '0px 10px 0px 10px',
+    width: 385,
+    height: 320
   },
   media: {
     height: 200,
@@ -39,7 +41,7 @@ function CardComponent(props) {
         </CardMedia>
         <CardContent>
           <Typography type="headline" component="h2">
-            {title}
+          {title === "" ? <CircularProgress size={20} /> : title}
           </Typography>
           <br/>
           <Typography component="p">
@@ -49,12 +51,6 @@ function CardComponent(props) {
                 <td>{kepadatan}</td>
                 <td><img src="../../../images/two-cars.png" height="20" width="20"/></td>
                 <td>{volume}</td>
-              </tr>
-              <tr>
-                <td><img src="../../../images/rainy.png" height="20" width="20"/></td>
-                <td>{hujan}</td>
-                <td><img src="../../../images/flooding-house.png" height="20" width="20"/></td>
-                <td>{banjir}</td>
               </tr>
             </table>
           </Typography>

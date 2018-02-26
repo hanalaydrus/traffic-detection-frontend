@@ -38,15 +38,15 @@ export default class Main extends React.Component {
         <AppBar position="static">
             <div style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
               <Tabs value={this.state.value} onChange={this.handleChange} centered>
-                <Tab label="Dashboard" />
+                {/* <Tab label="Dashboard" /> */}
                 <Tab label="Cameras" />
-                <Tab label="Maps" />
+                {/* <Tab label="Maps" /> */}
               </Tabs>
             </div>
         </AppBar>
-        {this.state.value === 0 && <TabContainer><Dashboard/></TabContainer>}
-        {this.state.value === 1 && <TabContainer><Cameras/></TabContainer>}
-        {this.state.value === 2 && <TabContainer><Maps/></TabContainer>}
+        {/* {this.state.value === 0 && <TabContainer><Dashboard/></TabContainer>} */}
+        {this.state.value === 0 && <TabContainer><Cameras/></TabContainer>}
+        {/* {this.state.value === 2 && <TabContainer><Maps/></TabContainer>} */}
       </div>
     );
   }
