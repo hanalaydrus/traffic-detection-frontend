@@ -45,7 +45,7 @@ function CardComponent(props) {
           </Typography>
           <br/>
           <Typography component="p">
-            <table style={{width:"100%"}}>
+            <table style={{width:"100%", marginBottom: "10px"}}>
               <tr>
                 <td><img src="../../../images/road.png" height="20" width="20"/></td>
                 <td>{kepadatan}</td>
