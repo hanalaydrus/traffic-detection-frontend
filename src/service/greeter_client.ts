@@ -19,7 +19,7 @@ import {grpc} from "grpc-web-client";
 import {Greeter} from "./generated/gatewayContract_pb_service";
 import {HelloRequest, HelloReply} from "./generated/gatewayContract_pb";
 
-const host = "http://localhost:8080";
+const host = "http://35.229.217.208:8080";
 
 export function helloGRPC(input_type: string, input_camera_id: number, output_response: Function) {
   console.log("type: ", input_type, "id: ", input_camera_id);
