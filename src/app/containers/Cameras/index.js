@@ -89,7 +89,7 @@ export default class Cameras extends React.Component {
           <tr>
             <td>
             <CardComponent
-              image={this.state.start ? "http://localhost:5000/camera_1" : ""}
+              image={this.state.start ? "http://35.187.247.127:5000/camera_1" : ""}
               title={this.state.semantic1}
               kepadatan={this.state.density1}
               volume={this.state.volume1 + " Kendaraan"}
@@ -97,7 +97,7 @@ export default class Cameras extends React.Component {
             </td>
             <td>
               <CardComponent
-                image={this.state.start ? "http://localhost:5000/camera_2" : ""}
+                image={this.state.start ? "http://35.187.247.127:5000/camera_2" : ""}
                 title={this.state.semantic2}
                 kepadatan={this.state.density2}
                 volume={this.state.volume2 + " Kendaraan"}
@@ -105,7 +105,7 @@ export default class Cameras extends React.Component {
             </td>
             <td>
               <CardComponent
-                image={this.state.start ? "http://localhost:5000/camera_3" : ""}
+                image={this.state.start ? "http://35.187.247.127:5000/camera_3" : ""}
                 title={this.state.semantic3}
                 kepadatan={this.state.density3}
                 volume={this.state.volume3 + " Kendaraan"}
@@ -116,7 +116,7 @@ export default class Cameras extends React.Component {
           <tr>
           <td>
             <CardComponent
-              image={this.state.start ? "http://localhost:5000/camera_4" : ""}
+              image={this.state.start ? "http://35.187.247.127:5000/camera_4" : ""}
               title={this.state.semantic4}
               kepadatan={this.state.density4}
               volume={this.state.volume4 + " Kendaraan"}
@@ -124,7 +124,7 @@ export default class Cameras extends React.Component {
             </td>
             <td>
               <CardComponent
-                image={this.state.start ? "http://localhost:5000/camera_5" : ""}
+                image={this.state.start ? "http://35.187.247.127:5000/camera_5" : ""}
                 title={this.state.semantic5}
                 kepadatan={this.state.density5}
                 volume={this.state.volume5 + " Kendaraan"}
@@ -132,7 +132,7 @@ export default class Cameras extends React.Component {
             </td>
             <td>
               <CardComponent
-                image={this.state.start ? "http://localhost:5000/camera_6" : ""}
+                image={this.state.start ? "http://35.187.247.127:5000/camera_6" : ""}
                 title={this.state.semantic6}
                 kepadatan={this.state.density6}
                 volume={this.state.volume6 + " Kendaraan"}
