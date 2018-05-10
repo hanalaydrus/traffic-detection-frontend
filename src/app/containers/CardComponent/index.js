@@ -10,7 +10,7 @@ const styles = {
   card: {
     margin: '0px 10px 0px 10px',
     width: 385,
-    height: 320
+    height: 380
   },
   media: {
     height: 200,
@@ -40,9 +40,7 @@ function CardComponent(props) {
         {image === "" ? <CircularProgress size={30} /> : null}
         </CardMedia>
         <CardContent>
-          <Typography type="headline" component="h2">
-          {title === "" ? <CircularProgress size={20} /> : title}
-          </Typography>
+          {title === "" ? <div style={{alignItems: 'center'}}><CircularProgress size={20} /> </div>: <Typography type="headline" style={{fontSize: '15px'}}>{ title }</Typography>}
           <br/>
           <Typography component="p">
             <table style={{width:"100%", marginBottom: "10px"}}>

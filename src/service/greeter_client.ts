@@ -15,15 +15,15 @@
  * limitations under the License.
  *
  */
-import {grpc, Code, Metadata} from "grpc-web-client";
+import {grpc} from "grpc-web-client";
 import {Greeter} from "./generated/gatewayContract_pb_service";
 import {HelloRequest, HelloReply} from "./generated/gatewayContract_pb";
 
 const host = "http://localhost:8080";
 
-var prev_response = "";
-
 export function helloGRPC(input_type: string, input_camera_id: number, output_response: Function) {
+  console.log("type: ", input_type, "id: ", input_camera_id);
+  
   const  helloRequest = new HelloRequest();
   helloRequest.setType(input_type);
   helloRequest.setId(input_camera_id);
@@ -31,18 +31,14 @@ export function helloGRPC(input_type: string, input_camera_id: number, output_re
     // debug: false,// optional - enable to output events to console.log
     request: helloRequest,
     host: host,
-    onHeaders: (headers: Metadata) => {
+    onHeaders: (headers: grpc.Metadata) => {
       console.log("got headers: ", headers);
     },
     onMessage: (message: HelloReply) => {
       var reply = message.toObject();
-      if (prev_response !== reply.response){
-        console.log("response: ", reply.response);
-        output_response(reply.response);
-        prev_response = reply.response;
-      }
+      output_response(reply.response);
     },
-    onEnd: (code: Code, msg: string | undefined, trailers: Metadata) => {
+    onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
       console.log("onEnd", code, msg, trailers);
     }
   });
