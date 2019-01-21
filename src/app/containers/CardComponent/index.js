@@ -33,11 +33,10 @@ function CardComponent(props) {
     <div>
       <Card className={classes.card}>
         <CardMedia
-          className={classes.media}
-          image={image}
-          title={title}
-        >
-        {image === "" ? <CircularProgress size={30} /> : null}
+            className={classes.media}
+            image={image === "" ? "https://images.unsplash.com/photo-1508292549404-81fd946f8c2e?ixlib=rb-0.3.5&s=2b255582246617b61b167259ec1bd3af&auto=format&fit=crop&w=1650&q=80" : image}
+            title={title}
+          >
         </CardMedia>
         <CardContent>
           {title === "" ? <div style={{alignItems: 'center'}}><CircularProgress size={20} /> </div>: <Typography type="headline" style={{fontSize: '15px'}}>{ title }</Typography>}

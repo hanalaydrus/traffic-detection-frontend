@@ -19,15 +19,24 @@ import {grpc} from "grpc-web-client";
 import {Greeter} from "./generated/gatewayContract_pb_service";
 import {HelloRequest, HelloReply} from "./generated/gatewayContract_pb";
 
-const host = "http://35.194.158.47:8080";
+const host = "http://localhost:8080";
+
+var data = new Array();
 
 export function helloGRPC(input_type: string, input_camera_id: number, output_response: Function) {
-  console.log("type: ", input_type, "id: ", input_camera_id);
-  
-  const  helloRequest = new HelloRequest();
+
+  console.log("id: ", input_camera_id);
+
+  var id_mod = input_camera_id % 10;
+  var id_camera = id_mod.toString();
+  var i = 0;
+  var time_prev = 0;
+
+  const helloRequest = new HelloRequest();
   helloRequest.setType(input_type);
-  helloRequest.setId(input_camera_id);
-  grpc.invoke(Greeter.SayHello, {
+  helloRequest.setId(id_mod);
+  
+  const client = grpc.invoke(Greeter.SayHello, {
     // debug: false,// optional - enable to output events to console.log
     request: helloRequest,
     host: host,
@@ -35,11 +44,18 @@ export function helloGRPC(input_type: string, input_camera_id: number, output_re
       console.log("got headers: ", headers);
     },
     onMessage: (message: HelloReply) => {
-      var reply = message.toObject();
-      output_response(reply.response);
+      i++;
+      if (i <= 1000) {
+        var reply = message.toObject();
+        output_response(reply.response);
+      }
     },
     onEnd: (code: grpc.Code, msg: string | undefined, trailers: grpc.Metadata) => {
       console.log("onEnd", code, msg, trailers);
     }
   });
+
+  // function closeClient(){
+  //   client.close();
+  // }
 }
