@@ -4,7 +4,7 @@ After you run all the microservices. In order to create a request to the API-Gat
 
 **1. Clone this repo**`git clone https://github.com/hanalaydrus/traffic-detection-frontend.git`
 
-**2. Make sure you have `yarn` run normally**
+**2. Go to the repo and make sure you have `yarn` run normally**
 
 **3. Run**`yarn install`
 
